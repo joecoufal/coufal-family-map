@@ -430,8 +430,8 @@
                         <span>${family}</span>
                     </div>
                 `).join('')}
-                <a href="https://www.google.com/maps/d/viewer?mid=YOUR_MAP_ID" class="action-button maps" target="_blank">
-                    Open in Google Maps
+                <a href="https://www.google.com/maps/@40.7128,-74.0060,11z" class="action-button maps" target="_blank">
+                    View Map Area in Google Maps
                 </a>
             `;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
@@ -477,7 +477,7 @@
                                             `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                             : ''}
                                     <a href="${mapsUrl}" class="action-button" target="_blank">
-                                        Open in Google Maps
+                                        See Current Day View on Google Maps
                                     </a>
                                 </div>
                             `
