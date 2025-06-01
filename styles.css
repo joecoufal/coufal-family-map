@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background: #523735;
+    color: #f5f1e6;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    border-bottom: 3px solid #c9b2a6;
+}
+
+.header h1 {
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+#map {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+}
+
+.legend {
+    position: absolute;
+    bottom: 30px;
+    right: 10px;
+    background: #f5f1e6;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(82, 55, 53, 0.2);
+    z-index: 1000;
+    font-size: 12px;
+    max-width: 220px;
+    border: 1px solid #c9b2a6;
+    font-family: 'Georgia', serif;
+}
+
+.legend h3 {
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    color: #523735;
+    font-weight: normal;
+    border-bottom: 1px solid #c9b2a6;
+    padding-bottom: 5px;
+}
+
+.legend-section {
+    margin-bottom: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    color: #523735;
+}
+
+.color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid rgba(82, 55, 53, 0.2);
+}
+
+/* Info Window Styles */
+.popup-content {
+    padding: 24px;
+    max-width: 360px;
+    background: #ffffff;
+    color: #2f2f2f;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-family: Georgia, 'Times New Roman', serif;
+    position: relative;
+}
+
+.popup-content h3 {
+    font-size: 24px;
+    color: #2f2f2f;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 24px 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+.popup-content h3::after {
+    content: "";
+    display: block;
+    width: 60%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.15);
+    margin: 12px auto 0;
+}
+
+.popup-content p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 16px 0;
+    color: #2f2f2f;
+}
+
+.popup-content p:first-of-type {
+    margin-top: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+
+.popup-content img {
+    width: calc(100% + 48px);
+    margin: 24px -24px;
+    max-width: calc(100% + 48px);
+    display: block;
+}
+
+.popup-content a {
+    color: #2f2f2f;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    transition: border-color 0.2s ease;
+}
+
+.popup-content a:hover {
+    border-bottom-color: #2f2f2f;
+}
+
+.popup-content .action-button {
+    background-color: #2f2f2f;
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 24px 0 0 0;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.popup-content .action-button:hover {
+    background-color: #000000;
+}
+
+/* Custom scrollbar */
+.popup-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+}
+
+.popup-content::-webkit-scrollbar {
+    width: 2px;
+}
+
+.popup-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 1px;
+}
+
+/* Close button */
+.gm-ui-hover-effect {
+    opacity: 0.6 !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.gm-ui-hover-effect img {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.gm-ui-hover-effect:hover {
+    opacity: 0.8 !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .legend {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+        max-width: 160px;
+    }
+    
+    .popup-content {
+        max-width: 280px;
+        padding: 20px;
+    }
+    
+    .popup-content h3 {
+        font-size: 20px;
+    }
+    
+    .popup-content p {
+        font-size: 14px;
+    }
+    
+    .popup-content img {
+        width: calc(100% + 40px);
+        margin: 20px -20px;
+        max-width: calc(100% + 40px);
+    }
+}
