@@ -415,7 +415,7 @@
                         url: "https://www.loc.gov/item/2005689085/"
                     }
                 ],
-                images: ["historical/lower_east_side_1910.jpg", "historical/essex_delancey_1910.jpg"]
+                images: ["historical/lower_east_side_1910.jpg"]
             },
             {
                 name: "Irish Yorkville (1910-1920)",
@@ -829,8 +829,10 @@
                                 <h3>${context.name}</h3>
                                 <p><strong>Period:</strong> ${context.year}</p>
                                 <p>${context.details}</p>
-                                ${context.image ? 
-                                    `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                ${context.images ? 
+                                    context.images.map(img => 
+                                        `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                    ).join('') 
                                     : ''}
                                 ${context.links ? 
                                     `<div style="margin-top: 15px;">
