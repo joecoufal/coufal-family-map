@@ -146,6 +146,15 @@
         // Family address data
         const familyAddresses = [
             {
+                name: "Eli Krotman - Townsend Harris High School",
+                address: "17 Lexington Avenue, New York, NY 10010",
+                year: 1935,
+                family: "Krotman",
+                details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
+                image: "townsend_harris_hs_eli_krotman.jpg",
+                link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
+            },
+            {
                 name: "Eli & Claire Krotman",
                 address: "2962 Decatur Avenue, Bronx, New York, NY",
                 year: 1950,
@@ -432,6 +441,9 @@
                                     <p><strong>Year:</strong> ${location.year}</p>
                                     <p><strong>Address:</strong> ${location.address}</p>
                                     <p>${location.details}</p>
+                                    ${location.link ? 
+                                        `<p><a href="${location.link}" target="_blank" style="color: #2980b9;">Read more about this location</a></p>`
+                                        : ''}
                                     ${location.images ? 
                                         location.images.map(img => 
                                             `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
