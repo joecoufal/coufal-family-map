@@ -247,33 +247,43 @@
             legendDiv.innerHTML = legendHTML;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
 
-            // Add click handlers for family toggle buttons
-            document.querySelectorAll('.family-toggle-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const family = button.dataset.family;
-                    const isActive = button.classList.toggle('active');
-                    const icon = button.querySelector('.toggle-icon');
-                    icon.textContent = isActive ? '✓' : '×';
-                    updateMarkersVisibility();
+            // Wait for the next frame to ensure elements are in the DOM
+            requestAnimationFrame(() => {
+                // Add click handlers for family toggle buttons
+                const buttons = document.querySelectorAll('.family-toggle-button');
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const family = button.dataset.family;
+                        const isActive = button.classList.toggle('active');
+                        const icon = button.querySelector('.toggle-icon');
+                        icon.textContent = isActive ? '✓' : '×';
+                        updateMarkersVisibility();
+                    });
                 });
-            });
 
-            // Add click handler for "Show All" button
-            document.getElementById('show-all-families').addEventListener('click', () => {
-                document.querySelectorAll('.family-toggle-button').forEach(button => {
-                    button.classList.add('active');
-                    button.querySelector('.toggle-icon').textContent = '✓';
-                });
-                updateMarkersVisibility(true);
-            });
+                // Add click handler for "Show All" button
+                const showAllBtn = document.getElementById('show-all-families');
+                if (showAllBtn) {
+                    showAllBtn.addEventListener('click', () => {
+                        document.querySelectorAll('.family-toggle-button').forEach(button => {
+                            button.classList.add('active');
+                            button.querySelector('.toggle-icon').textContent = '✓';
+                        });
+                        updateMarkersVisibility(true);
+                    });
+                }
 
-            // Add click handler for "Hide All" button
-            document.getElementById('hide-all-families').addEventListener('click', () => {
-                document.querySelectorAll('.family-toggle-button').forEach(button => {
-                    button.classList.remove('active');
-                    button.querySelector('.toggle-icon').textContent = '×';
-                });
-                updateMarkersVisibility(false);
+                // Add click handler for "Hide All" button
+                const hideAllBtn = document.getElementById('hide-all-families');
+                if (hideAllBtn) {
+                    hideAllBtn.addEventListener('click', () => {
+                        document.querySelectorAll('.family-toggle-button').forEach(button => {
+                            button.classList.remove('active');
+                            button.querySelector('.toggle-icon').textContent = '×';
+                        });
+                        updateMarkersVisibility(false);
+                    });
+                }
             });
         }
 
