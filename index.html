@@ -595,6 +595,11 @@
                 alert("Error: Google Maps API Key is missing. The map cannot be loaded.");
                 return;
             }
+            if (typeof GOOGLE_MAPS_MAP_ID === 'undefined') {
+                console.error("Google Maps Map ID not found. Make sure config.js is loaded and contains GOOGLE_MAPS_MAP_ID.");
+                alert("Error: Google Maps Map ID is missing. The map cannot be loaded.");
+                return;
+            }
             const script = document.createElement('script');
             script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=marker&v=beta`;
             script.async = true;
