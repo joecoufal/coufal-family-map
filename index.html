@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coufal Family Historical Addresses</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo6XuvHLVIT61t-ab2CTWEbKiiuJEKFq4"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .controls {
+            padding: 1rem;
+            background: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .decade-filter {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #34495e;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 14px;
+        }
+
+        .decade-filter.active {
+            background-color: #2980b9;
+        }
+
+        #map {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 12px;
+            max-width: 150px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+
+        .action-button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .action-button:hover {
+            background-color: #34495e;
+        }
+
+        .action-button.maps {
+            background-color: #4285f4;
+        }
+
+        .action-button.maps:hover {
+            background-color: #2b7de9;
+        }
+
+        .popup-content {
+            padding: 5px;
+            max-width: 250px;
+        }
+
+        .popup-content h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .popup-content p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .controls {
+                padding: 8px;
+            }
+
+            .decade-filter {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .legend {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px;
+                font-size: 11px;
+                max-width: 120px;
+            }
+
+            .popup-content {
+                max-width: 200px;
+            }
+
+            .popup-content h3 {
+                font-size: 14px;
+            }
+
+            .popup-content p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Coufal Family Historical Addresses</h1>
+    </div>
+    
+    <div class="controls">
+        <button class="decade-filter" data-decade="all">All Years</button>
+        <button class="decade-filter" data-decade="1910">1910s</button>
+        <button class="decade-filter" data-decade="1920">1920s</button>
+        <button class="decade-filter" data-decade="1930">1930s</button>
+        <button class="decade-filter" data-decade="1940">1940s</button>
+        <button class="decade-filter" data-decade="1950">1950s</button>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+        // Family address data
+        const familyAddresses = [
+            {
+                name: "Eli & Claire Krotman",
+                address: "2962 Decatur Avenue, Bronx, New York, NY",
+                year: 1950,
+                family: "Krotman",
+                details: "Eli (age 33) and Claire (age 25)",
+                images: ["2962_decatur_ave_bronx._1950_eli_33_claire_25..png", "2962_decatur.png", "2962_decatur_2.png"]
+            },
+            {
+                name: "Claire Reckler",
+                address: "500 E Fordham Road, Bronx, New York, NY",
+                year: 1942,
+                family: "Reckler",
+                details: "Claire Reckler's high school - Theodore Roosevelt High School",
+                image: "claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png"
+            },
+            {
+                name: "Harry Reckler Family",
+                address: "87 Clinton Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Reckler",
+                details: "Harry (Hersch) (age 13), Sam (Salomon) (age 7), Rosa (age 16), and mother Chaje (age 42)",
+                image: "87_clinton_st_manhattan._1910_harry_reckler_age_13,_sam_7._rosa_16_mother_chaje_42_.png"
+            },
+            {
+                name: "Fannie Hermann",
+                address: "288 East 2nd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Krotman",
+                details: "Fannie (age 23)",
+                image: "288_e_2nd_st_manhattan_fannie_1910_age_23.png"
+            },
+            {
+                name: "Fannie Hermann Family",
+                address: "216 East 3rd Street, Manhattan, New York, NY",
+                year: 1905,
+                family: "Krotman",
+                details: "Fannie Hermann (age 17), father Joseph (Romanian fruit vendor), brother Tony (decorator), brother Louis (clothing dealer), sister Regina (millinery)",
+                image: "216_e_3rd_st_manhattan._1905_fannie_hermann_age_17._father_joseph_romanian_fruit_vendor._brother_tony_decorator_brother_louis_clothing_dealer_sister_regina_millinery.png"
+            },
+            {
+                name: "Walter Beasley",
+                address: "406 East 79th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Walter Beasley (age 14-24), with parents Robert (horse dealer) and Elizabeth. Lived here 1910-1920",
+                image: "406_e_79_1910-1920_walter_beasley_age_14-24._parents_robert_(horse_dealer)_and_elizabeth.png"
+            },
+            {
+                name: "Sebastian & Antoinette Coufal",
+                address: "110-112 East 3rd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Coufal",
+                details: "Sebastian worked as a Real Estate Agent",
+                image: "503_e_73rd_frank_childhood_home_1910s.png"
+            },
+            {
+                name: "Frank & Anna Coufal",
+                address: "534 East 5th Street, Manhattan, New York, NY",
+                year: 1920,
+                family: "Coufal",
+                details: "Frank worked as a plumber",
+                image: "534_East_5_Street_frank_anna.png"
+            },
+            {
+                name: "Frank & Anna Coufal",
+                address: "87-14 87th Street, Queens, New York, NY",
+                year: 1930,
+                family: "Coufal",
+                details: "Frank worked as a plumber in the building industry",
+                image: "87-14_87th_St_queens_coufal_1940.png"
+            },
+            {
+                name: "Walter & Emma Beasley",
+                address: "115-57 217 Street, Queens, New York, NY",
+                year: 1930,
+                family: "Beasley",
+                details: "Walter & Emma's home where their daughter Edna grew up",
+                image: "115_57_217_Street.png"
+            },
+            {
+                name: "Robert & Elizabeth Beasley",
+                address: "214 East 10th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Robert worked as a Horse Dealer",
+                image: "214_East_10_Street_beasley_horse_dealer_not_house.png"
+            },
+            {
+                name: "Joseph & Fannie Krotman",
+                address: "1524 Washington Avenue, Bronx, New York, NY",
+                year: 1920,
+                family: "Krotman",
+                details: "Joseph worked as a furniture salesman"
+            },
+            {
+                name: "Joseph & Rose Krotman",
+                address: "3604 Olinville Avenue, Bronx, New York, NY",
+                year: 1930,
+                family: "Krotman",
+                details: "Joseph (age 40), Rose (age 32), and Eli (age 12)",
+                image: "3604_Olinville_Avenue_1930_joseph_krotman_age_40,_rose_32,_eli_12.png"
+            },
+            {
+                name: "Joseph & Rose Krotman",
+                address: "1851 Andrews Avenue, Bronx, New York, NY",
+                year: 1940,
+                family: "Krotman",
+                details: "Joseph worked as a furniture salesman"
+            },
+            {
+                name: "Harry & Anna Reckler",
+                address: "7420 Fort Hamilton Parkway, Brooklyn, New York, NY",
+                year: 1930,
+                family: "Reckler",
+                details: "Harry worked as a baker",
+                image: "recklerbrooklynbakery_ft_hamilton.png"
+            },
+            {
+                name: "Harry & Anna Reckler",
+                address: "2145 Garden Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry worked as a storekeeper"
+            },
+            {
+                name: "Harry & Anna Reckler",
+                address: "144-12 Hissons Boulevard, Queens, New York, NY",
+                year: 1950,
+                family: "Reckler",
+                details: "Harry owned and operated a bakery",
+                image: "144-12_hissons_blvd_queens_reckler_bakery.png"
+            },
+            {
+                name: "Walter & Emma Beasley",
+                address: "1 South Gate, Massapequa, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter and Emma Beasley's home",
+                image: "1_s_gate_massapequa_new_york._walter_and_emma_beasley.png"
+            },
+            {
+                name: "Walter & Emma Beasley",
+                address: "Queens, New York, NY",
+                year: 1940,
+                family: "Beasley",
+                details: "Walter Beasley's residence",
+                image: "walter_beasley_queens.png"
+            },
+            {
+                name: "Harry & Anna Reckler",
+                address: "765 East 182 Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Reckler Bakery location in the 1940s",
+                image: "765_East_182_Street_reckler_bakery_1940s.png"
+            },
+            {
+                name: "Harry & Anna Reckler",
+                address: "2145 Garden Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Reckler family residence. Claire lived here when she was 15 years old",
+                image: "2145_garden_st.png"
+            },
+            {
+                name: "Joseph & Fannie Krotman",
+                address: "1524 Washington Avenue, Bronx, New York, NY",
+                year: 1920,
+                family: "Krotman",
+                details: "Joseph (age 32), Fannie (age 31), and Eli (age 3)",
+                image: "1524_washington_ave_1920_joseph_krotman_32,_fannie_krotman_31,_eli_3.png"
+            },
+            {
+                name: "Edward & Annie McKee",
+                address: "335 East 93 Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "McKee",
+                details: "Edward McKee's house, where Emma Beasley lived at age 20",
+                image: "335_East_93_Street_emma_beasley_20_yrs_old._edward_mckee_father_house.png"
+            },
+            {
+                name: "Walter & Emma Beasley",
+                address: "88-14 168th Street, Queens, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter worked as a supervisor at the Telephone Company",
+                image: "88_14_168_Street.png"
+            },
+            {
+                name: "Frank & Anna Coufal",
+                address: "219-27 114 Avenue, Queens, New York, NY",
+                year: 1950,
+                family: "Coufal",
+                details: "Lived here with their sons Donald (22) and Frank Jr. (25)",
+                image: "coufal1940.png"
+            }
+        ];
+
+        // Color mapping for families
+        const familyColors = {
+            'Coufal': '#e74c3c',
+            'Beasley': '#3498db',
+            'Krotman': '#2ecc71',
+            'Reckler': '#f1c40f',
+            'McKee': '#9b59b6'
+        };
+
+        let map;
+        let markers = [];
+        let currentInfoWindow = null;
+
+        function initMap() {
+            // Center map on New York City
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 40.7128, lng: -74.0060 },
+                zoom: 11,
+                styles: [
+                    {
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{ visibility: "off" }]
+                    }
+                ]
+            });
+
+            // Create markers for all addresses
+            createMarkers();
+
+            // Add click handlers for decade filters
+            document.querySelectorAll('.decade-filter').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.decade-filter').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    filterMarkersByDecade(button.dataset.decade);
+                });
+            });
+
+            // Add legend
+            const legend = document.createElement('div');
+            legend.className = 'legend';
+            legend.innerHTML = `
+                <h3>Family Members</h3>
+                ${Object.entries(familyColors).map(([family, color]) => `
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: ${color};"></div>
+                        <span>${family}</span>
+                    </div>
+                `).join('')}
+                <a href="https://www.google.com/maps/d/viewer?mid=YOUR_MAP_ID" class="action-button maps" target="_blank">
+                    Open in Google Maps
+                </a>
+            `;
+            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
+            // Activate "All Years" by default
+            document.querySelector('[data-decade="all"]').classList.add('active');
+        }
+
+        function createMarkers() {
+            familyAddresses.forEach(location => {
+                const geocoder = new google.maps.Geocoder();
+                
+                geocoder.geocode({ address: location.address }, (results, status) => {
+                    if (status === 'OK') {
+                        const marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: location.name,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                fillColor: familyColors[location.family],
+                                fillOpacity: 0.9,
+                                strokeWeight: 2,
+                                strokeColor: '#ffffff',
+                                scale: 10
+                            }
+                        });
+
+                        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
+                        
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `
+                                <div class="popup-content">
+                                    <h3>${location.name}</h3>
+                                    <p><strong>Year:</strong> ${location.year}</p>
+                                    <p><strong>Address:</strong> ${location.address}</p>
+                                    <p>${location.details}</p>
+                                    ${location.images ? 
+                                        location.images.map(img => 
+                                            `<img src="/Users/joecoufal/Desktop/coufal_family_map/images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                        ).join('') 
+                                        : location.image ? 
+                                            `<img src="/Users/joecoufal/Desktop/coufal_family_map/images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                            : ''}
+                                    <a href="${mapsUrl}" class="action-button" target="_blank">
+                                        Open in Google Maps
+                                    </a>
+                                </div>
+                            `
+                        });
+
+                        marker.addListener('click', () => {
+                            if (currentInfoWindow) {
+                                currentInfoWindow.close();
+                            }
+                            infoWindow.open(map, marker);
+                            currentInfoWindow = infoWindow;
+                        });
+
+                        markers.push({
+                            marker: marker,
+                            year: location.year
+                        });
+                    }
+                });
+            });
+
+            // Close info window when clicking elsewhere on the map
+            map.addListener('click', () => {
+                if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                }
+            });
+        }
+
+        function filterMarkersByDecade(decade) {
+            markers.forEach(({ marker, year }) => {
+                if (decade === 'all' || Math.floor(year/10) * 10 === parseInt(decade)) {
+                    marker.setVisible(true);
+                } else {
+                    marker.setVisible(false);
+                }
+            });
+        }
+
+        // Initialize the map when the page loads
+        window.addEventListener('load', initMap);
+    </script>
+</body>
+</html>
