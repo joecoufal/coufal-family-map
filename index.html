@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coufal Family Historical Addresses</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCo6XuvHLVIT61t-ab2CTWEbKiiuJEKFq4"></script>
+    <!-- config.js will be loaded first -->
+    <script src="config.js"></script>
     <style>
         * {
             margin: 0;
@@ -44,59 +45,52 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             z-index: 1000;
             font-size: 12px;
-            max-width: 150px;
+            max-width: 180px; 
         }
 
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
+        .legend h3 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .family-toggle-button {
+            border: 1px solid #333;
+            margin: 3px 2px;
+            padding: 6px 8px;
+            border-radius: 3px;
             cursor: pointer;
-            padding: 4px 6px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
+            width: calc(100% - 4px); 
+            font-size: 11px;
+            transition: opacity 0.2s;
+        }
+        
+        .family-toggle-button.active {
+            opacity: 1;
         }
 
-        .legend-item:hover {
-            background-color: rgba(0,0,0,0.1);
+        .family-toggle-button:not(.active) {
+            opacity: 0.6;
         }
 
-        .legend-item input[type="checkbox"] {
-            margin-right: 8px;
-            cursor: pointer;
-            width: 16px;
-            height: 16px;
-        }
-
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-            border-radius: 50%;
-        }
-
-        .legend-item span {
-            user-select: none;
-        }
-
-        .action-button {
-            background-color: #2c3e50;
+        .legend .action-button { 
+            background-color: #5e6c7a; 
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 8px 10px;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 8px;
             transition: background-color 0.2s;
             text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
+            display: inline-block; 
+            font-size: 12px;
             text-align: center;
-            width: 100%;
+            width: calc(50% - 5px); 
         }
-
-        .action-button:hover {
-            background-color: #34495e;
+        
+        .legend .action-button:hover {
+            background-color: #4a545e;
         }
 
         .popup-content {
@@ -115,23 +109,47 @@
             margin: 5px 0;
         }
 
+        .popup-content .action-button { 
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: block; 
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+        }
+        .popup-content .action-button:hover {
+             background-color: #34495e;
+        }
+
         @media (max-width: 600px) {
             .legend {
                 bottom: 10px;
                 right: 10px;
                 padding: 8px;
                 font-size: 11px;
-                max-width: 120px;
+                max-width: 140px;
             }
-
+             .family-toggle-button {
+                font-size: 10px;
+                padding: 5px 6px;
+            }
+            .legend .action-button {
+                font-size: 11px;
+                padding: 7px 8px;
+            }
             .popup-content {
                 max-width: 200px;
             }
-
             .popup-content h3 {
                 font-size: 14px;
             }
-
             .popup-content p {
                 font-size: 12px;
             }
@@ -145,13 +163,203 @@
     
     <div id="map"></div>
 
+    <!-- Main script for map logic -->
     <script>
         // Family address data
         const familyAddresses = [
             {
-                name: "Eli Krotman - Townsend Harris High School",
+                name: "Eli & Claire Krotman Home (1950)",
+                address: "2962 Decatur Avenue, Bronx, New York, NY",
+                year: 1950,
+                family: "Krotman",
+                details: "Eli (age 33) and Claire (age 25)",
+                images: ["2962_decatur_ave_bronx._1950_eli_33_claire_25..png", "2962_decatur.png", "2962_decatur_2.png"]
+            },
+            {
+                name: "Claire Reckler High School (1942)",
+                address: "500 E Fordham Road, Bronx, New York, NY",
+                year: 1942,
+                family: "Reckler",
+                details: "Claire Reckler attended Theodore Roosevelt High School",
+                image: "claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png"
+            },
+            {
+                name: "Harry Reckler Childhood Home (1910)",
+                address: "87 Clinton Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Reckler",
+                details: "Harry (Hersch) (age 13) lived here with his brother Sam (Salomon) (age 7), sister Rosa (age 16), and mother Chaje (age 42)",
+                image: "87_clinton_st_manhattan._1910_harry_reckler_age_13,_sam_7._rosa_16_mother_chaje_42_.png"
+            },
+            {
+                name: "Fannie Hermann Home (1910)",
+                address: "288 East 2nd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Krotman",
+                details: "Fannie (age 23)",
+                image: "288_e_2nd_st_manhattan_fannie_1910_age_23.png"
+            },
+            {
+                name: "Fannie Hermann Family Home (1905)",
+                address: "216 East 3rd Street, Manhattan, New York, NY",
+                year: 1905,
+                family: "Krotman",
+                details: "Fannie Hermann (age 17) lived here with her father Joseph (Romanian fruit vendor), brother Tony (decorator), brother Louis (clothing dealer), and sister Regina (millinery)",
+                image: "216_e_3rd_st_manhattan._1905_fannie_hermann_age_17._father_joseph_romanian_fruit_vendor._brother_tony_decorator_brother_louis_clothing_dealer_sister_regina_millinery.png"
+            },
+            {
+                name: "Walter Beasley Family Home (1910-1920)",
+                address: "406 East 79th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Walter Beasley (age 14-24) lived here with parents Robert (horse dealer) and Elizabeth from 1910-1920",
+                image: "406_e_79_1910-1920_walter_beasley_age_14-24._parents_robert_(horse_dealer)_and_elizabeth.png"
+            },
+            {
+                name: "Sebastian & Antoinette Coufal Home (1910)",
+                address: "110-112 East 3rd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Coufal",
+                details: "Sebastian worked as a Real Estate Agent",
+                image: "503_e_73rd_frank_childhood_home_1910s.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1920)",
+                address: "534 East 5th Street, Manhattan, New York, NY",
+                year: 1920,
+                family: "Coufal",
+                details: "Frank worked as a plumber",
+                image: "534_East_5_Street_frank_anna.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1930)",
+                address: "87-14 87th Street, Queens, New York, NY",
+                year: 1930,
+                family: "Coufal",
+                details: "Frank worked as a plumber in the building industry",
+                image: "87-14_87th_St_queens_coufal_1940.png"
+            },
+            {
+                name: "Walter & Emma Beasley Family Home (1930)",
+                address: "115-57 217 Street, Queens, New York, NY",
+                year: 1930,
+                family: "Beasley",
+                details: "Walter & Emma's home where their daughter Edna grew up",
+                image: "115_57_217_Street.png"
+            },
+            {
+                name: "Robert & Elizabeth Beasley Home (1910)",
+                address: "214 East 10th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Robert worked as a Horse Dealer",
+                image: "214_East_10_Street_beasley_horse_dealer_not_house.png"
+            },
+            {
+                name: "Joseph & Fannie Krotman Home (1920)",
+                address: "1524 Washington Avenue, Bronx, New York, NY",
+                year: 1920,
+                family: "Krotman",
+                details: "Joseph (age 32), Fannie (age 31), and Eli (age 3). Joseph worked as a furniture salesman",
+                image: "1524_washington_ave_1920_joseph_krotman_32,_fannie_krotman_31,_eli_3.png"
+            },
+            {
+                name: "Joseph & Rose Krotman Home (1930)",
+                address: "3604 Olinville Avenue, Bronx, New York, NY",
+                year: 1930,
+                family: "Krotman",
+                details: "Joseph (age 40), Rose (age 32), and Eli (age 12)",
+                image: "3604_Olinville_Avenue_1930_joseph_krotman_age_40,_rose_32,_eli_12.png"
+            },
+            {
+                name: "Joseph & Rose Krotman Home (1940)",
+                address: "1851 Andrews Avenue, Bronx, New York, NY",
+                year: 1940,
+                family: "Krotman",
+                details: "Joseph worked as a furniture salesman"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1930)",
+                address: "7420 Fort Hamilton Parkway, Brooklyn, New York, NY",
+                year: 1930,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location",
+                image: "recklerbrooklynbakery_ft_hamilton.png"
+            },
+            {
+                name: "Harry & Anna Reckler Home (1940)",
+                address: "2145 Garden Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry and Anna's residence. Claire lived here when she was 15 years old",
+                image: "2145_garden_st.png"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1940s)",
+                address: "765 East 182 Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location in the 1940s",
+                image: "765_East_182_Street_reckler_bakery_1940s.png"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1950)",
+                address: "144-12 Hissons Boulevard, Queens, New York, NY",
+                year: 1950,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location",
+                image: "144-12_hissons_blvd_queens_reckler_bakery.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1950)",
+                address: "1 South Gate, Massapequa, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter and Emma Beasley's home",
+                image: "1_s_gate_massapequa_new_york._walter_and_emma_beasley.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1940)",
+                address: "Queens, New York, NY",
+                year: 1940,
+                family: "Beasley",
+                details: "Walter Beasley's residence",
+                image: "walter_beasley_queens.png"
+            },
+            {
+                name: "Edward & Annie McKee Home (1910)",
+                address: "335 East 93 Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "McKee",
+                details: "Edward McKee's house, where Emma Beasley lived at age 20",
+                image: "335_East_93_Street_emma_beasley_20_yrs_old._edward_mckee_father_house.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1950)",
+                address: "88-14 168th Street, Queens, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter worked as a supervisor at the Telephone Company",
+                image: "88_14_168_Street.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1950)",
+                address: "219-27 114 Avenue, Queens, New York, NY",
+                year: 1950,
+                family: "Coufal",
+                details: "Lived here with their sons Donald (22) and Frank Jr. (25)",
+                image: "coufal1940.png"
+            },
+            {
+                name: "Eli Krotman - Townsend Harris High School (1935)",
                 address: "https://maps.app.goo.gl/EPfWPdYHxf32pwth9",
                 displayAddress: "17 Lexington Avenue, New York, NY 10010",
+                year: 1935,
+                family: "Krotman",
+                details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
+                image: "townsend_harris_hs_eli_krotman.jpg",
+                link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
+            }
                 year: 1935,
                 family: "Krotman",
                 details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
@@ -357,7 +565,6 @@
             }
         ];
 
-        // Color mapping for families
         const familyColors = {
             'Coufal': '#e74c3c',
             'Beasley': '#3498db',
@@ -369,10 +576,9 @@
         let map;
         let markers = [];
         let currentInfoWindow = null;
-        let familyVisibility = {};
 
+        // initMap is now called by the Google Maps API script load (callback=initMap)
         function initMap() {
-            // Center map on New York City
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 40.7128, lng: -74.0060 },
                 zoom: 11,
@@ -386,84 +592,84 @@
                 ]
             });
 
-            // Initialize all families as visible
-            Object.keys(familyColors).forEach(family => {
-                familyVisibility[family] = true;
-            });
-
-            // Add legend
             createLegend();
-            
-            // Create markers for all addresses
-            createMarkers();
+            createMarkers(); 
         }
 
         function createLegend() {
-            // Add legend
-            const legend = document.createElement('div');
-            legend.className = 'legend';
-            legend.innerHTML = `
-                <h3>Family Members</h3>
-                ${Object.entries(familyColors).map(([family, color]) => `
-                    <div class="legend-item" data-family="${family}">
-                        <input type="checkbox" id="${family}Toggle" checked>
-                        <div class="legend-color" style="background: ${color};"></div>
-                        <span>${family}</span>
-                    </div>
-                `).join('')}
-            `;
-            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+            const legendDiv = document.createElement('div');
+            legendDiv.className = 'legend';
             
-            // Wait for legend to be added to DOM before adding event listeners
-            setTimeout(() => {
-                // Add click handlers for family toggles
-                Object.keys(familyColors).forEach(family => {
-                    const toggle = document.getElementById(`${family}Toggle`);
-                    if (!toggle) {
-                        console.error(`Toggle element not found for family: ${family}`);
-                        return; // Skip if element not found
-                    }
-                    
-                    const legendItem = toggle.closest('.legend-item');
-                    if (!legendItem) {
-                        console.error(`Legend item not found for family: ${family}`);
-                        return; // Skip if parent not found
-                    }
-                    
-                    // Add click handler for the entire legend item
-                    legendItem.addEventListener('click', (e) => {
-                        if (e.target !== toggle) { // If clicking the label/color, toggle the checkbox
-                            toggle.checked = !toggle.checked;
-                            familyVisibility[family] = toggle.checked;
-                            console.log(`${family} toggled to ${toggle.checked} by clicking legend item`);
-                            updateMarkers();
-                        }
-                    });
-                    
-                    // Add change handler for the checkbox directly
-                    toggle.addEventListener('change', () => {
-                        familyVisibility[family] = toggle.checked;
-                        console.log(`${family} checkbox changed to ${toggle.checked}`);
-                        updateMarkers();
-                    });
+            let legendHTML = '<h3>Families</h3>';
+            Object.keys(familyColors).forEach(family => {
+                legendHTML += `<button class="family-toggle-button active" data-family="${family}" style="background-color: ${familyColors[family]}; color: white;">Hide ${family}</button>`;
+            });
+            legendHTML += '<div style="margin-top: 10px; display: flex; justify-content: space-between;">';
+            legendHTML += '<button id="show-all-families" class="action-button">Show All</button>';
+            legendHTML += '<button id="hide-all-families" class="action-button">Hide All</button>';
+            legendHTML += '</div>';
+
+            legendDiv.innerHTML = legendHTML;
+            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
+
+            document.querySelectorAll('.family-toggle-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const family = button.dataset.family;
+                    const isActive = button.classList.toggle('active');
+                    button.textContent = isActive ? `Hide ${family}` : `Show ${family}`;
+                    button.style.opacity = isActive ? '1' : '0.6';
+                    updateMarkersVisibility();
                 });
-            }, 100);
+            });
+
+            document.getElementById('show-all-families').addEventListener('click', () => {
+                document.querySelectorAll('.family-toggle-button').forEach(button => {
+                    if (!button.classList.contains('active')) {
+                        button.classList.add('active');
+                        button.textContent = `Hide ${button.dataset.family}`;
+                        button.style.opacity = '1';
+                    }
+                });
+                updateMarkersVisibility(true);
+            });
+
+            document.getElementById('hide-all-families').addEventListener('click', () => {
+                document.querySelectorAll('.family-toggle-button').forEach(button => {
+                    if (button.classList.contains('active')) {
+                        button.classList.remove('active');
+                        button.textContent = `Show ${button.dataset.family}`;
+                        button.style.opacity = '0.6';
+                    }
+                });
+                updateMarkersVisibility(false);
+            });
         }
 
-        function updateMarkers() {
-            console.log('Updating markers...');
-            
-            markers.forEach(({ marker, familyName }) => {
-                const shouldBeVisible = familyVisibility[familyName];
-                console.log(`Setting ${familyName} marker to ${shouldBeVisible ? 'visible' : 'hidden'}`);
-                marker.setVisible(shouldBeVisible);
+        function updateMarkersVisibility(showAll = null) {
+            const familyButtonStates = {};
+            if (showAll === null) {
+                document.querySelectorAll('.family-toggle-button').forEach(button => {
+                    familyButtonStates[button.dataset.family] = button.classList.contains('active');
+                });
+            }
+
+            markers.forEach(markerData => {
+                let isVisible;
+                if (showAll === true) {
+                    isVisible = true;
+                } else if (showAll === false) {
+                    isVisible = false;
+                } else {
+                    isVisible = familyButtonStates[markerData.familyName];
+                }
+                markerData.marker.setVisible(isVisible);
             });
         }
 
         function createMarkers() {
+            markers = [];
             familyAddresses.forEach(location => {
                 const geocoder = new google.maps.Geocoder();
-                
                 geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
                     if (status === 'OK') {
                         const marker = new google.maps.Marker({
@@ -477,9 +683,7 @@
                                 strokeWeight: 2,
                                 strokeColor: '#ffffff',
                                 scale: 10
-                            },
-                            // Always start visible
-                            visible: true
+                            }
                         });
 
                         const mapsUrl = location.address.startsWith('http') ? location.address : 
@@ -497,10 +701,10 @@
                                         : ''}
                                     ${location.images ? 
                                         location.images.map(img => 
-                                            `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                            `<img src="${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
                                         ).join('') 
                                         : location.image ? 
-                                            `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                            `<img src="${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                             : ''}
                                     <a href="${mapsUrl}" class="action-button" target="_blank">
                                         See Current Day View on Google Maps
@@ -516,19 +720,19 @@
                             infoWindow.open(map, marker);
                             currentInfoWindow = infoWindow;
                         });
-
-                        markers.push({
-                            marker: marker,
-                            familyName: location.family
-                        });
                         
-                        // Log marker creation
-                        console.log(`Created marker for ${location.family}: ${location.name}`);
+                        markers.push({ marker: marker, familyName: location.family });
+                        
+                    } else {
+                        console.error('Geocode was not successful for the following reason: ' + status + ' for address: ' + (location.displayAddress || location.address));
                     }
                 });
             });
+            
+            setTimeout(() => {
+                 updateMarkersVisibility(true);
+            }, 1000);
 
-            // Close info window when clicking elsewhere on the map
             map.addListener('click', () => {
                 if (currentInfoWindow) {
                     currentInfoWindow.close();
@@ -536,8 +740,21 @@
             });
         }
 
-        // Initialize the map when the page loads
-        window.addEventListener('load', initMap);
+        // Dynamically load the Google Maps API
+        // This assumes GOOGLE_MAPS_API_KEY is defined in config.js
+        (function() {
+            if (typeof GOOGLE_MAPS_API_KEY === 'undefined') {
+                console.error("Google Maps API Key not found. Make sure config.js is loaded and contains GOOGLE_MAPS_API_KEY.");
+                alert("Error: Google Maps API Key is missing. The map cannot be loaded.");
+                return;
+            }
+            var script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=marker&v=beta`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        })();
+
     </script>
 </body>
 </html>
