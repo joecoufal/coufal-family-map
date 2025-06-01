@@ -27,31 +27,6 @@
             text-align: center;
         }
 
-        .controls {
-            padding: 1rem;
-            background: #f5f5f5;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .decade-filter {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            background-color: #34495e;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-size: 14px;
-        }
-
-        .decade-filter.active {
-            background-color: #2980b9;
-        }
-
         #map {
             flex-grow: 1;
             width: 100%;
@@ -121,14 +96,6 @@
             background-color: #34495e;
         }
 
-        .action-button.maps {
-            background-color: #4285f4;
-        }
-
-        .action-button.maps:hover {
-            background-color: #2b7de9;
-        }
-
         .popup-content {
             padding: 5px;
             max-width: 250px;
@@ -146,15 +113,6 @@
         }
 
         @media (max-width: 600px) {
-            .controls {
-                padding: 8px;
-            }
-
-            .decade-filter {
-                padding: 6px 12px;
-                font-size: 12px;
-            }
-
             .legend {
                 bottom: 10px;
                 right: 10px;
@@ -182,15 +140,6 @@
         <h1>Coufal Family Historical Addresses</h1>
     </div>
     
-    <div class="controls">
-        <button class="decade-filter" data-decade="all">All Years</button>
-        <button class="decade-filter" data-decade="1910">1910s</button>
-        <button class="decade-filter" data-decade="1920">1920s</button>
-        <button class="decade-filter" data-decade="1930">1930s</button>
-        <button class="decade-filter" data-decade="1940">1940s</button>
-        <button class="decade-filter" data-decade="1950">1950s</button>
-    </div>
-
     <div id="map"></div>
 
     <script>
@@ -426,15 +375,6 @@
             // Create markers for all addresses
             createMarkers();
 
-            // Add click handlers for decade filters
-            document.querySelectorAll('.decade-filter').forEach(button => {
-                button.addEventListener('click', () => {
-                    document.querySelectorAll('.decade-filter').forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    filterMarkersByDecade(button.dataset.decade);
-                });
-            });
-
             // Add legend
             const legend = document.createElement('div');
             legend.className = 'legend';
@@ -454,13 +394,13 @@
             Object.keys(familyColors).forEach(family => {
                 const toggle = document.getElementById(`${family}Toggle`);
                 toggle.addEventListener('change', () => {
-                    const currentDecade = document.querySelector('.decade-filter.active').dataset.decade;
-                    filterMarkersByDecade(currentDecade);
+                    markers.forEach(({ marker, familyName }) => {
+                        if (familyName === family) {
+                            marker.setVisible(toggle.checked);
+                        }
+                    });
                 });
             });
-
-            // Activate "All Years" by default
-            document.querySelector('[data-decade="all"]').classList.add('active');
         }
 
         function createMarkers() {
@@ -516,7 +456,6 @@
 
                         markers.push({
                             marker: marker,
-                            year: location.year,
                             familyName: location.family
                         });
                     }
@@ -528,14 +467,6 @@
                 if (currentInfoWindow) {
                     currentInfoWindow.close();
                 }
-            });
-        }
-
-        function filterMarkersByDecade(decade) {
-            markers.forEach(({ marker, year, familyName }) => {
-                const familyToggle = document.getElementById(`${familyName}Toggle`);
-                const matchesDecade = decade === 'all' || Math.floor(year/10) * 10 === parseInt(decade);
-                marker.setVisible(matchesDecade && familyToggle.checked);
             });
         }
 
