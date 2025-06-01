@@ -403,22 +403,31 @@
             `;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 
-            // Add click handlers for family toggles
-            Object.keys(familyColors).forEach(family => {
-                const toggle = document.getElementById(`${family}Toggle`);
-                const legendItem = toggle.parentElement;
-                
-                // Add click handler for the entire legend item
-                legendItem.addEventListener('click', (e) => {
-                    if (e.target !== toggle) { // If clicking the label/color, toggle the checkbox
-                        toggle.checked = !toggle.checked;
+            // Wait for legend to be added to DOM before adding event listeners
+            setTimeout(() => {
+                // Add click handlers for family toggles
+                Object.keys(familyColors).forEach(family => {
+                    const toggle = document.getElementById(`${family}Toggle`);
+                    if (!toggle) return; // Skip if element not found
+                    
+                    const legendItem = toggle.closest('.legend-item');
+                    if (!legendItem) return; // Skip if parent not found
+                    
+                    // Add click handler for the entire legend item
+                    legendItem.addEventListener('click', (e) => {
+                        if (e.target !== toggle) { // If clicking the label/color, toggle the checkbox
+                            toggle.checked = !toggle.checked;
+                            updateMarkers();
+                        }
+                    });
+                    
+                    // Add change handler for the checkbox
+                    toggle.addEventListener('change', () => {
+                        console.log(`${family} checkbox changed to ${toggle.checked}`);
                         updateMarkers();
-                    }
+                    });
                 });
-                
-                // Add change handler for the checkbox
-                toggle.addEventListener('change', updateMarkers);
-            });
+            }, 100); // Small delay to ensure DOM is updated
         }
 
         function updateMarkers() {
@@ -495,6 +504,9 @@
                             marker: marker,
                             familyName: location.family
                         });
+                        
+                        // Log marker creation
+                        console.log(`Created marker for ${location.family}: ${location.name}`);
                     }
                 });
             });
