@@ -443,7 +443,7 @@
                             `
                         });
 
-                        marker.addListener('click', () => {
+                        marker.addEventListener('gmp-click', () => {
                             if (currentInfoWindow) {
                                 currentInfoWindow.close();
                             }
@@ -574,21 +574,14 @@
                 center: { lat: 40.7128, lng: -74.0060 },
                 zoom: 11,
                 gestureHandling: 'greedy',
-                mapId: GOOGLE_MAPS_MAP_ID,
-                styles: [
-                    {
-                        featureType: "poi",
-                        elementType: "labels",
-                        stylers: [{ visibility: "off" }]
-                    }
-                ]
+                mapId: GOOGLE_MAPS_MAP_ID
             });
 
             createLegend();
             createMarkers();
         }
 
-        // Dynamically load the Google Maps API
+        // Load the Google Maps API
         (function() {
             if (typeof GOOGLE_MAPS_API_KEY === 'undefined') {
                 console.error("Google Maps API Key not found. Make sure config.js is loaded and contains GOOGLE_MAPS_API_KEY.");
@@ -600,10 +593,19 @@
                 alert("Error: Google Maps Map ID is missing. The map cannot be loaded.");
                 return;
             }
+
+            // Create the script element
             const script = document.createElement('script');
             script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=marker&v=beta`;
             script.async = true;
-            script.defer = true;
+            
+            // Add error handling
+            script.onerror = function() {
+                console.error('Failed to load Google Maps JavaScript API');
+                alert('Failed to load Google Maps. Please check your internet connection and try again.');
+            };
+
+            // Add the script to the page
             document.head.appendChild(script);
         })();
     </script>
