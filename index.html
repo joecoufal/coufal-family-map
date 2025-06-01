@@ -470,10 +470,10 @@
                                     <p>${location.details}</p>
                                     ${location.images ? 
                                         location.images.map(img => 
-                                            `<img src="/Users/joecoufal/Desktop/coufal_family_map/images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                            `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
                                         ).join('') 
                                         : location.image ? 
-                                            `<img src="/Users/joecoufal/Desktop/coufal_family_map/images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                            `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                             : ''}
                                     <a href="${mapsUrl}" class="action-button" target="_blank">
                                         Open in Google Maps
