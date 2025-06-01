@@ -39,7 +39,7 @@
             bottom: 30px;
             right: 10px;
             background: white;
-            padding: 10px;
+            padding: 15px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             z-index: 1000;
@@ -48,66 +48,27 @@
         }
 
         .legend h3 {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 14px;
             text-align: center;
         }
 
-        .family-toggle-button {
-            border: none;
-            margin: 3px 2px;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: calc(100% - 4px);
-            font-size: 12px;
-            transition: all 0.3s ease;
+        .legend-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            color: white;
-        }
-        
-        .family-toggle-button.active {
-            opacity: 1;
+            margin: 5px 0;
         }
 
-        .family-toggle-button:not(.active) {
-            opacity: 0.7;
-        }
-
-        .family-toggle-button .toggle-icon {
-            font-size: 16px;
-            margin-left: 8px;
-        }
-
-        .legend .control-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            gap: 8px;
-        }
-
-        .legend .action-button {
-            background-color: #5e6c7a;
-            color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-size: 12px;
-            text-align: center;
-            flex: 1;
-        }
-        
-        .legend .action-button:hover {
-            background-color: #4a545e;
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
         }
 
         .popup-content {
-            padding: 5px;
-            max-width: 250px;
+            padding: 10px;
+            max-width: 300px;
         }
 
         .popup-content h3 {
@@ -145,16 +106,8 @@
             .legend {
                 bottom: 10px;
                 right: 10px;
-                padding: 8px;
+                padding: 10px;
                 max-width: 140px;
-            }
-            .family-toggle-button {
-                font-size: 11px;
-                padding: 6px;
-            }
-            .legend .action-button {
-                font-size: 11px;
-                padding: 6px;
             }
             .popup-content {
                 max-width: 200px;
@@ -165,19 +118,6 @@
             .popup-content p {
                 font-size: 12px;
             }
-        }
-
-        .marker-pin {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .marker-pin:hover {
-            transform: scale(1.2);
         }
     </style>
 </head>
@@ -394,26 +334,51 @@
         };
 
         let map;
-        let markers = [];
         let currentInfoWindow = null;
 
-        async function createMarker(location, map) {
-            return new Promise((resolve, reject) => {
+        function createLegend() {
+            const legendDiv = document.createElement('div');
+            legendDiv.className = 'legend';
+            
+            let legendHTML = '<h3>Family Members</h3>';
+            Object.entries(familyColors).forEach(([family, color]) => {
+                legendHTML += `
+                    <div class="legend-item">
+                        <div class="color-dot" style="background-color: ${color}"></div>
+                        <span>${family}</span>
+                    </div>
+                `;
+            });
+
+            legendDiv.innerHTML = legendHTML;
+            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
+        }
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 40.7128, lng: -74.0060 },
+                zoom: 11,
+                gestureHandling: 'greedy'
+            });
+
+            createLegend();
+
+            familyAddresses.forEach(location => {
                 const geocoder = new google.maps.Geocoder();
-                
                 geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
                     if (status === 'OK') {
-                        // Create the marker element
-                        const markerDiv = document.createElement('div');
-                        markerDiv.className = 'marker-pin';
-                        markerDiv.style.backgroundColor = familyColors[location.family];
-
-                        // Create the advanced marker
-                        const marker = new google.maps.marker.AdvancedMarkerElement({
-                            map,
+                        const marker = new google.maps.Marker({
+                            map: map,
                             position: results[0].geometry.location,
                             title: location.name,
-                            content: markerDiv
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                fillColor: familyColors[location.family],
+                                fillOpacity: 0.9,
+                                strokeWeight: 2,
+                                strokeColor: '#ffffff',
+                                scale: 10
+                            }
                         });
 
                         const mapsUrl = location.address.startsWith('http') ? location.address : 
@@ -443,41 +408,16 @@
                             `
                         });
 
-                        marker.addEventListener('gmp-click', () => {
+                        marker.addListener('click', () => {
                             if (currentInfoWindow) {
                                 currentInfoWindow.close();
                             }
-                            infoWindow.open({
-                                map: map,
-                                anchor: marker
-                            });
+                            infoWindow.open(map, marker);
                             currentInfoWindow = infoWindow;
                         });
-
-                        resolve({ marker, familyName: location.family });
-                    } else {
-                        console.error('Geocode was not successful:', status, location);
-                        reject(new Error(`Geocoding failed for ${location.name}: ${status}`));
                     }
                 });
             });
-        }
-
-        async function createMarkers() {
-            markers = [];
-            const markerPromises = familyAddresses.map(location => createMarker(location, map));
-            
-            try {
-                const results = await Promise.allSettled(markerPromises);
-                results.forEach(result => {
-                    if (result.status === 'fulfilled') {
-                        markers.push(result.value);
-                    }
-                });
-                updateMarkersVisibility(true);
-            } catch (error) {
-                console.error('Error creating markers:', error);
-            }
 
             map.addListener('click', () => {
                 if (currentInfoWindow) {
@@ -486,128 +426,10 @@
             });
         }
 
-        function createLegend() {
-            const legendDiv = document.createElement('div');
-            legendDiv.className = 'legend';
-            
-            let legendHTML = '<h3>Family Locations</h3>';
-            
-            Object.keys(familyColors).forEach(family => {
-                legendHTML += `
-                    <button class="family-toggle-button active" data-family="${family}" 
-                            style="background-color: ${familyColors[family]};">
-                        <span>${family}</span>
-                        <span class="toggle-icon">✓</span>
-                    </button>`;
-            });
-
-            legendHTML += '<div class="control-buttons">';
-            legendHTML += '<button id="show-all-families" class="action-button">Show All</button>';
-            legendHTML += '<button id="hide-all-families" class="action-button">Hide All</button>';
-            legendHTML += '</div>';
-
-            legendDiv.innerHTML = legendHTML;
-            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
-
-            // Wait for the next frame to ensure elements are in the DOM
-            requestAnimationFrame(() => {
-                // Add click handlers for family toggle buttons
-                document.querySelectorAll('.family-toggle-button').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const family = button.dataset.family;
-                        const isActive = button.classList.toggle('active');
-                        const icon = button.querySelector('.toggle-icon');
-                        icon.textContent = isActive ? '✓' : '×';
-                        updateMarkersVisibility();
-                    });
-                });
-
-                // Add click handlers for control buttons
-                const showAllBtn = document.getElementById('show-all-families');
-                const hideAllBtn = document.getElementById('hide-all-families');
-
-                if (showAllBtn) {
-                    showAllBtn.addEventListener('click', () => {
-                        document.querySelectorAll('.family-toggle-button').forEach(button => {
-                            button.classList.add('active');
-                            button.querySelector('.toggle-icon').textContent = '✓';
-                        });
-                        updateMarkersVisibility(true);
-                    });
-                }
-
-                if (hideAllBtn) {
-                    hideAllBtn.addEventListener('click', () => {
-                        document.querySelectorAll('.family-toggle-button').forEach(button => {
-                            button.classList.remove('active');
-                            button.querySelector('.toggle-icon').textContent = '×';
-                        });
-                        updateMarkersVisibility(false);
-                    });
-                }
-            });
-        }
-
-        function updateMarkersVisibility(showAll = null) {
-            const familyButtonStates = {};
-            if (showAll === null) {
-                document.querySelectorAll('.family-toggle-button').forEach(button => {
-                    familyButtonStates[button.dataset.family] = button.classList.contains('active');
-                });
-            }
-
-            markers.forEach(markerData => {
-                const isVisible = showAll === true ? true : 
-                                showAll === false ? false : 
-                                familyButtonStates[markerData.familyName];
-                
-                if (isVisible) {
-                    markerData.marker.map = map;
-                } else {
-                    markerData.marker.map = null;
-                }
-            });
-        }
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 40.7128, lng: -74.0060 },
-                zoom: 11,
-                gestureHandling: 'greedy',
-                mapId: GOOGLE_MAPS_MAP_ID
-            });
-
-            createLegend();
-            createMarkers();
-        }
-
         // Load the Google Maps API
-        (function() {
-            if (typeof GOOGLE_MAPS_API_KEY === 'undefined') {
-                console.error("Google Maps API Key not found. Make sure config.js is loaded and contains GOOGLE_MAPS_API_KEY.");
-                alert("Error: Google Maps API Key is missing. The map cannot be loaded.");
-                return;
-            }
-            if (typeof GOOGLE_MAPS_MAP_ID === 'undefined') {
-                console.error("Google Maps Map ID not found. Make sure config.js is loaded and contains GOOGLE_MAPS_MAP_ID.");
-                alert("Error: Google Maps Map ID is missing. The map cannot be loaded.");
-                return;
-            }
-
-            // Create the script element
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=marker&v=beta`;
-            script.async = true;
-            
-            // Add error handling
-            script.onerror = function() {
-                console.error('Failed to load Google Maps JavaScript API');
-                alert('Failed to load Google Maps. Please check your internet connection and try again.');
-            };
-
-            // Add the script to the page
-            document.head.appendChild(script);
-        })();
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+        document.head.appendChild(script);
     </script>
 </body>
 </html>
