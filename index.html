@@ -369,6 +369,7 @@
         let map;
         let markers = [];
         let currentInfoWindow = null;
+        let familyVisibility = {};
 
         function initMap() {
             // Center map on New York City
@@ -385,9 +386,19 @@
                 ]
             });
 
+            // Initialize all families as visible
+            Object.keys(familyColors).forEach(family => {
+                familyVisibility[family] = true;
+            });
+
+            // Add legend
+            createLegend();
+            
             // Create markers for all addresses
             createMarkers();
+        }
 
+        function createLegend() {
             // Add legend
             const legend = document.createElement('div');
             legend.className = 'legend';
@@ -402,7 +413,7 @@
                 `).join('')}
             `;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-
+            
             // Wait for legend to be added to DOM before adding event listeners
             setTimeout(() => {
                 // Add click handlers for family toggles
@@ -423,6 +434,7 @@
                     legendItem.addEventListener('click', (e) => {
                         if (e.target !== toggle) { // If clicking the label/color, toggle the checkbox
                             toggle.checked = !toggle.checked;
+                            familyVisibility[family] = toggle.checked;
                             console.log(`${family} toggled to ${toggle.checked} by clicking legend item`);
                             updateMarkers();
                         }
@@ -430,37 +442,22 @@
                     
                     // Add change handler for the checkbox directly
                     toggle.addEventListener('change', () => {
+                        familyVisibility[family] = toggle.checked;
                         console.log(`${family} checkbox changed to ${toggle.checked}`);
                         updateMarkers();
                     });
                 });
-                
-                // Initial update to ensure correct state
-                updateMarkers();
-            }, 200); // Increased delay to ensure DOM is fully updated
+            }, 100);
         }
 
         function updateMarkers() {
             console.log('Updating markers...');
-            const visibleFamilies = Object.keys(familyColors).filter(family => {
-                const checkbox = document.getElementById(`${family}Toggle`);
-                if (!checkbox) {
-                    console.error(`Checkbox not found for family: ${family}`);
-                    return false;
-                }
-                const isChecked = checkbox.checked;
-                console.log(`${family}: ${isChecked ? 'visible' : 'hidden'}`);
-                return isChecked;
-            });
             
             markers.forEach(({ marker, familyName }) => {
-                const shouldBeVisible = visibleFamilies.includes(familyName);
+                const shouldBeVisible = familyVisibility[familyName];
                 console.log(`Setting ${familyName} marker to ${shouldBeVisible ? 'visible' : 'hidden'}`);
                 marker.setVisible(shouldBeVisible);
             });
-            
-            // Force map redraw
-            google.maps.event.trigger(map, 'resize');
         }
 
         function createMarkers() {
@@ -481,9 +478,8 @@
                                 strokeColor: '#ffffff',
                                 scale: 10
                             },
-                            // Set initial visibility based on checkbox state
-                            visible: document.getElementById(`${location.family}Toggle`) ? 
-                                     document.getElementById(`${location.family}Toggle`).checked : true
+                            // Always start visible
+                            visible: true
                         });
 
                         const mapsUrl = location.address.startsWith('http') ? location.address : 
