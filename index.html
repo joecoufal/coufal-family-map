@@ -190,7 +190,199 @@
 
     <script>
         const familyAddresses = [
-            // Your existing address data here
+            {
+                name: "Eli Krotman - Townsend Harris High School (1935)",
+                address: "https://maps.app.goo.gl/EPfWPdYHxf32pwth9",
+                displayAddress: "17 Lexington Avenue, New York, NY 10010",
+                year: 1935,
+                family: "Krotman",
+                details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
+                image: "townsend_harris_hs_eli_krotman.jpg",
+                link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
+            },
+            {
+                name: "Eli & Claire Krotman Home (1950)",
+                address: "2962 Decatur Avenue, Bronx, New York, NY",
+                year: 1950,
+                family: "Krotman",
+                details: "Eli (age 33) and Claire (age 25)",
+                images: ["2962_decatur_ave_bronx._1950_eli_33_claire_25..png", "2962_decatur.png", "2962_decatur_2.png"]
+            },
+            {
+                name: "Claire Reckler High School (1942)",
+                address: "500 E Fordham Road, Bronx, New York, NY",
+                year: 1942,
+                family: "Reckler",
+                details: "Claire Reckler attended Theodore Roosevelt High School",
+                image: "claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png"
+            },
+            {
+                name: "Harry Reckler Childhood Home (1910)",
+                address: "87 Clinton Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Reckler",
+                details: "Harry (Hersch) (age 13) lived here with his brother Sam (Salomon) (age 7), sister Rosa (age 16), and mother Chaje (age 42)",
+                image: "87_clinton_st_manhattan._1910_harry_reckler_age_13,_sam_7._rosa_16_mother_chaje_42_.png"
+            },
+            {
+                name: "Fannie Hermann Home (1910)",
+                address: "288 East 2nd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Krotman",
+                details: "Fannie (age 23)",
+                image: "288_e_2nd_st_manhattan_fannie_1910_age_23.png"
+            },
+            {
+                name: "Fannie Hermann Family Home (1905)",
+                address: "216 East 3rd Street, Manhattan, New York, NY",
+                year: 1905,
+                family: "Krotman",
+                details: "Fannie Hermann (age 17) lived here with her father Joseph (Romanian fruit vendor), brother Tony (decorator), brother Louis (clothing dealer), and sister Regina (millinery)",
+                image: "216_e_3rd_st_manhattan._1905_fannie_hermann_age_17._father_joseph_romanian_fruit_vendor._brother_tony_decorator_brother_louis_clothing_dealer_sister_regina_millinery.png"
+            },
+            {
+                name: "Walter Beasley Family Home (1910-1920)",
+                address: "406 East 79th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Walter Beasley (age 14-24) lived here with parents Robert (horse dealer) and Elizabeth from 1910-1920",
+                image: "406_e_79_1910-1920_walter_beasley_age_14-24._parents_robert_(horse_dealer)_and_elizabeth.png"
+            },
+            {
+                name: "Sebastian & Antoinette Coufal Home (1910)",
+                address: "110-112 East 3rd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Coufal",
+                details: "Sebastian worked as a Real Estate Agent",
+                image: "503_e_73rd_frank_childhood_home_1910s.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1920)",
+                address: "534 East 5th Street, Manhattan, New York, NY",
+                year: 1920,
+                family: "Coufal",
+                details: "Frank worked as a plumber",
+                image: "534_East_5_Street_frank_anna.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1930)",
+                address: "87-14 87th Street, Queens, New York, NY",
+                year: 1930,
+                family: "Coufal",
+                details: "Frank worked as a plumber in the building industry",
+                image: "87-14_87th_St_queens_coufal_1940.png"
+            },
+            {
+                name: "Walter & Emma Beasley Family Home (1930)",
+                address: "115-57 217 Street, Queens, New York, NY",
+                year: 1930,
+                family: "Beasley",
+                details: "Walter & Emma's home where their daughter Edna grew up",
+                image: "115_57_217_Street.png"
+            },
+            {
+                name: "Robert & Elizabeth Beasley Home (1910)",
+                address: "214 East 10th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Robert worked as a Horse Dealer",
+                image: "214_East_10_Street_beasley_horse_dealer_not_house.png"
+            },
+            {
+                name: "Joseph & Fannie Krotman Home (1920)",
+                address: "1524 Washington Avenue, Bronx, New York, NY",
+                year: 1920,
+                family: "Krotman",
+                details: "Joseph (age 32), Fannie (age 31), and Eli (age 3). Joseph worked as a furniture salesman",
+                image: "1524_washington_ave_1920_joseph_krotman_32,_fannie_krotman_31,_eli_3.png"
+            },
+            {
+                name: "Joseph & Rose Krotman Home (1930)",
+                address: "3604 Olinville Avenue, Bronx, New York, NY",
+                year: 1930,
+                family: "Krotman",
+                details: "Joseph (age 40), Rose (age 32), and Eli (age 12)",
+                image: "3604_Olinville_Avenue_1930_joseph_krotman_age_40,_rose_32,_eli_12.png"
+            },
+            {
+                name: "Joseph & Rose Krotman Home (1940)",
+                address: "1851 Andrews Avenue, Bronx, New York, NY",
+                year: 1940,
+                family: "Krotman",
+                details: "Joseph worked as a furniture salesman"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1930)",
+                address: "7420 Fort Hamilton Parkway, Brooklyn, New York, NY",
+                year: 1930,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location",
+                image: "recklerbrooklynbakery_ft_hamilton.png"
+            },
+            {
+                name: "Harry & Anna Reckler Home (1940)",
+                address: "2145 Garden Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry and Anna's residence. Claire lived here when she was 15 years old",
+                image: "2145_garden_st.png"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1940s)",
+                address: "765 East 182 Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location in the 1940s",
+                image: "765_East_182_Street_reckler_bakery_1940s.png"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1950)",
+                address: "144-12 Hissons Boulevard, Queens, New York, NY",
+                year: 1950,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location",
+                image: "144-12_hissons_blvd_queens_reckler_bakery.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1950)",
+                address: "1 South Gate, Massapequa, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter and Emma Beasley's home",
+                image: "1_s_gate_massapequa_new_york._walter_and_emma_beasley.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1940)",
+                address: "Queens, New York, NY",
+                year: 1940,
+                family: "Beasley",
+                details: "Walter Beasley's residence",
+                image: "walter_beasley_queens.png"
+            },
+            {
+                name: "Edward & Annie McKee Home (1910)",
+                address: "335 East 93 Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "McKee",
+                details: "Edward McKee's house, where Emma Beasley lived at age 20",
+                image: "335_East_93_Street_emma_beasley_20_yrs_old._edward_mckee_father_house.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1950)",
+                address: "88-14 168th Street, Queens, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter worked as a supervisor at the Telephone Company",
+                image: "88_14_168_Street.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1950)",
+                address: "219-27 114 Avenue, Queens, New York, NY",
+                year: 1950,
+                family: "Coufal",
+                details: "Lived here with their sons Donald (22) and Frank Jr. (25)",
+                image: "coufal1940.png"
+            }
         ];
 
         const familyColors = {
@@ -255,7 +447,10 @@
                             if (currentInfoWindow) {
                                 currentInfoWindow.close();
                             }
-                            infoWindow.open(map, marker);
+                            infoWindow.open({
+                                map: map,
+                                anchor: marker
+                            });
                             currentInfoWindow = infoWindow;
                         });
 
@@ -362,15 +557,15 @@
             }
 
             markers.forEach(markerData => {
-                let isVisible;
-                if (showAll === true) {
-                    isVisible = true;
-                } else if (showAll === false) {
-                    isVisible = false;
+                const isVisible = showAll === true ? true : 
+                                showAll === false ? false : 
+                                familyButtonStates[markerData.familyName];
+                
+                if (isVisible) {
+                    markerData.marker.map = map;
                 } else {
-                    isVisible = familyButtonStates[markerData.familyName];
+                    markerData.marker.map = null;
                 }
-                markerData.marker.map = isVisible ? map : null;
             });
         }
 
