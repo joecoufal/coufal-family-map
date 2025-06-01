@@ -408,41 +408,59 @@
                 // Add click handlers for family toggles
                 Object.keys(familyColors).forEach(family => {
                     const toggle = document.getElementById(`${family}Toggle`);
-                    if (!toggle) return; // Skip if element not found
+                    if (!toggle) {
+                        console.error(`Toggle element not found for family: ${family}`);
+                        return; // Skip if element not found
+                    }
                     
                     const legendItem = toggle.closest('.legend-item');
-                    if (!legendItem) return; // Skip if parent not found
+                    if (!legendItem) {
+                        console.error(`Legend item not found for family: ${family}`);
+                        return; // Skip if parent not found
+                    }
                     
                     // Add click handler for the entire legend item
                     legendItem.addEventListener('click', (e) => {
                         if (e.target !== toggle) { // If clicking the label/color, toggle the checkbox
                             toggle.checked = !toggle.checked;
+                            console.log(`${family} toggled to ${toggle.checked} by clicking legend item`);
                             updateMarkers();
                         }
                     });
                     
-                    // Add change handler for the checkbox
+                    // Add change handler for the checkbox directly
                     toggle.addEventListener('change', () => {
                         console.log(`${family} checkbox changed to ${toggle.checked}`);
                         updateMarkers();
                     });
                 });
-            }, 100); // Small delay to ensure DOM is updated
+                
+                // Initial update to ensure correct state
+                updateMarkers();
+            }, 200); // Increased delay to ensure DOM is fully updated
         }
 
         function updateMarkers() {
             console.log('Updating markers...');
             const visibleFamilies = Object.keys(familyColors).filter(family => {
-                const isChecked = document.getElementById(`${family}Toggle`).checked;
-                console.log(`${family}: ${isChecked}`);
+                const checkbox = document.getElementById(`${family}Toggle`);
+                if (!checkbox) {
+                    console.error(`Checkbox not found for family: ${family}`);
+                    return false;
+                }
+                const isChecked = checkbox.checked;
+                console.log(`${family}: ${isChecked ? 'visible' : 'hidden'}`);
                 return isChecked;
             });
             
             markers.forEach(({ marker, familyName }) => {
                 const shouldBeVisible = visibleFamilies.includes(familyName);
-                console.log(`Setting ${familyName} marker to ${shouldBeVisible}`);
+                console.log(`Setting ${familyName} marker to ${shouldBeVisible ? 'visible' : 'hidden'}`);
                 marker.setVisible(shouldBeVisible);
             });
+            
+            // Force map redraw
+            google.maps.event.trigger(map, 'resize');
         }
 
         function createMarkers() {
@@ -462,7 +480,10 @@
                                 strokeWeight: 2,
                                 strokeColor: '#ffffff',
                                 scale: 10
-                            }
+                            },
+                            // Set initial visibility based on checkbox state
+                            visible: document.getElementById(`${location.family}Toggle`) ? 
+                                     document.getElementById(`${location.family}Toggle`).checked : true
                         });
 
                         const mapsUrl = location.address.startsWith('http') ? location.address : 
