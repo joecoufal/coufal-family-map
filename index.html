@@ -150,7 +150,8 @@
         const familyAddresses = [
             {
                 name: "Eli Krotman - Townsend Harris High School",
-                address: "17 Lexington Avenue, New York, NY 10010",
+                address: "https://maps.app.goo.gl/EPfWPdYHxf32pwth9",
+                displayAddress: "17 Lexington Avenue, New York, NY 10010",
                 year: 1935,
                 family: "Krotman",
                 details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
@@ -421,12 +422,17 @@
         }
 
         function updateMarkers() {
-            const visibleFamilies = Object.keys(familyColors).filter(family => 
-                document.getElementById(`${family}Toggle`).checked
-            );
+            console.log('Updating markers...');
+            const visibleFamilies = Object.keys(familyColors).filter(family => {
+                const isChecked = document.getElementById(`${family}Toggle`).checked;
+                console.log(`${family}: ${isChecked}`);
+                return isChecked;
+            });
             
             markers.forEach(({ marker, familyName }) => {
-                marker.setVisible(visibleFamilies.includes(familyName));
+                const shouldBeVisible = visibleFamilies.includes(familyName);
+                console.log(`Setting ${familyName} marker to ${shouldBeVisible}`);
+                marker.setVisible(shouldBeVisible);
             });
         }
 
@@ -434,7 +440,7 @@
             familyAddresses.forEach(location => {
                 const geocoder = new google.maps.Geocoder();
                 
-                geocoder.geocode({ address: location.address }, (results, status) => {
+                geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
                     if (status === 'OK') {
                         const marker = new google.maps.Marker({
                             map: map,
@@ -450,14 +456,15 @@
                             }
                         });
 
-                        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
+                        const mapsUrl = location.address.startsWith('http') ? location.address : 
+                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
                         
                         const infoWindow = new google.maps.InfoWindow({
                             content: `
                                 <div class="popup-content">
                                     <h3>${location.name}</h3>
                                     <p><strong>Year:</strong> ${location.year}</p>
-                                    <p><strong>Address:</strong> ${location.address}</p>
+                                    <p><strong>Address:</strong> ${location.displayAddress || location.address}</p>
                                     <p>${location.details}</p>
                                     ${location.link ? 
                                         `<p><a href="${location.link}" target="_blank" style="color: #2980b9;">Read more about this location</a></p>`
