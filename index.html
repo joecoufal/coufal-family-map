@@ -86,51 +86,93 @@
         }
 
         .popup-content {
-            padding: 15px;
-            max-width: 300px;
+            padding: 20px;
+            max-width: 320px;
             font-family: 'Georgia', serif;
-            color: #523735;
+            color: #2c1810;
+            background: #f9f6f0;
+            border: 1px solid #d4c5b9;
+            box-shadow: 0 3px 8px rgba(44, 24, 16, 0.15);
+            border-radius: 8px;
         }
 
         .popup-content h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-            color: #523735;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2c1810;
             font-weight: normal;
-            border-bottom: 1px solid #c9b2a6;
-            padding-bottom: 5px;
+            text-align: center;
+            border-bottom: 2px solid #d4c5b9;
+            padding-bottom: 8px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-variant: small-caps;
         }
 
         .popup-content p {
             font-size: 14px;
-            margin: 8px 0;
-            line-height: 1.4;
+            margin: 12px 0;
+            line-height: 1.6;
+            color: #4a3427;
+        }
+
+        .popup-content p strong {
+            color: #2c1810;
+            font-variant: small-caps;
+            letter-spacing: 0.5px;
         }
 
         .popup-content img {
-            border: 3px solid #f5f1e6;
-            box-shadow: 0 2px 4px rgba(82, 55, 53, 0.2);
+            border: 4px solid #fff;
+            box-shadow: 0 2px 6px rgba(44, 24, 16, 0.2);
+            margin: 15px -5px;
+            width: calc(100% + 10px);
+            max-width: calc(100% + 10px);
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .popup-content img:hover {
+            transform: scale(1.02);
+        }
+
+        .popup-content a {
+            color: #6b4947;
+            text-decoration: none;
+            border-bottom: 1px dotted #6b4947;
+            transition: all 0.2s ease;
+        }
+
+        .popup-content a:hover {
+            color: #2c1810;
+            border-bottom-color: #2c1810;
         }
 
         .popup-content .action-button {
-            background-color: #523735;
-            color: #f5f1e6;
+            background-color: #2c1810;
+            color: #f9f6f0;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 20px;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 12px;
-            transition: background-color 0.2s;
+            margin-top: 15px;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: block;
             font-size: 14px;
             text-align: center;
             width: 100%;
             font-family: 'Georgia', serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-variant: small-caps;
+            box-shadow: 0 2px 4px rgba(44, 24, 16, 0.2);
         }
 
         .popup-content .action-button:hover {
-            background-color: #6b4947;
+            background-color: #4a3427;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(44, 24, 16, 0.3);
         }
 
         @media (max-width: 600px) {
@@ -373,7 +415,7 @@
                         url: "https://www.loc.gov/item/2005689085/"
                     }
                 ],
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Eldridge_Street_Synagogue_2019.jpg/1280px-Eldridge_Street_Synagogue_2019.jpg"
+                images: ["historical/lower_east_side_1910.jpg", "historical/essex_delancey_1910.jpg"]
             },
             {
                 name: "Irish Yorkville (1910-1920)",
@@ -387,7 +429,7 @@
                         url: "https://www.6sqft.com/yorkville-history-upper-east-side-german-hungarian-czech/"
                     }
                 ],
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/86th_Street_IRT_station_entrance.jpg/1280px-86th_Street_IRT_station_entrance.jpg"
+                images: ["historical/yorkville_1910.jpg"]
             },
             {
                 name: "East Village Czech Community (1910)",
@@ -405,7 +447,7 @@
                         url: "https://www.bohemianbenevolent.org/news/czech-new-york-for-the-independence-of-czechoslovakia"
                     }
                 ],
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Bohemian_National_Hall_001.JPG/1280px-Bohemian_National_Hall_001.JPG"
+                images: ["historical/bohemian_hall_1910.jpg"]
             },
             {
                 name: "Bronx Jewish Migration (1920-1940)",
@@ -423,7 +465,7 @@
                         url: "https://thebronxjewish.org/neighborhoods/the-grand-concourse/"
                     }
                 ],
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Loews_Paradise_Theater_Bronx_NYC.jpg/1280px-Loews_Paradise_Theater_Bronx_NYC.jpg"
+                images: ["historical/grand_concourse_1930.jpg"]
             },
             {
                 name: "Queens Migration (1940-1950)",
@@ -441,7 +483,7 @@
                         url: "https://queensmodern.com/qmneighborhoods/jamaica/"
                     }
                 ],
-                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Jamaica_Avenue_Queens.jpg/1280px-Jamaica_Avenue_Queens.jpg"
+                images: ["historical/jamaica_ave_1950.jpg"]
             }
         ];
 
