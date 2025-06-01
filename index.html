@@ -52,17 +52,20 @@
             align-items: center;
             margin: 5px 0;
             cursor: pointer;
-            padding: 2px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
         }
 
         .legend-item:hover {
-            background-color: rgba(0,0,0,0.05);
-            border-radius: 4px;
+            background-color: rgba(0,0,0,0.1);
         }
 
         .legend-item input[type="checkbox"] {
             margin-right: 8px;
             cursor: pointer;
+            width: 16px;
+            height: 16px;
         }
 
         .legend-color {
@@ -402,13 +405,28 @@
             // Add click handlers for family toggles
             Object.keys(familyColors).forEach(family => {
                 const toggle = document.getElementById(`${family}Toggle`);
-                toggle.addEventListener('change', () => {
-                    markers.forEach(({ marker, familyName }) => {
-                        if (familyName === family) {
-                            marker.setVisible(toggle.checked);
-                        }
-                    });
+                const legendItem = toggle.parentElement;
+                
+                // Add click handler for the entire legend item
+                legendItem.addEventListener('click', (e) => {
+                    if (e.target !== toggle) { // If clicking the label/color, toggle the checkbox
+                        toggle.checked = !toggle.checked;
+                        updateMarkers();
+                    }
                 });
+                
+                // Add change handler for the checkbox
+                toggle.addEventListener('change', updateMarkers);
+            });
+        }
+
+        function updateMarkers() {
+            const visibleFamilies = Object.keys(familyColors).filter(family => 
+                document.getElementById(`${family}Toggle`).checked
+            );
+            
+            markers.forEach(({ marker, familyName }) => {
+                marker.setVisible(visibleFamilies.includes(familyName));
             });
         }
 
