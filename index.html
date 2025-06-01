@@ -51,7 +51,7 @@
             box-shadow: 0 2px 8px rgba(82, 55, 53, 0.2);
             z-index: 1000;
             font-size: 12px;
-            max-width: 180px;
+            max-width: 220px;
             border: 1px solid #c9b2a6;
             font-family: 'Georgia', serif;
         }
@@ -64,6 +64,10 @@
             font-weight: normal;
             border-bottom: 1px solid #c9b2a6;
             padding-bottom: 5px;
+        }
+
+        .legend-section {
+            margin-bottom: 15px;
         }
 
         .legend-item {
@@ -134,7 +138,7 @@
                 bottom: 10px;
                 right: 10px;
                 padding: 10px;
-                max-width: 140px;
+                max-width: 160px;
             }
             .popup-content {
                 max-width: 200px;
@@ -352,6 +356,44 @@
             }
         ];
 
+        const historicalContext = [
+            {
+                name: "Lower East Side Jewish Community (1900-1910)",
+                address: "Essex Street and Delancey Street, Manhattan, New York, NY",
+                year: 1910,
+                type: "context",
+                details: "The Lower East Side was the heart of Jewish immigrant life in New York. Home to the largest Jewish community in the world at the time, with over 500,000 Jewish residents. The neighborhood was filled with kosher butcher shops, synagogues, Yiddish theaters, and pushcart vendors. Many Jewish immigrants, like the Reckler and Krotman families, started their American journey here."
+            },
+            {
+                name: "Irish Yorkville (1910-1920)",
+                address: "East 86th Street and Second Avenue, Manhattan, New York, NY",
+                year: 1910,
+                type: "context",
+                details: "Yorkville was a predominantly Irish and German neighborhood in the early 1900s. The area around East 86th Street was known as 'Irish Yorkville,' where many Irish immigrants, including the McKee and Beasley families, established their homes. The neighborhood was known for its strong sense of community, numerous Catholic churches, and Irish social clubs."
+            },
+            {
+                name: "East Village Czech Community (1910)",
+                address: "First Avenue and East 5th Street, Manhattan, New York, NY",
+                year: 1910,
+                type: "context",
+                details: "The East Village, particularly around First Avenue, was home to a significant Czech and Slovak community in the early 1900s. Known as 'Little Bohemia,' the area featured Czech restaurants, social clubs, and the Jan Hus Presbyterian Church. The Coufal family, like many Czech immigrants, found community in this neighborhood."
+            },
+            {
+                name: "Bronx Jewish Migration (1920-1940)",
+                address: "Grand Concourse and Fordham Road, Bronx, New York, NY",
+                year: 1930,
+                type: "context",
+                details: "During the 1920s and 1930s, many Jewish families moved from the Lower East Side to the Bronx, particularly along the Grand Concourse. This area became known as the 'Jewish Boulevard,' with beautiful Art Deco apartments, synagogues, and Jewish-owned businesses. The Krotman and Reckler families were part of this significant demographic shift."
+            },
+            {
+                name: "Queens Migration (1940-1950)",
+                address: "Jamaica Avenue and 168th Street, Queens, New York, NY",
+                year: 1950,
+                type: "context",
+                details: "The post-WWII period saw many families moving to Queens, representing the American dream of homeownership and suburban life. Areas like Jamaica and Woodhaven became popular destinations for upwardly mobile families, including the Beasley and Coufal families, who moved from Manhattan to establish new homes in these developing neighborhoods."
+            }
+        ];
+
         const familyColors = {
             'Coufal': '#e74c3c',
             'Beasley': '#3498db',
@@ -367,7 +409,7 @@
             const legendDiv = document.createElement('div');
             legendDiv.className = 'legend';
             
-            let legendHTML = '<h3>Family Members</h3>';
+            let legendHTML = '<div class="legend-section"><h3>Family Members</h3>';
             Object.entries(familyColors).forEach(([family, color]) => {
                 legendHTML += `
                     <div class="legend-item">
@@ -376,9 +418,46 @@
                     </div>
                 `;
             });
+            
+            legendHTML += '</div><div class="legend-section"><h3>Historical Context</h3>';
+            legendHTML += `
+                <div class="legend-item">
+                    <div class="color-dot" style="background-color: #808080"></div>
+                    <span>Neighborhood History</span>
+                </div>
+            `;
+            legendHTML += '</div>';
 
             legendDiv.innerHTML = legendHTML;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
+        }
+
+        function createMarker(position, title, color, content) {
+            const marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                title: title,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: color,
+                    fillOpacity: 0.9,
+                    strokeWeight: 2,
+                    strokeColor: '#ffffff',
+                    scale: 10
+                }
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: content
+            });
+
+            marker.addListener('click', () => {
+                if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                }
+                infoWindow.open(map, marker);
+                currentInfoWindow = infoWindow;
+            });
         }
 
         function initMap() {
@@ -607,58 +686,65 @@
 
             createLegend();
 
+            // Add family address markers
             familyAddresses.forEach(location => {
                 const geocoder = new google.maps.Geocoder();
                 geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
                     if (status === 'OK') {
-                        const marker = new google.maps.Marker({
-                            map: map,
-                            position: results[0].geometry.location,
-                            title: location.name,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                fillColor: familyColors[location.family],
-                                fillOpacity: 0.9,
-                                strokeWeight: 2,
-                                strokeColor: '#ffffff',
-                                scale: 10
-                            }
-                        });
-
                         const mapsUrl = location.address.startsWith('http') ? location.address : 
                             `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
                         
-                        const infoWindow = new google.maps.InfoWindow({
-                            content: `
-                                <div class="popup-content">
-                                    <h3>${location.name}</h3>
-                                    <p><strong>Year:</strong> ${location.year}</p>
-                                    <p><strong>Address:</strong> ${location.displayAddress || location.address}</p>
-                                    <p>${location.details}</p>
-                                    ${location.link ? 
-                                        `<p><a href="${location.link}" target="_blank" style="color: #2980b9;">Read more about this location</a></p>`
+                        const content = `
+                            <div class="popup-content">
+                                <h3>${location.name}</h3>
+                                <p><strong>Year:</strong> ${location.year}</p>
+                                <p><strong>Address:</strong> ${location.displayAddress || location.address}</p>
+                                <p>${location.details}</p>
+                                ${location.link ? 
+                                    `<p><a href="${location.link}" target="_blank" style="color: #2980b9;">Read more about this location</a></p>`
+                                    : ''}
+                                ${location.images ? 
+                                    location.images.map(img => 
+                                        `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                    ).join('') 
+                                    : location.image ? 
+                                        `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                         : ''}
-                                    ${location.images ? 
-                                        location.images.map(img => 
-                                            `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
-                                        ).join('') 
-                                        : location.image ? 
-                                            `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
-                                            : ''}
-                                    <a href="${mapsUrl}" class="action-button" target="_blank">
-                                        See Current Day View on Google Maps
-                                    </a>
-                                </div>
-                            `
-                        });
+                                <a href="${mapsUrl}" class="action-button" target="_blank">
+                                    See Current Day View on Google Maps
+                                </a>
+                            </div>
+                        `;
 
-                        marker.addListener('click', () => {
-                            if (currentInfoWindow) {
-                                currentInfoWindow.close();
-                            }
-                            infoWindow.open(map, marker);
-                            currentInfoWindow = infoWindow;
-                        });
+                        createMarker(
+                            results[0].geometry.location,
+                            location.name,
+                            familyColors[location.family],
+                            content
+                        );
+                    }
+                });
+            });
+
+            // Add historical context markers
+            historicalContext.forEach(context => {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: context.address }, (results, status) => {
+                    if (status === 'OK') {
+                        const content = `
+                            <div class="popup-content">
+                                <h3>${context.name}</h3>
+                                <p><strong>Period:</strong> ${context.year}</p>
+                                <p>${context.details}</p>
+                            </div>
+                        `;
+
+                        createMarker(
+                            results[0].geometry.location,
+                            context.name,
+                            '#808080', // Gray color for historical context
+                            content
+                        );
                     }
                 });
             });
