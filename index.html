@@ -454,11 +454,8 @@
             Object.keys(familyColors).forEach(family => {
                 const toggle = document.getElementById(`${family}Toggle`);
                 toggle.addEventListener('change', () => {
-                    markers.forEach(({ marker, familyName }) => {
-                        if (familyName === family) {
-                            marker.setVisible(toggle.checked);
-                        }
-                    });
+                    const currentDecade = document.querySelector('.decade-filter.active').dataset.decade;
+                    filterMarkersByDecade(currentDecade);
                 });
             });
 
@@ -535,12 +532,10 @@
         }
 
         function filterMarkersByDecade(decade) {
-            markers.forEach(({ marker, year }) => {
-                if (decade === 'all' || Math.floor(year/10) * 10 === parseInt(decade)) {
-                    marker.setVisible(true);
-                } else {
-                    marker.setVisible(false);
-                }
+            markers.forEach(({ marker, year, familyName }) => {
+                const familyToggle = document.getElementById(`${familyName}Toggle`);
+                const matchesDecade = decade === 'all' || Math.floor(year/10) * 10 === parseInt(decade);
+                marker.setVisible(matchesDecade && familyToggle.checked);
             });
         }
 
