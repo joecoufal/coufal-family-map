@@ -17,11 +17,11 @@ const familyAddresses = [
         image: "252_w_44th_st_manhattan._1905_anna_buckley_age_6._mother_mary_janitor.png"
     },
     {
-        name: "Sebastian & Antoinette Coufal Home (1910)",
+        name: "Sebastian & Nettie Coufal Home (1910)",
         address: "509 West 48th Street, New York, NY",
         year: 1910,
         family: "Coufal",
-        details: "Sebastian (age 33) and Antoinette (age 34) lived here with their children, including Frank (age 3). Sebastian worked as a cigar maker and Antoinette as a saleswoman at a department store.",
+        details: "Sebastian (age 33) and Nettie (age 34) lived here with their children, including Frank (age 3). Sebastian worked as a cigar maker and Nettie as a saleswoman at a department store.",
         image: "509_West_48_Street._1910_anna_buckley_age_11._mother_mary_saleswoman_at_dept_store.png"
     },
     {
