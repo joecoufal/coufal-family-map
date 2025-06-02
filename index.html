@@ -42,13 +42,122 @@
     
     
     
+    
     /* Mobile responsive styles for better positioning without scrolling */
     @media (max-width: 768px) {
         /* Make header smaller */
         .header {
             height: 40px;
             padding: 0.5rem;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
+        
+        .header h1 {
+            font-size: 1.2rem;
+        }
+        
+        /* Adjust map to fill entire screen */
+        #map {
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        /* Position search bar at the top, but below the header */
+        .search-container {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            z-index: 1001; /* Ensure it's above other elements */
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        #search-input {
+            padding: 8px 10px;
+            font-size: 14px;
+        }
+        
+        #search-button {
+            padding: 0 10px;
+            font-size: 14px;
+        }
+        
+        /* Position legend at bottom right */
+        .legend {
+            position: fixed;
+            bottom: 20px;
+            right: 10px;
+            max-width: 120px;
+            padding: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+            font-size: 11px;
+            opacity: 0.95;
+            border: 1px solid #ddd;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .legend-section h3 {
+            margin: 0 0 3px 0;
+            font-size: 11px;
+        }
+        
+        .legend-item {
+            margin-bottom: 2px;
+        }
+        
+        .color-dot {
+            width: 8px;
+            height: 8px;
+            margin-right: 4px;
+        }
+        
+        /* Position family tree box at bottom left */
+        .family-tree-box {
+            position: fixed;
+            bottom: 20px;
+            left: 10px;
+            max-width: 120px;
+            padding: 8px;
+            z-index: 1000;
+            opacity: 0.95;
+            border: 1px solid #ddd;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+        }
+        
+        .family-tree-box h3 {
+            margin: 0;
+            font-size: 11px;
+        }
+        
+        .family-tree-box p {
+            display: none;
+        }
+        
+        .family-tree-link {
+            margin-top: 0;
+            margin-left: 8px;
+            padding: 4px 8px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+    }
+
         
         .header h1 {
             font-size: 1.2rem;
@@ -683,11 +792,22 @@
                 }
             ];
 
+            const isMobile = window.innerWidth <= 768;
+
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 40.7128, lng: -74.0060 },
                 zoom: 11,
                 gestureHandling: 'greedy',
                 styles: vintageStyle
+            
+                gestureHandling: 'greedy',
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: isMobile ? google.maps.ControlPosition.RIGHT_TOP : google.maps.ControlPosition.RIGHT_TOP
+                },
+                streetViewControl: false,
+                mapTypeControl: false,
+                fullscreenControl: false
             });
 
             createLegend();
