@@ -85,11 +85,13 @@ body {
 
 /* Google Maps InfoWindow Content Wrapper Styling */
 .gm-style-iw-c {
-    padding: 0 !important; /* Remove default padding from InfoWindow container */
+    padding: 0 !important; /* Remove default padding */
 }
 
-.gm-style-iw-d {
-    overflow: hidden !important; /* Hide the default scrollbar of the InfoWindow content div */
+.gm-style-iw-d,
+.gm-style-iw-d > div { /* Target the direct child div as well */
+    overflow: visible !important; /* Allow content to be its natural height, no scrollbars here */
+    height: auto !important; /* Ensure height adjusts to content */
 }
 
 /* Info Window Styles */
@@ -102,7 +104,7 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     font-family: Georgia, 'Times New Roman', serif;
     position: relative;
-    overflow-y: auto; /* Ensure vertical scrollbar appears only when content overflows */
+    overflow-y: auto; /* THIS is where the scrollbar should appear if content is too tall */
     max-height: 450px; /* Fixed max height for the popup content area */
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: rgba(0,0,0,0.2) transparent; /* For Firefox */
