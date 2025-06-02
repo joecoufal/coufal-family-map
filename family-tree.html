@@ -526,13 +526,27 @@
         </div>
     </div>
     
+    
     <script>
         function searchMap(name) {
+            // Extract the last name from the full name
+            const nameParts = name.split(' ');
+            let lastName = name;
+            
+            // If "Unknown", search for that directly
+            if (name !== "Unknown") {
+                // If there are multiple parts, get the last part as the last name
+                if (nameParts.length > 1) {
+                    lastName = nameParts[nameParts.length - 1];
+                }
+            }
+            
             // Store the search term in localStorage
-            localStorage.setItem('familyTreeSearch', name);
+            localStorage.setItem('familyTreeSearch', lastName);
             // Redirect to the map page
             window.location.href = 'index.html';
         }
     </script>
+
 </body>
 </html>
