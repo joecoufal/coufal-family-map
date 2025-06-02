@@ -116,7 +116,7 @@ const familyAddresses = [
         year: 1930,
         family: "Reckler",
         details: "Harry and Anna owned and operated their bakery at this location",
-        image: "recklerbrooklynbakery_ft_hamilton.png"
+        images: ["recklerbrooklynbakery_ft_hamilton.png", "claire reckler 1935.png"]
     },
     {
         name: "Sam Reckler Home (1930)",
@@ -132,7 +132,7 @@ const familyAddresses = [
         year: 1940,
         family: "Reckler",
         details: "Harry and Anna's residence. Claire lived here when she was 15 years old",
-        image: "2145_garden_st.png"
+        images: ["2145_garden_st.png", "claire reckler 1943.png"]
     },
     {
         name: "Sam Reckler Home (1940)",
@@ -200,22 +200,6 @@ const familyAddresses = [
         details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
         images: ["townsend_harris_hs_eli_krotman.jpg", "eli krotman townsend harris.png"],
         link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
-    },
-    {
-        name: "Claire Reckler (1935)",
-        address: "2145 Garden Street, Bronx, New York, NY",
-        year: 1935,
-        family: "Reckler",
-        details: "Claire Reckler at age 10, growing up in the Bronx.",
-        image: "claire reckler 1935.png"
-    },
-    {
-        name: "Claire Reckler High School (1942)",
-        address: "500 East Fordham Road, Bronx, New York, NY",
-        year: 1942,
-        family: "Reckler",
-        details: "Claire Reckler attended Theodore Roosevelt High School",
-        images: ["claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png", "claire reckler 1943.png"]
     },
     {
         name: "Eli & Claire Krotman Home (1950)",
