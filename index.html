@@ -6,6 +6,7 @@
     <title>Coufal Family Historical Addresses</title>
     <link rel="stylesheet" href="styles.css">
 <style>
+    
     .family-tree-box {
         position: absolute;
         bottom: 10px;
@@ -37,10 +38,90 @@
     .family-tree-link:hover {
         background: #3367d6;
     }
+    
+    /* Mobile responsive styles for family tree box */
+    @media (max-width: 768px) {
+        .family-tree-box {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            max-width: none;
+            width: auto;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .family-tree-box h3 {
+            margin: 0;
+            font-size: 13px;
+        }
+        
+        .family-tree-box p {
+            display: none;
+        }
+        
+        .family-tree-link {
+            margin-top: 0;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+    }
+
 </style>
-    <script src="config.js"></script>
-    <script src="data.js"></script>
-    <script src="notableFigures.js"></script>
+    <script src="config.js">
+        // Check if there's a search term from the family tree page
+        window.addEventListener('load', function() {
+            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
+            if (familyTreeSearch) {
+                // Clear the localStorage item
+                localStorage.removeItem('familyTreeSearch');
+                
+                // Set the search input value
+                document.getElementById('search-input').value = familyTreeSearch;
+                
+                // Perform the search
+                performSearch();
+            }
+        });
+
+    </script>
+    <script src="data.js">
+        // Check if there's a search term from the family tree page
+        window.addEventListener('load', function() {
+            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
+            if (familyTreeSearch) {
+                // Clear the localStorage item
+                localStorage.removeItem('familyTreeSearch');
+                
+                // Set the search input value
+                document.getElementById('search-input').value = familyTreeSearch;
+                
+                // Perform the search
+                performSearch();
+            }
+        });
+
+    </script>
+    <script src="notableFigures.js">
+        // Check if there's a search term from the family tree page
+        window.addEventListener('load', function() {
+            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
+            if (familyTreeSearch) {
+                // Clear the localStorage item
+                localStorage.removeItem('familyTreeSearch');
+                
+                // Set the search input value
+                document.getElementById('search-input').value = familyTreeSearch;
+                
+                // Perform the search
+                performSearch();
+            }
+        });
+
+    </script>
 </head>
 <body>
     <div class="header">
@@ -91,17 +172,19 @@
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
         }
 
+    
     function createFamilyTreeBox() {
         const treeBoxDiv = document.createElement('div');
         treeBoxDiv.className = 'family-tree-box';
         
         let treeBoxHTML = '<h3>Family Tree</h3>';
-        treeBoxHTML += '<p>View the complete Coufal family tree</p>';
-        treeBoxHTML += '<a href="images/family-tree.png" target="_blank" class="family-tree-link">Open Family Tree</a>';
+        treeBoxHTML += '<p>View the interactive Coufal family tree</p>';
+        treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
         
         treeBoxDiv.innerHTML = treeBoxHTML;
         map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
     }
+
 
         function createMarker(position, title, color, content) {
             const marker = new google.maps.Marker({
@@ -535,6 +618,22 @@
         const script = document.createElement('script');
         script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&loading=async&defer`;
         document.head.appendChild(script);
+    
+        // Check if there's a search term from the family tree page
+        window.addEventListener('load', function() {
+            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
+            if (familyTreeSearch) {
+                // Clear the localStorage item
+                localStorage.removeItem('familyTreeSearch');
+                
+                // Set the search input value
+                document.getElementById('search-input').value = familyTreeSearch;
+                
+                // Perform the search
+                performSearch();
+            }
+        });
+
     </script>
 </body>
 </html>
