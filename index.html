@@ -396,6 +396,19 @@
                     performSearch();
                 }
             });
+            
+            // Check if there's a search term from family tree
+            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
+            if (familyTreeSearch) {
+                // Clear the search term from localStorage
+                localStorage.removeItem('familyTreeSearch');
+                
+                // Set the search input value
+                document.getElementById('search-input').value = familyTreeSearch;
+                
+                // Perform the search
+                performSearch();
+            }
         }
         
         function createLegend() {
