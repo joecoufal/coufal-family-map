@@ -30,8 +30,12 @@ jobs:
 
       - name: Create config.js from example
         run: |
+          echo "Creating config.js from example..."
           cp config.js.example config.js
-          sed -i 's/YOUR_NEW_API_KEY_HERE/${{ secrets.GOOGLE_MAPS_API_KEY }}/g' config.js
+          echo "Replacing API key placeholder..."
+          sed -i "s/YOUR_NEW_API_KEY_HERE/${{ secrets.GOOGLE_MAPS_API_KEY }}/g" config.js
+          echo "Verifying config.js content (with key redacted)..."
+          cat config.js | sed 's/AIza[0-9A-Za-z-_]*/<API_KEY_REDACTED>/g'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
