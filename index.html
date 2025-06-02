@@ -15,7 +15,7 @@
     
     <div class="main-content">
         <div id="map"></div>
-        <div class="family-tree-sidebar collapsed">
+        <div class="family-tree-sidebar">
             <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
             <div class="family-tree">
                 <h2>Family Tree</h2>
@@ -46,10 +46,13 @@
         // Load and parse GEDCOM file
         async function loadGedcomData() {
             try {
+                console.log('Loading GEDCOM file...');
                 const response = await fetch('Coufal Family Tree.ged');
                 const gedcomContent = await response.text();
+                console.log('GEDCOM content loaded:', gedcomContent.substring(0, 200) + '...');
                 const parser = new GedcomParser();
                 gedcomData = parser.parse(gedcomContent);
+                console.log('Parsed GEDCOM data:', gedcomData);
                 renderFamilyTree();
             } catch (error) {
                 console.error('Error loading GEDCOM file:', error);
@@ -57,8 +60,12 @@
         }
 
         function renderFamilyTree() {
+            console.log('Rendering family tree...');
             const container = document.getElementById('family-tree-content');
-            if (!gedcomData) return;
+            if (!gedcomData) {
+                console.log('No GEDCOM data available');
+                return;
+            }
 
             gedcomData.families.forEach(family => {
                 const familyDiv = document.createElement('div');
@@ -86,9 +93,11 @@
                 
                 container.appendChild(familyDiv);
             });
+            console.log('Family tree rendered');
         }
 
         function highlightPerson(name) {
+            console.log('Highlighting person:', name);
             // Remove previous highlights
             document.querySelectorAll('.person.highlighted').forEach(el => {
                 el.classList.remove('highlighted');
@@ -106,6 +115,8 @@
                 location.name.includes(name) || location.details.includes(name)
             );
 
+            console.log('Related locations:', relatedLocations);
+
             if (relatedLocations.length > 0) {
                 const bounds = new google.maps.LatLngBounds();
                 relatedLocations.forEach(location => {
@@ -121,6 +132,7 @@
         }
 
         function toggleSidebar() {
+            console.log('Toggling sidebar');
             const sidebar = document.querySelector('.family-tree-sidebar');
             const legend = document.querySelector('.legend');
             sidebar.classList.toggle('collapsed');
@@ -129,7 +141,7 @@
 
         function createLegend() {
             const legendDiv = document.createElement('div');
-            legendDiv.className = 'legend sidebar-collapsed';
+            legendDiv.className = 'legend';
             
             let legendHTML = '<div class="legend-section"><h3>Family Members</h3>';
             Object.entries(familyColors).forEach(([family, color]) => {
@@ -172,7 +184,8 @@
             familyMarkers[title] = marker;
 
             const infoWindow = new google.maps.InfoWindow({
-                content: content
+                content: content,
+                maxWidth: 360
             });
 
             marker.addListener('click', () => {
@@ -187,6 +200,7 @@
         }
 
         function drawFamilyPaths() {
+            console.log('Drawing family paths...');
             // Clear existing paths
             Object.values(familyPaths).forEach(path => path.setMap(null));
             familyPaths = {};
@@ -209,6 +223,8 @@
                     return marker ? marker.getPosition() : null;
                 }).filter(pos => pos !== null);
 
+                console.log(`Family ${family} coordinates:`, coordinates);
+
                 if (coordinates.length > 1) {
                     const path = new google.maps.Polyline({
                         path: coordinates,
@@ -220,6 +236,7 @@
 
                     path.setMap(map);
                     familyPaths[family] = path;
+                    console.log(`Drew path for family ${family}`);
                 }
             });
         }
@@ -263,9 +280,11 @@
                                         : location.image ? 
                                             `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                             : ''}
-                                    <a href="${mapsUrl}" class="action-button" target="_blank">
-                                        See Current Day View on Google Maps
-                                    </a>
+                                    <div style="width: 100%; overflow: hidden;">
+                                        <a href="${mapsUrl}" class="action-button" target="_blank">
+                                            See Current Day View on Google Maps
+                                        </a>
+                                    </div>
                                 </div>
                             `;
 
@@ -286,7 +305,10 @@
 
             // After all markers are created, draw the connecting paths
             Promise.all(geocodePromises).then(() => {
+                console.log('All markers created, drawing paths...');
                 drawFamilyPaths();
+            }).catch(error => {
+                console.error('Error creating markers:', error);
             });
 
             // Add historical context markers
@@ -340,7 +362,7 @@
         document.head.appendChild(script);
 
         // Load GEDCOM data
-        loadGedcomData();
+        window.addEventListener('load', loadGedcomData);
     </script>
 </body>
 </html>
