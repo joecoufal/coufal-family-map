@@ -587,17 +587,21 @@
                         // Store original icon
                         const originalIcon = marker.getIcon();
                         
-                        // Create enlarged icon (50% larger)
+                        // Create enlarged icon (twice as large)
                         const enlargedIcon = {
                             ...originalIcon,
-                            scale: originalIcon.scale * 1.5
+                            scale: originalIcon.scale * 2.0
                         };
                         
-                        // Apply enlarged icon
+                        // Apply enlarged icon and make it bounce
                         marker.setIcon(enlargedIcon);
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
                         
-                        // Reset after 3 seconds
-                        setTimeout(() => marker.setIcon(originalIcon), 3000);
+                        // Reset after 5 seconds
+                        setTimeout(() => {
+                            marker.setIcon(originalIcon);
+                            marker.setAnimation(null);
+                        }, 5000);
                     }
                 });
                 
