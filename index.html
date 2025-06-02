@@ -15,7 +15,573 @@
     <div id="map"></div>
 
     <script>
-        // [Previous JavaScript code remains the same]
+        const familyAddresses = [
+            {
+                name: "Eli Krotman - Townsend Harris High School (1935)",
+                address: "https://maps.app.goo.gl/EPfWPdYHxf32pwth9",
+                displayAddress: "17 Lexington Avenue, New York, NY 10010",
+                year: 1935,
+                family: "Krotman",
+                details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
+                image: "townsend_harris_hs_eli_krotman.jpg",
+                link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
+            },
+            {
+                name: "Eli & Claire Krotman Home (1950)",
+                address: "2962 Decatur Avenue, Bronx, New York, NY",
+                year: 1950,
+                family: "Krotman",
+                details: "Eli (age 33) and Claire (age 25)",
+                images: ["2962_decatur_ave_bronx._1950_eli_33_claire_25..png", "2962_decatur.png", "2962_decatur_2.png"]
+            },
+            {
+                name: "Claire Reckler High School (1942)",
+                address: "500 E Fordham Road, Bronx, New York, NY",
+                year: 1942,
+                family: "Reckler",
+                details: "Claire Reckler attended Theodore Roosevelt High School",
+                image: "claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png"
+            },
+            {
+                name: "Harry Reckler Childhood Home (1910)",
+                address: "87 Clinton Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Reckler",
+                details: "Harry (Hersch) (age 13) lived here with his brother Sam (Salomon) (age 7), sister Rosa (age 16), and mother Chaje (age 42)",
+                image: "87_clinton_st_manhattan._1910_harry_reckler_age_13,_sam_7._rosa_16_mother_chaje_42_.png"
+            },
+            {
+                name: "Fannie Hermann Home (1910)",
+                address: "288 East 2nd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Krotman",
+                details: "Fannie (age 23)",
+                image: "288_e_2nd_st_manhattan_fannie_1910_age_23.png"
+            },
+            {
+                name: "Fannie Hermann Family Home (1905)",
+                address: "216 East 3rd Street, Manhattan, New York, NY",
+                year: 1905,
+                family: "Krotman",
+                details: "Fannie Hermann (age 17) lived here with her father Joseph (Romanian fruit vendor), brother Tony (decorator), brother Louis (clothing dealer), and sister Regina (millinery)",
+                image: "216_e_3rd_st_manhattan._1905_fannie_hermann_age_17._father_joseph_romanian_fruit_vendor._brother_tony_decorator_brother_louis_clothing_dealer_sister_regina_millinery.png"
+            },
+            {
+                name: "Walter Beasley Family Home (1910-1920)",
+                address: "406 East 79th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Walter Beasley (age 14-24) lived here with parents Robert (horse dealer) and Elizabeth from 1910-1920",
+                image: "406_e_79_1910-1920_walter_beasley_age_14-24._parents_robert_(horse_dealer)_and_elizabeth.png"
+            },
+            {
+                name: "Sebastian & Antoinette Coufal Home (1910)",
+                address: "110-112 East 3rd Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Coufal",
+                details: "Sebastian worked as a Real Estate Agent",
+                image: "503_e_73rd_frank_childhood_home_1910s.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1920)",
+                address: "534 East 5th Street, Manhattan, New York, NY",
+                year: 1920,
+                family: "Coufal",
+                details: "Frank worked as a plumber",
+                image: "534_East_5_Street_frank_anna.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1930)",
+                address: "87-14 87th Street, Queens, New York, NY",
+                year: 1930,
+                family: "Coufal",
+                details: "Frank worked as a plumber in the building industry",
+                image: "87-14_87th_St_queens_coufal_1940.png"
+            },
+            {
+                name: "Walter & Emma Beasley Family Home (1930)",
+                address: "115-57 217 Street, Queens, New York, NY",
+                year: 1930,
+                family: "Beasley",
+                details: "Walter & Emma's home where their daughter Edna grew up",
+                image: "115_57_217_Street.png"
+            },
+            {
+                name: "Robert & Elizabeth Beasley Home (1910)",
+                address: "214 East 10th Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "Beasley",
+                details: "Robert worked as a Horse Dealer",
+                image: "214_East_10_Street_beasley_horse_dealer_not_house.png"
+            },
+            {
+                name: "Joseph & Fannie Krotman Home (1920)",
+                address: "1524 Washington Avenue, Bronx, New York, NY",
+                year: 1920,
+                family: "Krotman",
+                details: "Joseph (age 32), Fannie (age 31), and Eli (age 3). Joseph worked as a furniture salesman",
+                image: "1524_washington_ave_1920_joseph_krotman_32,_fannie_krotman_31,_eli_3.png"
+            },
+            {
+                name: "Joseph & Rose Krotman Home (1930)",
+                address: "3604 Olinville Avenue, Bronx, New York, NY",
+                year: 1930,
+                family: "Krotman",
+                details: "Joseph (age 40), Rose (age 32), and Eli (age 12)",
+                image: "3604_Olinville_Avenue_1930_joseph_krotman_age_40,_rose_32,_eli_12.png"
+            },
+            {
+                name: "Joseph & Rose Krotman Home (1940)",
+                address: "1851 Andrews Avenue, Bronx, New York, NY",
+                year: 1940,
+                family: "Krotman",
+                details: "Joseph worked as a furniture salesman"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1930)",
+                address: "7420 Fort Hamilton Parkway, Brooklyn, New York, NY",
+                year: 1930,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location",
+                image: "recklerbrooklynbakery_ft_hamilton.png"
+            },
+            {
+                name: "Harry & Anna Reckler Home (1940)",
+                address: "2145 Garden Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry and Anna's residence. Claire lived here when she was 15 years old",
+                image: "2145_garden_st.png"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1940s)",
+                address: "765 East 182 Street, Bronx, New York, NY",
+                year: 1940,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location in the 1940s",
+                image: "765_East_182_Street_reckler_bakery_1940s.png"
+            },
+            {
+                name: "Harry & Anna Reckler Bakery (1950)",
+                address: "144-12 Hissons Boulevard, Queens, New York, NY",
+                year: 1950,
+                family: "Reckler",
+                details: "Harry and Anna owned and operated their bakery at this location",
+                image: "144-12_hissons_blvd_queens_reckler_bakery.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1950)",
+                address: "1 South Gate, Massapequa, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter and Emma Beasley's home",
+                image: "1_s_gate_massapequa_new_york._walter_and_emma_beasley.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1940)",
+                address: "Queens, New York, NY",
+                year: 1940,
+                family: "Beasley",
+                details: "Walter Beasley's residence",
+                image: "walter_beasley_queens.png"
+            },
+            {
+                name: "Edward & Annie McKee Home (1910)",
+                address: "335 East 93 Street, Manhattan, New York, NY",
+                year: 1910,
+                family: "McKee",
+                details: "Edward McKee's house, where Emma Beasley lived at age 20",
+                image: "335_East_93_Street_emma_beasley_20_yrs_old._edward_mckee_father_house.png"
+            },
+            {
+                name: "Walter & Emma Beasley Home (1950)",
+                address: "88-14 168th Street, Queens, New York, NY",
+                year: 1950,
+                family: "Beasley",
+                details: "Walter worked as a supervisor at the Telephone Company",
+                image: "88_14_168_Street.png"
+            },
+            {
+                name: "Frank & Anna Coufal Home (1950)",
+                address: "219-27 114 Avenue, Queens, New York, NY",
+                year: 1950,
+                family: "Coufal",
+                details: "Lived here with their sons Donald (22) and Frank Jr. (25)",
+                image: "coufal1940.png"
+            }
+        ];
+
+        const historicalContext = [
+            {
+                name: "Lower East Side Jewish Community (1900-1910)",
+                address: "Essex Street and Delancey Street, Manhattan, New York, NY",
+                year: 1910,
+                type: "context",
+                details: "The Lower East Side was the heart of Jewish immigrant life in New York, home to the largest Jewish community in the world at the time, with over 500,000 Jewish residents. The neighborhood was filled with kosher butcher shops, synagogues like the historic Eldridge Street Synagogue (1887) and Bialystoker Synagogue (1905), Yiddish theaters, and pushcart vendors. Many Jewish immigrants, like the Reckler and Krotman families, started their American journey here.",
+                links: [
+                    {
+                        text: "Eldridge Street Synagogue History",
+                        url: "https://www.eldridgestreet.org/history/"
+                    },
+                    {
+                        text: "Lower East Side Historical Photos",
+                        url: "https://www.loc.gov/item/2005689085/"
+                    }
+                ],
+                image: "images/historical/lower_east_side_1910.jpg"
+            },
+            {
+                name: "Irish Yorkville (1910-1920)",
+                address: "East 86th Street and Second Avenue, Manhattan, New York, NY",
+                year: 1910,
+                type: "context",
+                details: "Yorkville was a predominantly Irish neighborhood in the early 1900s, particularly between 81st to 85th Streets and Lexington to Fifth Avenues. The McKee and Beasley families were part of this vibrant community, which was anchored by churches like St. Ignatius Loyola on 84th Street and Our Lady of Good Counsel on 90th Street. The neighborhood's social life centered around Irish bars and social clubs, with the St. Patrick's Day Parade traditionally ending at 86th Street and Third Avenue until the late 1990s.",
+                links: [
+                    {
+                        text: "Yorkville History",
+                        url: "https://www.6sqft.com/yorkville-history-upper-east-side-german-hungarian-czech/"
+                    }
+                ],
+                image: "images/historical/yorkville_1910.jpg"
+            },
+            {
+                name: "East Village Czech Community (1910)",
+                address: "First Avenue and East 5th Street, Manhattan, New York, NY",
+                year: 1910,
+                type: "context",
+                details: "The East Village, particularly around First Avenue, was home to a significant Czech and Slovak community in the early 1900s. Known as 'Little Bohemia,' the area featured Czech restaurants, social clubs, and the historic Jan Hus Presbyterian Church. The Bohemian National Hall, built in 1895, served as a central cultural hub. The Coufal family, like many Czech immigrants, found community in this neighborhood. The area also housed the largest Czech library in America at the time, with over 15,000 volumes.",
+                links: [
+                    {
+                        text: "Bohemian National Hall History",
+                        url: "https://www.dvoraknyc.org/history-of-the-bohemian-national-hall"
+                    },
+                    {
+                        text: "Czech New York History",
+                        url: "https://www.bohemianbenevolent.org/news/czech-new-york-for-the-independence-of-czechoslovakia"
+                    }
+                ],
+                image: "images/historical/bohemian_hall_1910.jpg"
+            },
+            {
+                name: "Bronx Jewish Migration (1920-1940)",
+                address: "Grand Concourse and Fordham Road, Bronx, New York, NY",
+                year: 1930,
+                type: "context",
+                details: "During the 1920s and 1930s, the Grand Concourse became known as the 'Park Avenue of middle-class Bronx residents.' Many Jewish families, including the Krotman and Reckler families, moved here from the Lower East Side. The area featured beautiful Art Deco apartments and significant synagogues like Temple Adath Israel (1927) and the Concourse Center of Israel. Cultural life flourished with venues like the Loew's Paradise Theatre (1929) and the Ascot Theater, which screened Yiddish films.",
+                links: [
+                    {
+                        text: "Grand Concourse History",
+                        url: "https://www.lehman.edu/vpadvance/artgallery/arch/buildings/GrandConcourse.html"
+                    },
+                    {
+                        text: "Bronx Jewish Heritage",
+                        url: "https://thebronxjewish.org/neighborhoods/the-grand-concourse/"
+                    }
+                ],
+                image: "images/historical/grand_concourse_1930.jpg"
+            },
+            {
+                name: "Queens Migration (1940-1950)",
+                address: "Jamaica Avenue and 168th Street, Queens, New York, NY",
+                year: 1950,
+                type: "context",
+                details: "The post-WWII period saw many families, including the Beasley and Coufal families, moving to Queens in pursuit of the American dream of homeownership. This era was marked by significant infrastructure development, including the expansion of Queens Boulevard and improvements to Woodhaven and Cross Bay Boulevards. New community institutions emerged, such as the Woodhaven Library and the Richmond Hill Savings Bank (1957), reflecting the area's growth and prosperity.",
+                links: [
+                    {
+                        text: "Queens Historical Development",
+                        url: "https://www.queenslibrary.org/about-us/queens-public-library-overview/history"
+                    },
+                    {
+                        text: "Jamaica Architecture History",
+                        url: "https://queensmodern.com/qmneighborhoods/jamaica/"
+                    }
+                ],
+                image: "images/historical/jamaica_ave_1950.jpg"
+            }
+        ];
+
+        const familyColors = {
+            'Coufal': '#e74c3c',
+            'Beasley': '#3498db',
+            'Krotman': '#2ecc71',
+            'Reckler': '#f1c40f',
+            'McKee': '#9b59b6'
+        };
+
+        let map;
+        let currentInfoWindow = null;
+
+        function createLegend() {
+            const legendDiv = document.createElement('div');
+            legendDiv.className = 'legend';
+            
+            let legendHTML = '<div class="legend-section"><h3>Family Members</h3>';
+            Object.entries(familyColors).forEach(([family, color]) => {
+                legendHTML += `
+                    <div class="legend-item">
+                        <div class="color-dot" style="background-color: ${color}"></div>
+                        <span>${family}</span>
+                    </div>
+                `;
+            });
+            
+            legendHTML += '</div><div class="legend-section"><h3>Historical Context</h3>';
+            legendHTML += `
+                <div class="legend-item">
+                    <div class="color-dot" style="background-color: #808080"></div>
+                    <span>Neighborhood History</span>
+                </div>
+            `;
+            legendHTML += '</div>';
+
+            legendDiv.innerHTML = legendHTML;
+            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
+        }
+
+        function createMarker(position, title, color, content) {
+            const marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                title: title,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: color,
+                    fillOpacity: 0.9,
+                    strokeWeight: 2,
+                    strokeColor: '#ffffff',
+                    scale: 10
+                }
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: content
+            });
+
+            marker.addListener('click', () => {
+                if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                }
+                infoWindow.open(map, marker);
+                currentInfoWindow = infoWindow;
+            });
+        }
+
+        function initMap() {
+            const vintageStyle = [
+                {
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#ebe3cd"}]
+                },
+                {
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#523735"}]
+                },
+                {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#f5f1e6"}]
+                },
+                {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#c9b2a6"}]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#dcd2be"}]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ae9e90"}]
+                },
+                {
+                    "featureType": "landscape.natural",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#dfd2ae"}]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#dfd2ae"}]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#93817c"}]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#cebea8"}]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#447530"}]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#f5f1e6"}]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#fdfcf8"}]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#f8c967"}]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#e9bc62"}]
+                },
+                {
+                    "featureType": "road.highway.controlled_access",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#e98d58"}]
+                },
+                {
+                    "featureType": "road.highway.controlled_access",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#db8555"}]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#806b63"}]
+                },
+                {
+                    "featureType": "transit.line",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#dfd2ae"}]
+                },
+                {
+                    "featureType": "transit.line",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#8f7d77"}]
+                },
+                {
+                    "featureType": "transit.line",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#ebe3cd"}]
+                },
+                {
+                    "featureType": "transit.station",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#dfd2ae"}]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#b9d3c2"}]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#92998d"}]
+                }
+            ];
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 40.7128, lng: -74.0060 },
+                zoom: 11,
+                gestureHandling: 'greedy',
+                styles: vintageStyle
+            });
+
+            createLegend();
+
+            familyAddresses.forEach(location => {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
+                    if (status === 'OK') {
+                        const mapsUrl = location.address.startsWith('http') ? location.address : 
+                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
+                        
+                        const content = `
+                            <div class="popup-content">
+                                <h3>${location.name}</h3>
+                                <p><strong>Year:</strong> ${location.year}</p>
+                                <p><strong>Address:</strong> ${location.displayAddress || location.address}</p>
+                                <p>${location.details}</p>
+                                ${location.link ? 
+                                    `<p><a href="${location.link}" target="_blank">Read more about this location</a></p>`
+                                    : ''}
+                                ${location.images ? 
+                                    location.images.map(img => 
+                                        `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                    ).join('') 
+                                    : location.image ? 
+                                        `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                        : ''}
+                                <a href="${mapsUrl}" class="action-button" target="_blank">
+                                    See Current Day View on Google Maps
+                                </a>
+                            </div>
+                        `;
+
+                        createMarker(
+                            results[0].geometry.location,
+                            location.name,
+                            familyColors[location.family],
+                            content
+                        );
+                    } else {
+                        console.error('Geocode was not successful for familyAddress: ' + status + ' for address: ' + (location.displayAddress || location.address));
+                    }
+                });
+            });
+
+            historicalContext.forEach(context => {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: context.address }, (results, status) => {
+                    if (status === 'OK') {
+                        const content = `
+                            <div class="popup-content">
+                                <h3>${context.name}</h3>
+                                <p><strong>Period:</strong> ${context.year}</p>
+                                <p>${context.details}</p>
+                                ${context.image ? 
+                                    `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                    : ''}
+                                ${context.links ? 
+                                    `<div style="margin-top: 15px;">
+                                        <strong>Learn More:</strong><br>
+                                        ${context.links.map(link => 
+                                            `<a href="${link.url}" target="_blank">${link.text}</a>`
+                                        ).join('')}
+                                    </div>`
+                                    : ''}
+                            </div>
+                        `;
+
+                        createMarker(
+                            results[0].geometry.location,
+                            context.name,
+                            '#808080',
+                            content
+                        );
+                    } else {
+                        console.error('Geocode was not successful for historicalContext: ' + status + ' for address: ' + context.address);
+                    }
+                });
+            });
+
+            map.addListener('click', () => {
+                if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                }
+            });
+        }
+
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&loading=async&defer`;
+        document.head.appendChild(script);
     </script>
 </body>
 </html>
