@@ -187,11 +187,11 @@
         let searchMarker = null;
         
         function initMap() {
-            // Create the map with vintage styling
+            // Create the map with standard styling
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 40.7128, lng: -74.0060},
                 zoom: 11,
-                styles: vintageStyle,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
                 gestureHandling: 'greedy',
                 zoomControl: true,
                 zoomControlOptions: {
