@@ -202,12 +202,20 @@ const familyAddresses = [
         link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
     },
     {
+        name: "Claire Reckler (1935)",
+        address: "2145 Garden Street, Bronx, New York, NY",
+        year: 1935,
+        family: "Reckler",
+        details: "Claire Reckler at age 10, growing up in the Bronx.",
+        image: "claire reckler 1935.png"
+    },
+    {
         name: "Claire Reckler High School (1942)",
         address: "500 East Fordham Road, Bronx, New York, NY",
         year: 1942,
         family: "Reckler",
         details: "Claire Reckler attended Theodore Roosevelt High School",
-        image: "claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png"
+        images: ["claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png", "claire reckler 1943.png"]
     },
     {
         name: "Eli & Claire Krotman Home (1950)",
@@ -215,7 +223,7 @@ const familyAddresses = [
         year: 1950,
         family: "Krotman",
         details: "Eli (age 33) and Claire (age 25)",
-        images: ["2962_decatur_ave_bronx._1950_eli_33_claire_25..png", "2962_decatur.png", "2962_decatur_2.png"]
+        images: ["2962_decatur_ave_bronx._1950_eli_33_claire_25..png", "2962_decatur.png", "2962_decatur_2.png", "eli claire krotman 1950.png"]
     }
 ];
 
