@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coufal Family Historical Addresses</title>
     <link rel="stylesheet" href="styles.css">
+<style>
+    .family-tree-box {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: white;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 100;
+        max-width: 200px;
+    }
+    
+    .family-tree-box h3 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+    }
+    
+    .family-tree-link {
+        display: inline-block;
+        background: #4285f4;
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin-top: 5px;
+        font-size: 13px;
+    }
+    
+    .family-tree-link:hover {
+        background: #3367d6;
+    }
+</style>
     <script src="config.js"></script>
     <script src="data.js"></script>
     <script src="notableFigures.js"></script>
@@ -57,6 +90,18 @@
             legendDiv.innerHTML = legendHTML;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
         }
+
+    function createFamilyTreeBox() {
+        const treeBoxDiv = document.createElement('div');
+        treeBoxDiv.className = 'family-tree-box';
+        
+        let treeBoxHTML = '<h3>Family Tree</h3>';
+        treeBoxHTML += '<p>View the complete Coufal family tree</p>';
+        treeBoxHTML += '<a href="images/family-tree.png" target="_blank" class="family-tree-link">Open Family Tree</a>';
+        
+        treeBoxDiv.innerHTML = treeBoxHTML;
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
+    }
 
         function createMarker(position, title, color, content) {
             const marker = new google.maps.Marker({
@@ -357,6 +402,7 @@
             });
 
             createLegend();
+            createFamilyTreeBox();
 
             familyAddresses.forEach(location => {
                 const geocoder = new google.maps.Geocoder();
