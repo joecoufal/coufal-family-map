@@ -202,6 +202,14 @@ const familyAddresses = [
         link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
     },
     {
+        name: "Claire Reckler High School (1942)",
+        address: "500 East Fordham Road, Bronx, New York, NY",
+        year: 1942,
+        family: "Reckler",
+        details: "Claire Reckler attended Theodore Roosevelt High School",
+        image: "claire_reckler_1942_high_school_yearbook,_theodore_roosevelt_high_school_500_E_Fordham_Rd,_Bronx,_NY.png"
+    },
+    {
         name: "Eli & Claire Krotman Home (1950)",
         address: "2962 Decatur Avenue, Bronx, New York, NY",
         year: 1950,
