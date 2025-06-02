@@ -40,20 +40,82 @@
     }
     
     
+    
     /* Mobile responsive styles for legend and family tree box */
     @media (max-width: 768px) {
         .legend {
-            position: fixed;
-            bottom: 60px;
+            position: absolute;
+            bottom: 10px;
             right: 10px;
-            max-width: none;
-            width: auto;
+            max-width: 150px;
             padding: 8px;
-            max-height: 40vh;
+            max-height: 200px;
             overflow-y: auto;
             z-index: 100;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .legend-section h3 {
+            margin: 0 0 5px 0;
             font-size: 12px;
         }
+        
+        .legend-item {
+            margin-bottom: 3px;
+        }
+        
+        .color-dot {
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+        
+        .family-tree-box {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            max-width: 140px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            opacity: 0.9;
+        }
+        
+        .family-tree-box h3 {
+            margin: 0;
+            font-size: 12px;
+        }
+        
+        .family-tree-box p {
+            display: none;
+        }
+        
+        .family-tree-link {
+            margin-top: 0;
+            margin-left: 10px;
+            padding: 5px 8px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+        
+        .search-container {
+            width: 90%;
+            top: 65px;
+        }
+        
+        #search-input {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+        
+        #search-button {
+            padding: 0 10px;
+            font-size: 13px;
+        }
+    }
+
         
         .legend-section h3 {
             margin: 0 0 5px 0;
