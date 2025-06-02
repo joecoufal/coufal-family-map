@@ -48,7 +48,7 @@
                     <span>Neighborhood History</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background-color: #505050"></div>
+                    <div class="color-dot" style="background-color: #404040"></div>
                     <span>Notable Figures</span>
                 </div>
             `;
@@ -450,7 +450,7 @@
                                 <p>${figure.details}</p>
                                 ${figure.images ? 
                                     figure.images.map(img => 
-                                        `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                        `<img src="${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
                                     ).join('') 
                                     : ''}
                                 ${figure.link ? 
@@ -467,7 +467,7 @@
                         createMarker(
                             results[0].geometry.location,
                             figure.name,
-                            '#505050', // Darker gray for notable figures
+                            '#404040', // Darker gray for notable figures
                             content
                         );
                     } else {
