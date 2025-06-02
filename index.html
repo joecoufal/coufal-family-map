@@ -11,6 +11,10 @@
 <body>
     <div class="header">
         <h1>Coufal Family Historical Addresses</h1>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search for locations, people, or addresses...">
+            <button id="search-button">Search</button>
+        </div>
     </div>
     
     <div id="map"></div>
@@ -18,6 +22,15 @@
     <script>
         let map;
         let currentInfoWindow = null;
+        let familyMarkers = {};
+        let searchMarker = null;
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.family-tree-sidebar');
+            const legend = document.querySelector('.legend');
+            sidebar.classList.toggle('collapsed');
+            legend.classList.toggle('sidebar-collapsed');
+        }
 
         function createLegend() {
             const legendDiv = document.createElement('div');
@@ -61,6 +74,8 @@
                 }
             });
 
+            familyMarkers[title] = marker;
+
             const infoWindow = new google.maps.InfoWindow({
                 content: content,
                 maxWidth: 360
@@ -73,129 +88,118 @@
                 infoWindow.open(map, marker);
                 currentInfoWindow = infoWindow;
             });
+
+            return marker;
+        }
+
+        function searchRecords(query) {
+            query = query.toLowerCase();
+            
+            // Search family addresses
+            const matchingFamilyAddresses = familyAddresses.filter(location => 
+                location.name.toLowerCase().includes(query) || 
+                location.address.toLowerCase().includes(query) || 
+                location.family.toLowerCase().includes(query) ||
+                (location.details && location.details.toLowerCase().includes(query))
+            );
+            
+            // Search historical context
+            const matchingHistoricalContext = historicalContext.filter(context => 
+                context.name.toLowerCase().includes(query) || 
+                context.address.toLowerCase().includes(query) || 
+                context.details.toLowerCase().includes(query)
+            );
+            
+            // Combine results
+            const allResults = [...matchingFamilyAddresses, ...matchingHistoricalContext];
+            
+            if (allResults.length > 0) {
+                // Create bounds to fit all matching locations
+                const bounds = new google.maps.LatLngBounds();
+                
+                // Highlight matching markers
+                allResults.forEach(result => {
+                    const marker = familyMarkers[result.name];
+                    if (marker) {
+                        bounds.extend(marker.getPosition());
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                        setTimeout(() => marker.setAnimation(null), 2100);
+                    }
+                });
+                
+                // Fit map to show all matching locations
+                map.fitBounds(bounds, { padding: 50 });
+                
+                return true;
+            }
+            
+            return false;
+        }
+
+        function performSearch() {
+            const searchInput = document.getElementById('search-input');
+            const query = searchInput.value.trim();
+            
+            if (!query) return;
+            
+            // First search our own records
+            const foundInRecords = searchRecords(query);
+            
+            // If not found in our records, use Google Maps search
+            if (!foundInRecords) {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: query }, (results, status) => {
+                    if (status === 'OK') {
+                        // Remove previous search marker if exists
+                        if (searchMarker) {
+                            searchMarker.setMap(null);
+                        }
+                        
+                        // Create a new marker for the search result
+                        searchMarker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            animation: google.maps.Animation.DROP,
+                            title: `Search result for: ${query}`
+                        });
+                        
+                        // Center map on the result
+                        map.setCenter(results[0].geometry.location);
+                        map.setZoom(15);
+                        
+                        // Create info window for the search result
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: `
+                                <div class="popup-content">
+                                    <h3>Search Result</h3>
+                                    <p>${results[0].formatted_address}</p>
+                                </div>
+                            `
+                        });
+                        
+                        // Open info window
+                        if (currentInfoWindow) {
+                            currentInfoWindow.close();
+                        }
+                        infoWindow.open(map, searchMarker);
+                        currentInfoWindow = infoWindow;
+                        
+                        // Add click listener to the marker
+                        searchMarker.addListener('click', () => {
+                            if (currentInfoWindow) {
+                                currentInfoWindow.close();
+                            }
+                            infoWindow.open(map, searchMarker);
+                            currentInfoWindow = infoWindow;
+                        });
+                    } else {
+                        alert('No results found for your search.');
+                    }
+                });
+            }
         }
 
         function initMap() {
-            const vintageStyle = [
-                {
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#ebe3cd"}]
-                },
-                {
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#523735"}]
-                },
-                {
-                    "elementType": "labels.text.stroke",
-                    "stylers": [{"color": "#f5f1e6"}]
-                },
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#c9b2a6"}]
-                },
-                {
-                    "featureType": "administrative.land_parcel",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#dcd2be"}]
-                },
-                {
-                    "featureType": "administrative.land_parcel",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#ae9e90"}]
-                },
-                {
-                    "featureType": "landscape.natural",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "poi",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "poi",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#93817c"}]
-                },
-                {
-                    "featureType": "poi.park",
-                    "elementType": "geometry.fill",
-                    "stylers": [{"color": "#cebea8"}]
-                },
-                {
-                    "featureType": "poi.park",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#447530"}]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#f5f1e6"}]
-                },
-                {
-                    "featureType": "road.arterial",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#fdfcf8"}]
-                },
-                {
-                    "featureType": "road.highway",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#f8c967"}]
-                },
-                {
-                    "featureType": "road.highway",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#e9bc62"}]
-                },
-                {
-                    "featureType": "road.highway.controlled_access",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#e98d58"}]
-                },
-                {
-                    "featureType": "road.highway.controlled_access",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#db8555"}]
-                },
-                {
-                    "featureType": "road.local",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#806b63"}]
-                },
-                {
-                    "featureType": "transit.line",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "transit.line",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#8f7d77"}]
-                },
-                {
-                    "featureType": "transit.line",
-                    "elementType": "labels.text.stroke",
-                    "stylers": [{"color": "#ebe3cd"}]
-                },
-                {
-                    "featureType": "transit.station",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "water",
-                    "elementType": "geometry.fill",
-                    "stylers": [{"color": "#b9d3c2"}]
-                },
-                {
-                    "featureType": "water",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#92998d"}]
-                }
-            ];
-
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 40.7128, lng: -74.0060 },
                 zoom: 11,
@@ -258,7 +262,7 @@
                                 ${context.images && context.images.length > 0 ? 
                                     `<img src="${context.images[0]}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
                                     : context.image ? 
-                                        `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                        `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
                                         : ''}
                                 ${context.links ? 
                                     `<div style="margin-top: 15px;">
@@ -286,6 +290,14 @@
             map.addListener('click', () => {
                 if (currentInfoWindow) {
                     currentInfoWindow.close();
+                }
+            });
+            
+            // Set up search functionality
+            document.getElementById('search-button').addEventListener('click', performSearch);
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
                 }
             });
         }
