@@ -39,20 +39,67 @@
         background: #3367d6;
     }
     
-    /* Mobile responsive styles for family tree box */
+    
+    /* Mobile responsive styles for legend and family tree box */
     @media (max-width: 768px) {
+        .legend {
+            position: fixed;
+            bottom: 60px;
+            right: 10px;
+            max-width: none;
+            width: auto;
+            padding: 8px;
+            max-height: 40vh;
+            overflow-y: auto;
+            z-index: 100;
+            font-size: 12px;
+        }
+        
+        .legend-section h3 {
+            margin: 0 0 5px 0;
+            font-size: 12px;
+        }
+        
+        .legend-item {
+            margin-bottom: 3px;
+        }
+        
+        .color-dot {
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+        }
+        
         .family-tree-box {
             position: fixed;
             bottom: 10px;
             left: 10px;
-            right: 10px;
+            right: auto;
             max-width: none;
             width: auto;
             padding: 8px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            z-index: 100;
         }
+        
+        .family-tree-box h3 {
+            margin: 0;
+            font-size: 13px;
+        }
+        
+        .family-tree-box p {
+            display: none;
+        }
+        
+        .family-tree-link {
+            margin-top: 0;
+            margin-left: 10px;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+    }
+
         
         .family-tree-box h3 {
             margin: 0;
@@ -173,6 +220,7 @@
         }
 
     
+    
     function createFamilyTreeBox() {
         const treeBoxDiv = document.createElement('div');
         treeBoxDiv.className = 'family-tree-box';
@@ -184,6 +232,7 @@
         treeBoxDiv.innerHTML = treeBoxHTML;
         map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
     }
+
 
 
         function createMarker(position, title, color, content) {
