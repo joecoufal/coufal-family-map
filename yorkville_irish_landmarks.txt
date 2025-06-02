@@ -1,0 +1,54 @@
+// Yorkville
+    {
+        name: "Yorkville Irish Community",
+        address: "East 86th Street and Second Avenue, Manhattan, New York, NY",
+        year: 1910,
+        type: "context",
+        details: "Yorkville was home to a vibrant Irish community in the early 1900s. The McKee and Beasley families were part of this community, which was anchored by churches, social clubs, and cultural institutions.",
+        links: [
+            {
+                text: "Yorkville History",
+                url: "https://www.6sqft.com/yorkville-history-upper-east-side-german-hungarian-czech/"
+            }
+        ],
+        images: ["images/historical/irish yorkville 1916.jpg", "images/historical/irish yorkville.png"]
+    },
+    {
+        name: "St. Ignatius Loyola Church",
+        address: "980 Park Avenue, Manhattan, New York, NY",
+        year: 1910,
+        type: "context",
+        details: "Founded in 1851, this Roman Catholic church became a central institution for the Irish Catholic community in Yorkville. Its impressive Baroque facade and grand interior served as both a spiritual home and community gathering place for Irish immigrants and their descendants.",
+        links: [
+            {
+                text: "St. Ignatius Loyola History",
+                url: "https://stignatiusloyola.org/index.php/about-us/our-history"
+            }
+        ]
+    },
+    {
+        name: "Our Lady of Good Counsel",
+        address: "230 East 90th Street, Manhattan, New York, NY",
+        year: 1910,
+        type: "context",
+        details: "Founded in 1886, this parish served the growing Irish Catholic population in Yorkville. The church provided not only religious services but also social support, educational opportunities, and a sense of community for Irish immigrants adjusting to life in America.",
+        links: [
+            {
+                text: "Our Lady of Good Counsel History",
+                url: "https://www.oldnyc.org/"
+            }
+        ]
+    },
+    {
+        name: "Finnegan's Wake Irish Pub",
+        address: "1361 First Avenue, Manhattan, New York, NY",
+        year: 1910,
+        type: "context",
+        details: "This traditional Irish pub was a social hub for the Irish community in Yorkville. Named after James Joyce's novel, it provided a gathering place where Irish immigrants could enjoy familiar food and drink, music, and camaraderie, helping them maintain cultural connections while building new lives in America.",
+        links: [
+            {
+                text: "Irish Pubs in New York History",
+                url: "https://www.nypl.org/blog/2015/03/17/brief-history-irish-pubs-nyc"
+            }
+        ]
+    }
