@@ -103,13 +103,6 @@ const notableFigures = [
         link: "https://en.wikipedia.org/wiki/Regis_Philbin"
     },
     {
-        name: "Harry Belafonte's Childhood Home",
-        address: "461 East 169th Street, Bronx, New York, NY",
-        year: "1940s",
-        details: "Singer, actor, and civil rights activist Harry Belafonte lived in the Bronx during part of his youth. Born in Harlem, he spent time living with his grandmother in Jamaica before returning to New York. Belafonte would go on to become a groundbreaking performer known for hits like 'Banana Boat Song (Day-O)' and for his tireless civil rights activism alongside Dr. Martin Luther King Jr.",
-        link: "https://en.wikipedia.org/wiki/Harry_Belafonte"
-    },
-    {
         name: "Tami Mauriello's Home",
         address: "Morris Park, Bronx, New York, NY",
         year: "1940s",
