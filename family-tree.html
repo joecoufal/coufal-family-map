@@ -16,51 +16,15 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        .family-tree {
+        .tree-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
         }
-        .generation {
-            margin-bottom: 30px;
-        }
-        .generation-title {
-            border-bottom: 2px solid #c9b2a6;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .family-group {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 6px;
-            background-color: #faf7f2;
-        }
-        .family-name {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #523735;
-        }
-        .person {
-            padding: 8px 15px;
-            margin: 5px 0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        .person:hover {
-            background-color: #e6dfd0;
-        }
-        .coufal { background-color: rgba(231, 76, 60, 0.2); }
-        .mckee { background-color: rgba(155, 89, 182, 0.2); }
-        .beasley { background-color: rgba(52, 152, 219, 0.2); }
-        .reckler { background-color: rgba(241, 196, 15, 0.2); }
-        .krotman { background-color: rgba(46, 204, 113, 0.2); }
-        
         .back-link {
             display: inline-block;
             margin: 20px 0;
@@ -74,19 +38,129 @@
             background-color: #3367d6;
         }
         
-        /* Mobile responsive styles */
+        /* Tree styles */
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 900px;
+        }
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+            transition: all 0.5s;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .tree li {
+            float: left;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+        }
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 1px solid #ccc;
+            width: 50%;
+            height: 20px;
+        }
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 1px solid #ccc;
+        }
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+        .tree li:only-child {
+            padding-top: 0;
+        }
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+        .tree li:last-child::before {
+            border-right: 1px solid #ccc;
+            border-radius: 0 5px 0 0;
+        }
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+        }
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 1px solid #ccc;
+            width: 0;
+            height: 20px;
+        }
+        .tree li .person {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.5s;
+            min-width: 150px;
+            cursor: pointer;
+        }
+        .tree li .person:hover {
+            background: #e6dfd0;
+            transform: scale(1.05);
+        }
+        .tree li .spouse {
+            margin-top: 5px;
+            border: 1px dashed #ccc;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        .tree li .name {
+            font-weight: bold;
+        }
+        .tree li .dates {
+            font-size: 0.8em;
+            color: #777;
+        }
+        
+        /* Family color coding */
+        .coufal { background-color: rgba(231, 76, 60, 0.2); }
+        .mckee { background-color: rgba(155, 89, 182, 0.2); }
+        .beasley { background-color: rgba(52, 152, 219, 0.2); }
+        .reckler { background-color: rgba(241, 196, 15, 0.2); }
+        .krotman { background-color: rgba(46, 204, 113, 0.2); }
+        
+        /* Mobile styles */
         @media (max-width: 768px) {
-            body {
+            .tree-container {
                 padding: 10px;
             }
-            .family-tree {
-                padding: 15px;
+            .tree {
+                min-width: 600px;
             }
-            .person {
-                display: block;
-                margin-right: 0;
-                margin-bottom: 8px;
-            }
+        }
+        
+        /* Legend */
+        .legend {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 15px;
+        }
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -96,118 +170,243 @@
         <a href="index.html" class="back-link">Back to Map</a>
     </div>
     
-    <div class="family-tree">
-        <div class="generation">
-            <h2 class="generation-title">Generation 1</h2>
-            
-            <div class="family-group">
-                <div class="family-name">Coufal Family</div>
-                <div class="person coufal" onclick="searchMap('Sebastian Coufal')">Sebastian Coufal</div>
-                <div class="person coufal" onclick="searchMap('Antoinette Coufal')">Antoinette Coufal</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Buckley Family</div>
-                <div class="person coufal" onclick="searchMap('Anna Buckley')">Anna Buckley</div>
-                <div class="person coufal" onclick="searchMap('Mary Buckley')">Mary Buckley (Mother)</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Beasley Family</div>
-                <div class="person beasley" onclick="searchMap('Robert Beasley')">Robert Beasley</div>
-                <div class="person beasley" onclick="searchMap('Elizabeth Beasley')">Elizabeth Beasley</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">McKee Family</div>
-                <div class="person mckee" onclick="searchMap('Edward McKee')">Edward McKee</div>
-                <div class="person mckee" onclick="searchMap('Annie McKee')">Annie McKee</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Reckler Family</div>
-                <div class="person reckler" onclick="searchMap('Harry Reckler')">Harry (Hersch) Reckler</div>
-                <div class="person reckler" onclick="searchMap('Chaje Reckler')">Chaje Reckler (Mother)</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Hermann/Krotman Family</div>
-                <div class="person krotman" onclick="searchMap('Joseph Hermann')">Joseph Hermann</div>
-                <div class="person krotman" onclick="searchMap('Fannie Hermann')">Fannie Hermann</div>
-            </div>
+    <div class="legend">
+        <div class="legend-item">
+            <div class="color-dot" style="background-color: #e74c3c"></div>
+            <span>Coufal</span>
         </div>
-        
-        <div class="generation">
-            <h2 class="generation-title">Generation 2</h2>
-            
-            <div class="family-group">
-                <div class="family-name">Coufal Family</div>
-                <div class="person coufal" onclick="searchMap('Frank Coufal')">Frank Coufal</div>
-                <div class="person coufal" onclick="searchMap('Anna Coufal')">Anna (Buckley) Coufal</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Beasley Family</div>
-                <div class="person beasley" onclick="searchMap('Walter Beasley')">Walter John Beasley</div>
-                <div class="person beasley" onclick="searchMap('Emma Beasley')">Emma Rose McKee Beasley</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Reckler Family</div>
-                <div class="person reckler" onclick="searchMap('Harry Reckler')">Harry David Reckler</div>
-                <div class="person reckler" onclick="searchMap('Anna Reckler')">Anna Nitzberg</div>
-                <div class="person reckler" onclick="searchMap('Sam Reckler')">Sam Reckler</div>
-                <div class="person reckler" onclick="searchMap('Henrietta Reckler')">Henrietta Reckler</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Krotman Family</div>
-                <div class="person krotman" onclick="searchMap('Joseph Krotman')">Joseph Krotman</div>
-                <div class="person krotman" onclick="searchMap('Fannie Krotman')">Fannie Hermann Krotman</div>
-                <div class="person krotman" onclick="searchMap('Rose Krotman')">Rose Krotman</div>
-            </div>
+        <div class="legend-item">
+            <div class="color-dot" style="background-color: #9b59b6"></div>
+            <span>McKee</span>
         </div>
-        
-        <div class="generation">
-            <h2 class="generation-title">Generation 3</h2>
-            
-            <div class="family-group">
-                <div class="family-name">Coufal Family</div>
-                <div class="person coufal" onclick="searchMap('Donald Coufal')">Donald Coufal</div>
-                <div class="person coufal" onclick="searchMap('Frank Coufal Jr')">Frank Coufal Jr.</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Beasley Family</div>
-                <div class="person beasley" onclick="searchMap('Edna Beasley')">Edna Beasley</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Reckler Family</div>
-                <div class="person reckler" onclick="searchMap('Claire Reckler')">Claire Reckler</div>
-                <div class="person reckler" onclick="searchMap('Coralie Reckler')">Coralie Reckler</div>
-                <div class="person reckler" onclick="searchMap('Ruth Reckler')">Ruth Reckler</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Krotman Family</div>
-                <div class="person krotman" onclick="searchMap('Eli Krotman')">Eli Krotman</div>
-            </div>
+        <div class="legend-item">
+            <div class="color-dot" style="background-color: #3498db"></div>
+            <span>Beasley</span>
         </div>
-        
-        <div class="generation">
-            <h2 class="generation-title">Generation 4</h2>
-            
-            <div class="family-group">
-                <div class="family-name">Coufal Family</div>
-                <div class="person coufal" onclick="searchMap('Robert Coufal')">Robert Coufal</div>
-            </div>
-            
-            <div class="family-group">
-                <div class="family-name">Krotman Family</div>
-                <div class="person krotman" onclick="searchMap('Donna Krotman')">Donna Krotman</div>
-                <div class="person krotman" onclick="searchMap('Joe Coufal')">Joe Coufal</div>
-            </div>
+        <div class="legend-item">
+            <div class="color-dot" style="background-color: #f1c40f"></div>
+            <span>Reckler</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-dot" style="background-color: #2ecc71"></div>
+            <span>Krotman</span>
+        </div>
+    </div>
+    
+    <div class="tree-container">
+        <div class="tree">
+            <!-- Generation 1 -->
+            <ul>
+                <li>
+                    <div class="person coufal" onclick="searchMap('Sebastian Coufal')">
+                        <div class="name">Sebastian Coufal</div>
+                    </div>
+                    <div class="spouse" onclick="searchMap('Antoinette Coufal')">
+                        <div class="name">Antoinette Coufal</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person coufal" onclick="searchMap('Frank Coufal')">
+                                <div class="name">Frank Coufal</div>
+                            </div>
+                            <div class="spouse" onclick="searchMap('Anna Coufal')">
+                                <div class="name">Anna (Buckley) Coufal</div>
+                            </div>
+                            
+                            <!-- Generation 3 -->
+                            <ul>
+                                <li>
+                                    <div class="person coufal" onclick="searchMap('Donald Coufal')">
+                                        <div class="name">Donald Coufal</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="person coufal" onclick="searchMap('Frank Coufal Jr')">
+                                        <div class="name">Frank Coufal Jr.</div>
+                                    </div>
+                                    
+                                    <!-- Generation 4 -->
+                                    <ul>
+                                        <li>
+                                            <div class="person coufal" onclick="searchMap('Robert Coufal')">
+                                                <div class="name">Robert Coufal</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="person coufal" onclick="searchMap('Mary Buckley')">
+                        <div class="name">Mary Buckley</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person coufal" onclick="searchMap('Anna Buckley')">
+                                <div class="name">Anna Buckley</div>
+                                <div class="dates">→ married Frank Coufal</div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="person beasley" onclick="searchMap('Robert Beasley')">
+                        <div class="name">Robert Beasley</div>
+                    </div>
+                    <div class="spouse" onclick="searchMap('Elizabeth Beasley')">
+                        <div class="name">Elizabeth Beasley</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person beasley" onclick="searchMap('Walter Beasley')">
+                                <div class="name">Walter John Beasley</div>
+                            </div>
+                            <div class="spouse" onclick="searchMap('Emma Beasley')">
+                                <div class="name">Emma Rose McKee</div>
+                            </div>
+                            
+                            <!-- Generation 3 -->
+                            <ul>
+                                <li>
+                                    <div class="person beasley" onclick="searchMap('Edna Beasley')">
+                                        <div class="name">Edna Beasley</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="person mckee" onclick="searchMap('Edward McKee')">
+                        <div class="name">Edward McKee</div>
+                    </div>
+                    <div class="spouse" onclick="searchMap('Annie McKee')">
+                        <div class="name">Annie McKee</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person mckee" onclick="searchMap('Emma McKee')">
+                                <div class="name">Emma Rose McKee</div>
+                                <div class="dates">→ married Walter Beasley</div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="person reckler" onclick="searchMap('Chaje Reckler')">
+                        <div class="name">Chaje Reckler</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person reckler" onclick="searchMap('Harry Reckler')">
+                                <div class="name">Harry (Hersch) Reckler</div>
+                            </div>
+                            <div class="spouse" onclick="searchMap('Anna Nitzberg')">
+                                <div class="name">Anna Nitzberg</div>
+                            </div>
+                            
+                            <!-- Generation 3 -->
+                            <ul>
+                                <li>
+                                    <div class="person reckler" onclick="searchMap('Claire Reckler')">
+                                        <div class="name">Claire Reckler</div>
+                                        <div class="dates">→ married Eli Krotman</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="person reckler" onclick="searchMap('Sam Reckler')">
+                                <div class="name">Sam Reckler</div>
+                            </div>
+                            <div class="spouse" onclick="searchMap('Henrietta Reckler')">
+                                <div class="name">Henrietta Reckler</div>
+                            </div>
+                            
+                            <!-- Generation 3 -->
+                            <ul>
+                                <li>
+                                    <div class="person reckler" onclick="searchMap('Coralie Reckler')">
+                                        <div class="name">Coralie Reckler</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="person reckler" onclick="searchMap('Ruth Reckler')">
+                                        <div class="name">Ruth Reckler</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="person krotman" onclick="searchMap('Joseph Hermann')">
+                        <div class="name">Joseph Hermann</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person krotman" onclick="searchMap('Fannie Hermann')">
+                                <div class="name">Fannie Hermann</div>
+                                <div class="dates">→ married Joseph Krotman</div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <div class="person krotman" onclick="searchMap('Joseph Krotman')">
+                        <div class="name">Joseph Krotman</div>
+                    </div>
+                    <div class="spouse" onclick="searchMap('Fannie Krotman')">
+                        <div class="name">Fannie Hermann</div>
+                    </div>
+                    
+                    <!-- Generation 2 -->
+                    <ul>
+                        <li>
+                            <div class="person krotman" onclick="searchMap('Eli Krotman')">
+                                <div class="name">Eli Krotman</div>
+                            </div>
+                            <div class="spouse" onclick="searchMap('Claire Reckler')">
+                                <div class="name">Claire Reckler</div>
+                            </div>
+                            
+                            <!-- Generation 3 -->
+                            <ul>
+                                <li>
+                                    <div class="person krotman" onclick="searchMap('Donna Krotman')">
+                                        <div class="name">Donna Krotman</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="person krotman" onclick="searchMap('Joe Coufal')">
+                                        <div class="name">Joe Coufal</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
     
