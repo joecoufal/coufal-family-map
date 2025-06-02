@@ -233,7 +233,7 @@ const historicalContext = [
                 url: "https://www.tenement.org/explore/lower-east-side-history/"
             }
         ],
-        images: ["images/historical/jewish-quarter-heine-les.jpg", "images/historical/lower-east-side-jewish.jpeg", "images/historical/lower-east-side-jewish-community.png"]
+        images: ["images/historical/jewish-quarter-heine LES.jpg", "images/historical/lowe east side jewish.jpeg", "images/historical/lower east side jewish community.png"]
     },
     {
         name: "Forward Building",
@@ -246,8 +246,7 @@ const historicalContext = [
                 text: "Forward Building History",
                 url: "https://www.nytimes.com/2013/02/17/realestate/the-forward-building-a-monument-to-jewish-immigration.html"
             }
-        ],
-        images: ["images/historical/forward-building-1912.jpg"]
+        ]
     },
     {
         name: "Eldridge Street Synagogue",
@@ -260,8 +259,7 @@ const historicalContext = [
                 text: "Eldridge Street Synagogue",
                 url: "https://www.eldridgestreet.org/history/"
             }
-        ],
-        images: ["images/historical/eldridge-street-synagogue.jpg"]
+        ]
     },
     {
         name: "Katz's Delicatessen",
@@ -274,8 +272,7 @@ const historicalContext = [
                 text: "Katz's History",
                 url: "https://www.katzsdelicatessen.com/history"
             }
-        ],
-        images: ["images/historical/katzs-deli-historic.jpg"]
+        ]
     },
 
     // East Village Czech Community
@@ -291,7 +288,7 @@ const historicalContext = [
                 url: "https://www.bohemianbenevolent.org/history"
             }
         ],
-        images: ["images/historical/czechs-in-parade-5th-avenue-1917.jpg"]
+        images: ["images/historical/Czechs_in_parade,_5th_Avenue,_May_1917.jpg"]
     },
     {
         name: "Bohemian National Hall",
@@ -304,8 +301,7 @@ const historicalContext = [
                 text: "Bohemian National Hall",
                 url: "https://www.bohemianbenevolent.org/"
             }
-        ],
-        images: ["images/historical/bohemian-national-hall.jpg"]
+        ]
     },
     {
         name: "Jan Hus Presbyterian Church",
@@ -318,8 +314,7 @@ const historicalContext = [
                 text: "Jan Hus Church History",
                 url: "https://www.janhus.org/history"
             }
-        ],
-        images: ["images/historical/jan-hus-church.jpg"]
+        ]
     },
 
     // Yorkville - Irish Community
@@ -335,7 +330,7 @@ const historicalContext = [
                 url: "https://www.6sqft.com/yorkville-history-upper-east-side-german-hungarian-czech/"
             }
         ],
-        images: ["images/historical/irish-yorkville-1916.jpg", "images/historical/irish-yorkville.png"]
+        images: ["images/historical/irish yorkville 1916.jpg", "images/historical/irish yorkville.png"]
     },
     {
         name: "St. Ignatius Loyola Church",
@@ -348,8 +343,7 @@ const historicalContext = [
                 text: "St. Ignatius Loyola History",
                 url: "https://stignatiusloyola.org/index.php/about-us/our-history"
             }
-        ],
-        images: ["images/historical/st-ignatius-loyola-church.jpg"]
+        ]
     },
     {
         name: "Our Lady of Good Counsel",
@@ -362,8 +356,7 @@ const historicalContext = [
                 text: "Our Lady of Good Counsel History",
                 url: "https://www.oldnyc.org/"
             }
-        ],
-        images: ["images/historical/our-lady-good-counsel.jpg"]
+        ]
     },
 
     // Bronx Jewish Community
@@ -379,7 +372,7 @@ const historicalContext = [
                 url: "https://www.bxscience.edu/apps/pages/index.jsp?uREC_ID=219393&type=d"
             }
         ],
-        images: ["images/historical/adath-israel-bronx.jpg", "images/historical/loews-paradise-theater-bronx.jpg"]
+        images: ["images/historical/adath israel bronx.jpg", "images/historical/loews paradise theater bronx .jpg"]
     },
     {
         name: "Loew's Paradise Theater",
@@ -392,8 +385,7 @@ const historicalContext = [
                 text: "Paradise Theater History",
                 url: "https://bronxhistoricalsociety.org/2019/02/15/loews-paradise-theater/"
             }
-        ],
-        images: ["images/historical/loews-paradise-interior.jpg"]
+        ]
     },
     {
         name: "Concourse Plaza Hotel",
@@ -406,8 +398,7 @@ const historicalContext = [
                 text: "Concourse Plaza History",
                 url: "https://www.nytimes.com/1987/12/13/realestate/streetscapes-the-concourse-plaza-hotel-the-bronx-s-waldorf-gets-a-new-life.html"
             }
-        ],
-        images: ["images/historical/concourse-plaza-hotel.jpg"]
+        ]
     },
     {
         name: "Bronx House",
@@ -420,8 +411,7 @@ const historicalContext = [
                 text: "Bronx House History",
                 url: "https://www.bronxhouse.org/about/history/"
             }
-        ],
-        images: ["images/historical/bronx-house.jpg"]
+        ]
     },
 
     // Queens Development
@@ -437,7 +427,7 @@ const historicalContext = [
                 url: "https://www.queenslibrary.org/about-us/queens-public-library-overview/history"
             }
         ],
-        images: ["images/historical/queens-1950s.webp"]
+        images: ["images/historical/queens 1950s.webp"]
     },
     {
         name: "Jamaica Savings Bank",
@@ -450,8 +440,7 @@ const historicalContext = [
                 text: "Jamaica Savings Bank History",
                 url: "https://www.nycago.org/Organs/NYC/html/JamaicaSavingsBank.html"
             }
-        ],
-        images: ["images/historical/jamaica-savings-bank.jpg"]
+        ]
     },
     {
         name: "RKO Keith's Theater",
@@ -464,8 +453,7 @@ const historicalContext = [
                 text: "RKO Keith's History",
                 url: "https://queenshistoricalsociety.org/rko-keiths-theater/"
             }
-        ],
-        images: ["images/historical/rko-keiths-theater.jpg"]
+        ]
     }
 ];
 
