@@ -31,8 +31,7 @@ jobs:
       - name: Create config.js from example
         run: |
           cp config.js.example config.js
-          sed -i 's/YOUR_API_KEY_HERE/${{ secrets.GOOGLE_MAPS_API_KEY }}/g' config.js
-          sed -i 's/YOUR_MAP_ID_HERE/4ca1a4c8220c625e83aa55c0/g' config.js
+          sed -i 's/YOUR_NEW_API_KEY_HERE/${{ secrets.GOOGLE_MAPS_API_KEY }}/g' config.js
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
