@@ -18,7 +18,7 @@ html, body {
     text-align: center;
     height: 60px;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: 10;
 }
 
 .header h1 {
@@ -28,13 +28,14 @@ html, body {
 
 /* Map container */
 #map {
-    position: fixed !important;
+    position: absolute;
     top: 60px;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
     height: calc(100vh - 60px);
+    z-index: 1;
 }
 
 /* Search container */
@@ -77,12 +78,15 @@ html, body {
 
 /* Legend styles */
 .legend {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     background: white;
     padding: 10px;
-    margin: 10px;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     max-width: 200px;
+    z-index: 5;
 }
 
 .legend-section {
@@ -127,7 +131,7 @@ html, body {
     padding: 15px;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 10;
+    z-index: 5;
     max-width: 200px;
 }
 
@@ -211,10 +215,7 @@ html, body {
     
     #map {
         top: 40px;
-        height: calc(100vh - 40px) !important;
-        position: fixed !important;
-        width: 100% !important;
-        z-index: 1 !important;
+        height: calc(100vh - 40px);
     }
     
     .search-container {
@@ -307,15 +308,6 @@ html, body {
     .action-button {
         font-size: 11px;
         padding: 4px 8px;
-    }
-    
-    /* Fix for Google Maps UI elements */
-    .gm-style-cc {
-        display: none !important;
-    }
-    
-    .gm-style .gm-style-iw-c {
-        max-width: 250px !important;
     }
 }
 

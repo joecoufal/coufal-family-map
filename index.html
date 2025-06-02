@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coufal Family Historical Addresses</title>
-    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="styles.css?v=2">
     <!-- Load configuration and data files first -->
     <script src="config.js"></script>
     <script src="data.js"></script>
@@ -62,7 +62,7 @@
             legendHTML += '</div>';
 
             legendDiv.innerHTML = legendHTML;
-            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
+            document.body.appendChild(legendDiv);
         }
 
         // Create family tree box function
@@ -238,7 +238,7 @@
 
         // Initialize map function
         function initMap() {
-            // Create map instance
+            // Create map instance with specific options for better street rendering
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 40.7128, lng: -74.0060 },
                 zoom: 11,
@@ -250,7 +250,19 @@
                 },
                 streetViewControl: false,
                 mapTypeControl: false,
-                fullscreenControl: false
+                fullscreenControl: false,
+                // Options to improve street rendering
+                clickableIcons: false,
+                disableDefaultUI: false,
+                draggableCursor: 'default',
+                draggingCursor: 'move',
+                keyboardShortcuts: true,
+                mapId: undefined,
+                maxZoom: undefined,
+                minZoom: undefined,
+                noClear: false,
+                scrollwheel: true,
+                tilt: 0 // Set to 0 for better street rendering
             });
 
             // Create legend and family tree box
