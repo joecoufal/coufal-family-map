@@ -74,6 +74,48 @@ const notableFigures = [
         details: "The future 26th President of the United States, Theodore Roosevelt, spent summers in the Bronx as a child. His family owned a summer home near what is now Mosholu Parkway. These early experiences in nature helped shape his later conservation efforts as president.",
         link: "https://www.nps.gov/thrb/index.htm"
     },
+    {
+        name: "Stanley Kubrick's Childhood Home",
+        address: "2715 Grand Concourse, Bronx, New York, NY",
+        year: "1942-1944",
+        details: "Legendary filmmaker Stanley Kubrick lived in this building, known as Majestic Court, during his high school years. He attended William Howard Taft High School while living here. Kubrick would go on to direct groundbreaking films like '2001: A Space Odyssey,' 'A Clockwork Orange,' and 'The Shining.'",
+        link: "https://en.wikipedia.org/wiki/Stanley_Kubrick"
+    },
+    {
+        name: "Ralph Lauren's Childhood Home",
+        address: "3220 Steuben Avenue, Bronx, New York, NY",
+        year: "1940s",
+        details: "Fashion icon Ralph Lauren (born Ralph Lifshitz) grew up in this home in the Mosholu Parkway area of the Bronx. He attended DeWitt Clinton High School before going on to build one of the world's most recognizable fashion empires.",
+        link: "https://en.wikipedia.org/wiki/Ralph_Lauren"
+    },
+    {
+        name: "Calvin Klein's Childhood Home",
+        address: "3191 Rochambeau Avenue, Bronx, New York, NY",
+        year: "1940s-1950s",
+        details: "Fashion designer Calvin Klein spent his childhood in this Norwood neighborhood home near Mosholu Parkway. He attended P.S. 80 in the Bronx before pursuing his interest in fashion design, eventually founding his iconic global brand.",
+        link: "https://en.wikipedia.org/wiki/Calvin_Klein"
+    },
+    {
+        name: "Regis Philbin's Childhood Home",
+        address: "1990 Cruger Avenue, Bronx, New York, NY",
+        year: "1940s",
+        details: "Television personality Regis Philbin grew up in this house in the Van Nest neighborhood. He attended Our Lady of Solace Elementary School and graduated from Cardinal Hayes High School in 1949. Philbin became one of television's most enduring personalities, hosting shows like 'Live! with Regis and Kathie Lee' and 'Who Wants to Be a Millionaire.'",
+        link: "https://en.wikipedia.org/wiki/Regis_Philbin"
+    },
+    {
+        name: "Harry Belafonte's Childhood Home",
+        address: "461 East 169th Street, Bronx, New York, NY",
+        year: "1940s",
+        details: "Singer, actor, and civil rights activist Harry Belafonte lived in the Bronx during part of his youth. Born in Harlem, he spent time living with his grandmother in Jamaica before returning to New York. Belafonte would go on to become a groundbreaking performer known for hits like 'Banana Boat Song (Day-O)' and for his tireless civil rights activism alongside Dr. Martin Luther King Jr.",
+        link: "https://en.wikipedia.org/wiki/Harry_Belafonte"
+    },
+    {
+        name: "Tami Mauriello's Home",
+        address: "Morris Park, Bronx, New York, NY",
+        year: "1940s",
+        details: "Professional boxer Tami Mauriello, nicknamed 'The Bronx Barkeep,' was a prominent figure in boxing during the 1940s. He challenged for world titles in both the Light-Heavyweight and Heavyweight divisions, most notably facing Joe Louis for the heavyweight championship in 1946.",
+        link: "https://en.wikipedia.org/wiki/Tami_Mauriello"
+    },
 
     // Queens
     {
