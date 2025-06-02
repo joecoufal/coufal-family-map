@@ -114,8 +114,21 @@
                     const marker = familyMarkers[result.name];
                     if (marker) {
                         bounds.extend(marker.getPosition());
-                        marker.setAnimation(google.maps.Animation.BOUNCE);
-                        setTimeout(() => marker.setAnimation(null), 2100);
+                        
+                        // Store original icon
+                        const originalIcon = marker.getIcon();
+                        
+                        // Create enlarged icon (50% larger)
+                        const enlargedIcon = {
+                            ...originalIcon,
+                            scale: originalIcon.scale * 1.5 // Make 50% larger
+                        };
+                        
+                        // Apply enlarged icon
+                        marker.setIcon(enlargedIcon);
+                        
+                        // Reset after 3 seconds
+                        setTimeout(() => marker.setIcon(originalIcon), 3000);
                     }
                 });
                 
@@ -151,9 +164,21 @@
                         searchMarker = new google.maps.Marker({
                             map: map,
                             position: results[0].geometry.location,
-                            animation: google.maps.Animation.DROP,
                             title: `Search result for: ${query}`
                         });
+                        
+                        // Create enlarged icon for search marker
+                        const searchIcon = {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            fillColor: '#FF4500', // Bright orange-red color
+                            fillOpacity: 0.9,
+                            strokeWeight: 2,
+                            strokeColor: '#FFFFFF',
+                            scale: 15 // Larger than regular markers
+                        };
+                        
+                        // Apply enlarged icon
+                        searchMarker.setIcon(searchIcon);
                         
                         // Center map on the result
                         map.setCenter(results[0].geometry.location);
