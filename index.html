@@ -213,6 +213,29 @@
             }
         }
 
+        // Create family tree box function
+        function createFamilyTreeBox() {
+            const treeBoxDiv = document.createElement('div');
+            treeBoxDiv.className = 'family-tree-box';
+            
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // More compact version for mobile
+                let treeBoxHTML = '<h3>Family Tree</h3>';
+                treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">View Tree</a>';
+                treeBoxDiv.innerHTML = treeBoxHTML;
+            } else {
+                // Desktop version
+                let treeBoxHTML = '<h3>Interactive Family Tree</h3>';
+                treeBoxHTML += '<p>View and explore the Coufal family connections</p>';
+                treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
+                treeBoxDiv.innerHTML = treeBoxHTML;
+            }
+            
+            document.body.appendChild(treeBoxDiv);
+        }
+
         // Initialize map function
         function initMap() {
             // Create map instance
@@ -230,8 +253,9 @@
                 fullscreenControl: false
             });
 
-            // Create legend
+            // Create legend and family tree box
             createLegend();
+            createFamilyTreeBox();
 
             // Add family address markers
             if (familyAddresses && familyAddresses.length > 0) {

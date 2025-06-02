@@ -18,7 +18,7 @@ html, body {
     text-align: center;
     height: 60px;
     box-sizing: border-box;
-    z-index: 1000;
+    z-index: 2;
 }
 
 .header h1 {
@@ -28,14 +28,13 @@ html, body {
 
 /* Map container */
 #map {
-    position: absolute;
+    position: fixed !important;
     top: 60px;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
     height: calc(100vh - 60px);
-    z-index: 1;
 }
 
 /* Search container */
@@ -47,7 +46,7 @@ html, body {
     display: flex;
     width: 80%;
     max-width: 500px;
-    z-index: 1001;
+    z-index: 10;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     border-radius: 4px;
     overflow: hidden;
@@ -84,7 +83,6 @@ html, body {
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     max-width: 200px;
-    z-index: 1000;
 }
 
 .legend-section {
@@ -118,6 +116,46 @@ html, body {
     border-radius: 50%;
     margin-right: 8px;
     flex-shrink: 0;
+}
+
+/* Family tree box styles */
+.family-tree-box {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 10;
+    max-width: 200px;
+}
+
+.family-tree-box h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.family-tree-box p {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.family-tree-link {
+    display: inline-block;
+    background: #4285f4;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.family-tree-link:hover {
+    background: #3367d6;
 }
 
 /* Popup styles */
@@ -204,6 +242,27 @@ html, body {
     .color-dot {
         width: 10px;
         height: 10px;
+    }
+    
+    .family-tree-box {
+        bottom: 10px;
+        left: 10px;
+        padding: 10px;
+        max-width: 160px;
+    }
+    
+    .family-tree-box h3 {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    
+    .family-tree-box p {
+        display: none;
+    }
+    
+    .family-tree-link {
+        font-size: 12px;
+        padding: 6px 10px;
     }
     
     .popup-content {
