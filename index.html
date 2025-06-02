@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="config.js"></script>
     <script src="data.js"></script>
+    <script src="notableFigures.js"></script>
 </head>
 <body>
     <div class="header">
@@ -45,6 +46,10 @@
                 <div class="legend-item">
                     <div class="color-dot" style="background-color: #808080"></div>
                     <span>Neighborhood History</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-dot" style="background-color: #505050"></div>
+                    <span>Notable Figures</span>
                 </div>
             `;
             legendHTML += '</div>';
@@ -102,8 +107,15 @@
                 context.details.toLowerCase().includes(query)
             );
             
+            // Search notable figures
+            const matchingNotableFigures = notableFigures.filter(figure => 
+                figure.name.toLowerCase().includes(query) || 
+                figure.address.toLowerCase().includes(query) || 
+                figure.details.toLowerCase().includes(query)
+            );
+            
             // Combine results
-            const allResults = [...matchingFamilyAddresses, ...matchingHistoricalContext];
+            const allResults = [...matchingFamilyAddresses, ...matchingHistoricalContext, ...matchingNotableFigures];
             
             if (allResults.length > 0) {
                 // Create bounds to fit all matching locations
@@ -420,6 +432,46 @@
                         );
                     } else {
                         console.error('Geocode was not successful for historicalContext: ' + status + ' for address: ' + context.address);
+                    }
+                });
+            });
+
+            // Add Notable Figures markers
+            notableFigures.forEach(figure => {
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ address: figure.address }, (results, status) => {
+                    if (status === 'OK') {
+                        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(figure.address)}`;
+                        
+                        const content = `
+                            <div class="popup-content">
+                                <h3>${figure.name}</h3>
+                                <p><strong>Period:</strong> ${figure.year}</p>
+                                <p>${figure.details}</p>
+                                ${figure.images ? 
+                                    figure.images.map(img => 
+                                        `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                    ).join('') 
+                                    : ''}
+                                ${figure.link ? 
+                                    `<a href="${figure.link}" class="action-button" target="_blank">
+                                        Learn More
+                                    </a>` 
+                                    : ''}
+                                <a href="${mapsUrl}" class="action-button" target="_blank">
+                                    See Current Day View on Google Maps
+                                </a>
+                            </div>
+                        `;
+
+                        createMarker(
+                            results[0].geometry.location,
+                            figure.name,
+                            '#505050', // Darker gray for notable figures
+                            content
+                        );
+                    } else {
+                        console.error('Geocode was not successful for notableFigure: ' + status + ' for address: ' + figure.address);
                     }
                 });
             });
