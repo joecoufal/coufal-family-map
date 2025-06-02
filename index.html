@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coufal Family Historical Addresses</title>
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=3">
     <!-- Load configuration and data files first -->
     <script src="config.js"></script>
     <script src="data.js"></script>
     <script src="notableFigures.js"></script>
-    <!-- Load Google Maps API -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_akhvNaRsOgD4P2zu3hGHWRliwhOP9JQ&callback=initMap">
-    </script>
 </head>
 <body>
     <div class="header">
@@ -25,6 +21,9 @@
         <input type="text" id="search-input" placeholder="Search for locations, people, or addresses...">
         <button id="search-button">Search</button>
     </div>
+
+    <div id="legend-container"></div>
+    <div id="family-tree-container"></div>
 
     <script>
         // Initialize global variables
@@ -62,7 +61,7 @@
             legendHTML += '</div>';
 
             legendDiv.innerHTML = legendHTML;
-            document.body.appendChild(legendDiv);
+            document.getElementById('legend-container').appendChild(legendDiv);
         }
 
         // Create family tree box function
@@ -85,7 +84,7 @@
                 treeBoxDiv.innerHTML = treeBoxHTML;
             }
             
-            document.body.appendChild(treeBoxDiv);
+            document.getElementById('family-tree-container').appendChild(treeBoxDiv);
         }
 
         // Create marker function
@@ -251,23 +250,14 @@
                 streetViewControl: false,
                 mapTypeControl: false,
                 fullscreenControl: false,
-                // Options to improve street rendering
-                clickableIcons: false,
-                disableDefaultUI: false,
-                draggableCursor: 'default',
-                draggingCursor: 'move',
-                keyboardShortcuts: true,
-                mapId: undefined,
-                maxZoom: undefined,
-                minZoom: undefined,
-                noClear: false,
-                scrollwheel: true,
-                tilt: 0 // Set to 0 for better street rendering
+                tilt: 0
             });
 
-            // Create legend and family tree box
-            createLegend();
-            createFamilyTreeBox();
+            // Create legend and family tree box after a slight delay to ensure map is fully loaded
+            setTimeout(() => {
+                createLegend();
+                createFamilyTreeBox();
+            }, 100);
 
             // Add family address markers
             if (familyAddresses && familyAddresses.length > 0) {
@@ -414,6 +404,18 @@
             console.error('Google Maps authentication failed');
             document.getElementById('map').innerHTML = '<div style="text-align: center; padding: 20px;">Error loading Google Maps. Please try again later.</div>';
         };
+        
+        // Load Google Maps API
+        function loadGoogleMapsAPI() {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyA_akhvNaRsOgD4P2zu3hGHWRliwhOP9JQ&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+        
+        // Load the API after the page is fully loaded
+        window.onload = loadGoogleMapsAPI;
     </script>
 </body>
 </html>
