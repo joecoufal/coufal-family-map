@@ -1,6 +1,6 @@
-/* Ensure html does not show scrollbars unnecessarily, but allow body to scroll if needed */
+/* Existing styles */
 html {
-    /* overflow: hidden; /* Removed this as it's too broad */
+    height: 100%;
 }
 
 * {
@@ -15,7 +15,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Allows body to scroll if overall page content is too tall */
+    overflow-y: auto;
 }
 
 .header {
@@ -25,11 +25,18 @@ body {
     text-align: center;
     font-family: 'Georgia', serif;
     border-bottom: 3px solid #c9b2a6;
+    z-index: 2;
 }
 
 .header h1 {
     font-weight: normal;
     letter-spacing: 1px;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    position: relative;
 }
 
 #map {
@@ -39,10 +46,91 @@ body {
     min-height: 500px;
 }
 
+/* Family Tree Sidebar */
+.family-tree-sidebar {
+    width: 300px;
+    background: #f5f1e6;
+    border-left: 1px solid #c9b2a6;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.family-tree-sidebar.collapsed {
+    transform: translateX(100%);
+}
+
+.sidebar-toggle {
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #523735;
+    color: #f5f1e6;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px 0 0 4px;
+    font-size: 20px;
+}
+
+.family-tree {
+    padding: 20px;
+}
+
+.family-tree h2 {
+    color: #523735;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+    text-align: center;
+}
+
+.family-group {
+    margin-bottom: 30px;
+    border: 1px solid #c9b2a6;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.family-group h3 {
+    color: #523735;
+    margin-bottom: 15px;
+    font-family: 'Georgia', serif;
+    border-bottom: 1px solid #c9b2a6;
+    padding-bottom: 5px;
+}
+
+.person {
+    padding: 8px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.person:hover {
+    background-color: rgba(82, 55, 53, 0.1);
+}
+
+.person.highlighted {
+    background-color: rgba(82, 55, 53, 0.2);
+}
+
+.person-details {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Legend styles */
 .legend {
     position: absolute;
     bottom: 30px;
-    right: 10px;
+    right: 310px;
     background: #f5f1e6;
     padding: 15px;
     border-radius: 4px;
@@ -52,6 +140,11 @@ body {
     max-width: 220px;
     border: 1px solid #c9b2a6;
     font-family: 'Georgia', serif;
+    transition: right 0.3s ease;
+}
+
+.legend.sidebar-collapsed {
+    right: 10px;
 }
 
 .legend h3 {
@@ -83,35 +176,34 @@ body {
     border: 1px solid rgba(82, 55, 53, 0.2);
 }
 
-/* Google Maps InfoWindow Content Wrapper Styling */
+/* Info Window styles */
 .gm-style-iw-c {
-    padding: 0 !important; /* Remove default padding */
+    padding: 0 !important;
 }
 
 .gm-style-iw-d,
-.gm-style-iw-d > div { /* Target the direct child div as well */
-    overflow: visible !important; /* Allow content to be its natural height, no scrollbars here */
-    height: auto !important; /* Ensure height adjusts to content */
+.gm-style-iw-d > div {
+    overflow: visible !important;
+    height: auto !important;
 }
 
-/* Info Window Styles */
 .popup-content {
     padding: 24px;
     max-width: 360px;
     background: #ffffff;
     color: #2f2f2f;
-    border-radius: 6px; /* This will be the visible border radius */
+    border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     font-family: Georgia, 'Times New Roman', serif;
     position: relative;
-    overflow-y: auto; /* THIS is where the scrollbar should appear if content is too tall */
-    max-height: 450px; /* Fixed max height for the popup content area */
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: rgba(0,0,0,0.2) transparent; /* For Firefox */
+    overflow-y: auto;
+    max-height: 450px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
 }
 
 .popup-content::-webkit-scrollbar {
-    width: 5px; /* Slightly wider scrollbar for WebKit browsers */
+    width: 5px;
 }
 
 .popup-content::-webkit-scrollbar-track {
@@ -161,7 +253,7 @@ body {
 }
 
 .popup-content img {
-    width: calc(100% + 48px); /* To make image full-bleed considering padding */
+    width: calc(100% + 48px);
     margin: 24px -24px;
     max-width: calc(100% + 48px);
     display: block;
@@ -201,8 +293,7 @@ body {
     background-color: #000000;
 }
 
-/* Close button */
-.gm-ui-hover-effect { /* Google Maps API specific class for the close button */
+.gm-ui-hover-effect {
     opacity: 0.6 !important;
     top: 12px !important;
     right: 12px !important;
@@ -210,7 +301,7 @@ body {
     height: 20px !important;
 }
 
-.gm-ui-hover-effect img { /* Icon inside the close button */
+.gm-ui-hover-effect img {
     width: 12px !important;
     height: 12px !important;
 }
@@ -220,7 +311,11 @@ body {
 }
 
 /* Mobile Responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+    .family-tree-sidebar {
+        width: 100%;
+    }
+
     .legend {
         bottom: 10px;
         right: 10px;
@@ -231,7 +326,7 @@ body {
     .popup-content {
         max-width: 280px;
         padding: 20px;
-        max-height: 350px; /* Adjust max-height for smaller screens */
+        max-height: 350px;
     }
     
     .popup-content h3 {
@@ -243,7 +338,7 @@ body {
     }
     
     .popup-content img {
-        width: calc(100% + 40px); /* Adjust for smaller padding */
+        width: calc(100% + 40px);
         margin: 20px -20px;
         max-width: calc(100% + 40px);
     }

@@ -1,0 +1,624 @@
+0 HEAD
+1 SUBM @SUBM1@
+1 SOUR Ancestry.com Family Trees
+2 NAME Ancestry.com Member Trees
+2 VERS 2025.04
+2 _TREE Coufal Family Tree
+3 RIN 204369502
+3 _ENV prd
+2 CORP Ancestry.com
+3 PHON 801-705-7000
+3 WWW www.ancestry.com
+3 ADDR 1300 West Traverse Parkway
+4 CONT Lehi, UT  84043
+4 CONT USA
+1 DATE 31 May 2025
+2 TIME 18:30:53
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @SUBM1@ SUBM
+1 NAME Ancestry.com Member Trees Submitter
+0 @I342677484484@ INDI
+1 NAME Joe /Coufal/
+2 GIVN Joe
+2 SURN Coufal
+1 SEX M
+1 FAMC @F10@
+1 BIRT
+2 DATE 1992
+0 @I342677484566@ INDI
+1 NAME donna /krotman/
+2 GIVN donna
+2 SURN krotman
+1 SEX F
+1 FAMC @F1@
+1 FAMS @F10@
+1 BIRT
+2 DATE 1954
+2 PLAC Pittsburgh, Allegheny, Pennsylvania, USA
+1 RESI
+2 PLAC Pittsburgh, Allegheny, Pennsylvania, USA
+0 @I342677484605@ INDI
+1 NAME robert /Coufal/
+2 GIVN robert
+2 SURN Coufal
+1 SEX M
+1 FAMC @F7@
+1 FAMS @F10@
+1 BIRT
+2 DATE 1957
+2 PLAC Merrick, Nassau, New York, USA
+1 RESI
+2 PLAC Merrick, Nassau, New York, USA
+0 @I342677484676@ INDI
+1 NAME Claire /Reckler/
+2 GIVN Claire
+2 SURN Reckler
+1 SEX F
+1 FAMC @F3@
+1 FAMS @F1@
+1 BIRT
+2 DATE 21 Jan 1925
+2 PLAC NY Kings, New York
+1 RESI
+2 PLAC Bradenton, Manatee, Florida, USA
+1 DEAT
+2 DATE 11 December 2000
+2 PLAC Cincinnati, Clermont, Ohio, USA
+0 @I342677484684@ INDI
+1 NAME Elias /Krotman/
+2 GIVN Elias
+2 SURN Krotman
+1 SEX M
+1 FAMC @F6@
+1 FAMS @F1@
+1 BIRT
+2 DATE 08 Nov 1916
+2 PLAC New York, New York, USA
+1 DEAT
+2 DATE 29 Oct 1980
+2 PLAC Frederick Frederick Maryland US
+0 @I342677484712@ INDI
+1 NAME Edna Elizabeth /Beasley/
+2 GIVN Edna Elizabeth
+2 SURN Beasley
+1 SEX F
+1 FAMC @F5@
+1 FAMS @F7@
+1 BIRT
+2 DATE 18 Jul 1928
+2 PLAC Astoria Queens, New York
+1 RESI
+2 PLAC Merrick, Nassau, New York, USA
+1 DEAT
+2 DATE 25 Feb 2004
+2 PLAC Merrick, Nassau, New York, United States of America
+0 @I342677484718@ INDI
+1 NAME Donald Sebastian /Coufal/
+2 GIVN Donald Sebastian
+2 SURN Coufal
+1 SEX M
+1 FAMC @F2@
+1 FAMS @F7@
+1 BIRT
+2 DATE 7 May 1927
+2 PLAC Queens, New York City, New York, USA
+1 DEAT
+2 DATE 14 Feb 1989
+2 PLAC New York, New York, New York, USA
+0 @I342677484769@ INDI
+1 NAME Harry David /Reckler/
+2 GIVN Harry David
+2 SURN Reckler
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::138166538
+1 SEX M
+1 FAMC @F14@
+1 FAMS @F3@
+1 BIRT
+2 DATE 1897
+2 PLAC Kamionka Strumilowa, L'viv, Ukraine
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::138166538
+1 EVEN
+2 TYPE Arrival
+2 DATE 1909
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::138166538
+1 RESI
+2 DATE 1910
+2 PLAC Manhattan Ward 13, New York, New York, USA
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::138166538
+2 NOTE Marital Status: Single; Relation to Head of House: Son
+1 DEAT
+2 DATE 14 Jul 1953
+2 PLAC New York, New York, USA
+1 SOUR @S1323504351@
+2 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+2 _APID 1,7884::138166538
+0 @I342677484814@ INDI
+1 NAME Anna /Nitzberg/
+2 GIVN Anna
+2 SURN Nitzberg
+1 SEX F
+1 FAMS @F3@
+1 BIRT
+2 DATE 10 Mar 1901
+2 PLAC Brest/Grodnos, Russia
+1 DEAT
+2 DATE 1 May 1974
+2 PLAC Miami, Miami-dade, Florida, United States of America
+0 @I342677485405@ INDI
+1 NAME Joseph L /Krotman/
+2 GIVN Joseph L
+2 SURN Krotman
+1 SEX M
+1 FAMC @F4@
+1 FAMS @F6@
+1 BIRT
+2 DATE 28 Jul 1893
+2 PLAC Oddessa, Russia
+1 DEAT
+2 DATE 20 November 1957
+2 PLAC New York, USA
+0 @I342677485891@ INDI
+1 NAME Fannie /Hermann/
+2 GIVN Fannie
+2 SURN Hermann
+1 SEX F
+1 FAMC @F8@
+1 FAMS @F6@
+1 BIRT
+2 DATE abt 1889
+2 PLAC Romania
+1 DEAT
+2 DATE 30 May 1925
+2 PLAC Bronx, New York, USA
+0 @I342677486356@ INDI
+1 NAME Louis /Krotman/
+2 GIVN Louis
+2 SURN Krotman
+1 SEX M
+1 FAMS @F4@
+1 BIRT
+2 DATE 1852
+2 PLAC Yarmolintsy, Khmelnystskyi, Ukraine
+1 DEAT
+2 DATE 6 September 1928
+2 PLAC New York City, New York, USA
+0 @I342677486369@ INDI
+1 NAME Rose /Krotman/
+2 GIVN Rose
+2 SURN Krotman
+1 SEX F
+1 FAMS @F4@
+1 BIRT
+2 DATE 1860
+2 PLAC Yarmolintsy, Khmelnystskyi, Ukraine
+1 DEAT
+2 DATE 25 Jun 1935
+2 PLAC New York City, New York, USA
+0 @I342677486382@ INDI
+1 NAME Joseph /Hermann/
+2 GIVN Joseph
+2 SURN Hermann
+2 SOUR @S1323405674@
+3 PAGE New York State Archives; Albany, New York; State Population Census Schedules, 1905; Election District: A.D. 16 E.D. 05; City: Manhattan; County: New York; Page: 114
+3 _APID 1,7364::2500447
+1 SEX M
+1 FAMS @F8@
+1 BIRT
+2 DATE 1860
+2 PLAC Galatz, Galati, Romania
+2 SOUR @S1323405674@
+3 PAGE New York State Archives; Albany, New York; State Population Census Schedules, 1905; Election District: A.D. 16 E.D. 05; City: Manhattan; County: New York; Page: 114
+3 _APID 1,7364::2500447
+1 RESI
+2 DATE 1905
+2 PLAC Manhattan, New York, New York, USA
+2 SOUR @S1323405674@
+3 PAGE New York State Archives; Albany, New York; State Population Census Schedules, 1905; Election District: A.D. 16 E.D. 05; City: Manhattan; County: New York; Page: 114
+3 _APID 1,7364::2500447
+2 NOTE Relation to Head of House: Head
+1 DEAT
+2 DATE 25 Jul 1919
+2 PLAC Bronx, New York, USA
+1 SOUR @S1323405674@
+2 PAGE New York State Archives; Albany, New York; State Population Census Schedules, 1905; Election District: A.D. 16 E.D. 05; City: Manhattan; County: New York; Page: 114
+2 _APID 1,7364::2500447
+0 @I342677486392@ INDI
+1 NAME Hannah /Riegel/
+2 GIVN Hannah
+2 SURN Riegel
+1 SEX F
+1 FAMS @F8@
+1 FAMS @F13@
+1 BIRT
+2 DATE 1858
+2 PLAC Galatz, Galati, Romania
+1 DEAT
+2 DATE 1900
+2 PLAC Galatz, Galati, Romania
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051929458:1030:106444569
+0 @I342677486759@ INDI
+1 NAME Minna /Hermann/
+2 GIVN Minna
+2 SURN Hermann
+1 SEX F
+1 FAMC @F13@
+1 BIRT
+2 DATE abt 1899
+2 PLAC Galatz, Galati, Romania
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051929439:1030:106444569
+0 @I342677486760@ INDI
+1 NAME Annette /Hermann/
+2 GIVN Annette
+2 SURN Hermann
+1 SEX F
+1 FAMC @F13@
+1 BIRT
+2 DATE 23 Dec 1886
+2 PLAC Galatz, Galati, Romania
+1 DEAT
+2 DATE Sep 1973
+2 PLAC Long Beach, Nassau, New York, USA
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051930591:1030:106444569
+0 @I342677486761@ INDI
+1 NAME Regina /Hermann/
+2 GIVN Regina
+2 SURN Hermann
+1 SEX F
+1 FAMC @F13@
+1 BIRT
+2 DATE abt 1890
+2 PLAC Galatz, Galati, Romania
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051930592:1030:106444569
+0 @I342677486764@ INDI
+1 NAME Louis Marvin /Hermann/
+2 GIVN Louis Marvin
+2 SURN Hermann
+1 SEX M
+1 FAMC @F13@
+1 BIRT
+2 DATE 22 Jul 1884
+2 PLAC Galatz, Galati, Romania
+1 DEAT
+2 DATE JAN 1953
+2 PLAC Queens County, New York, USA
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051930594:1030:106444569
+0 @I342677486765@ INDI
+1 NAME Toni /Hermann/
+2 GIVN Toni
+2 SURN Hermann
+1 SEX F
+1 FAMC @F13@
+1 BIRT
+2 DATE 28 Jan 1885
+2 PLAC Galatz, Galati, Romania
+1 DEAT
+2 DATE 13 Sep 1967
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051930595:1030:106444569
+0 @I342677486766@ INDI
+1 NAME Paul J /Hermann/
+2 GIVN Paul J
+2 SURN Hermann
+1 SEX M
+1 FAMC @F13@
+1 BIRT
+2 DATE 28 Apr 1891
+2 PLAC Galatz, Galati, Romania
+1 DEAT
+2 DATE 13 Oct 1979
+2 PLAC Dade, Florida, United States
+1 SOUR @S1323405693@
+2 PAGE Ancestry Family Tree
+2 _APID 310051930596:1030:106444569
+0 @I342677491313@ INDI
+1 NAME Walter John /Beasley/
+2 GIVN Walter John
+2 SURN Beasley
+1 SEX M
+1 FAMC @F15@
+1 FAMS @F5@
+1 BIRT
+2 DATE 24 Jan 1896
+2 PLAC Nyc, New York
+1 DEAT
+2 DATE Oct 1980
+2 PLAC Massapequa, Nassau, New York, United States of America
+0 @I342678490451@ INDI
+1 NAME Emma Rose /McKee/
+2 GIVN Emma Rose
+2 SURN McKee
+1 SEX F
+1 FAMC @F9@
+1 FAMS @F5@
+1 BIRT
+2 DATE 1 Oct 1899
+2 PLAC New York
+1 DEAT
+2 DATE 8 Jun 1985
+2 PLAC Morehead City, Carteret, North Carolina, USA
+0 @I342678490454@ INDI
+1 NAME Anna V /Buckley/
+2 GIVN Anna V
+2 SURN Buckley
+1 SEX F
+1 FAMC @F11@
+1 FAMS @F2@
+1 BIRT
+2 DATE 21 Jul 1898
+2 PLAC New York
+1 DEAT
+2 DATE 20 Nov 1969
+2 PLAC Brattleboro, Windham, Vermont, USA
+0 @I342678490456@ INDI
+1 NAME Frank J /Coufal/
+2 GIVN Frank J
+2 SURN Coufal
+1 SEX M
+1 FAMC @F12@
+1 FAMS @F2@
+1 BIRT
+2 DATE 22 Oct 1897
+2 PLAC New York
+1 DEAT
+2 DATE 12 March 1963
+2 PLAC New York, New York, USA
+0 @I342678490503@ INDI
+1 NAME Thomas /Buckley/
+2 GIVN Thomas
+2 SURN Buckley
+1 SEX M
+1 FAMS @F11@
+1 BIRT
+2 DATE abt 1873
+2 PLAC Ireland
+0 @I342678490506@ INDI
+1 NAME Mary A /Newman/
+2 GIVN Mary A
+2 SURN Newman
+1 SEX F
+1 FAMS @F11@
+1 BIRT
+2 DATE abt 1870
+2 PLAC Ireland
+0 @I342678490539@ INDI
+1 NAME Antoinette /Hlavacek/
+2 GIVN Antoinette
+2 SURN Hlavacek
+1 SEX F
+1 FAMS @F12@
+1 BIRT
+2 DATE abt 1877
+2 PLAC New York City
+1 DEAT
+2 DATE 17 Mar 1942
+2 PLAC Queens, New York, USA
+0 @I342678490657@ INDI
+1 NAME Sebastian /Coufal/
+2 GIVN Sebastian
+2 SURN Coufal
+1 SEX M
+1 FAMS @F12@
+1 BIRT
+2 DATE 1868
+2 PLAC Czeslovokia
+0 @I342678490698@ INDI
+1 NAME Edward /McKee/
+2 GIVN Edward
+2 SURN McKee
+1 SEX M
+1 FAMC @F16@
+1 FAMS @F9@
+1 BIRT
+2 DATE Dec 1853
+2 PLAC New York
+1 DEAT
+2 DATE 29 February 1936
+2 PLAC Queens, New York, USA
+0 @I342678490712@ INDI
+1 NAME Annie Theresa /Devine/
+2 GIVN Annie Theresa
+2 SURN Devine
+1 SEX F
+1 FAMS @F9@
+1 BIRT
+2 DATE 25 Apr 1861
+2 PLAC Trenton, Mercer, New Jersey
+1 DEAT
+2 DATE 7 Jul 1926
+2 PLAC Queens, New York, USA
+0 @I342678490909@ INDI
+1 NAME John Dennis /McKee/
+2 GIVN John Dennis
+2 SURN McKee
+1 SEX M
+1 FAMS @F16@
+1 BIRT
+2 DATE About 1816
+2 PLAC Pennsylvania, USA
+1 DEAT
+2 DATE 06 Nov 1896
+2 PLAC Jersey City, NJ
+0 @I342678490983@ INDI
+1 NAME Elizabeth /Hassett/
+2 GIVN Elizabeth
+2 SURN Hassett
+1 SEX F
+1 FAMS @F15@
+1 BIRT
+2 DATE Nov 1864
+2 PLAC New York
+1 OBJE @O1@
+2 _PRIM Y
+0 @I342678491474@ INDI
+1 NAME Chaje /Keckler/
+2 GIVN Chaje
+2 SURN Keckler
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::18957412
+1 SEX F
+1 FAMS @F14@
+1 BIRT
+2 DATE 1868
+2 PLAC Austria
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::18957412
+1 EVEN
+2 TYPE Arrival
+2 DATE 1909
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::18957412
+1 RESI
+2 DATE 1910
+2 PLAC Manhattan Ward 13, New York, New York, USA
+2 SOUR @S1323504351@
+3 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+3 _APID 1,7884::18957412
+2 NOTE Marital Status: Widowed; Relation to Head of House: Head
+1 SOUR @S1323504351@
+2 PAGE Year: 1910; Census Place: Manhattan Ward 13, New York, New York; Roll: T624_1028; Page: 18b; Enumeration District: 0748; FHL microfilm: 1375041
+2 _APID 1,7884::18957412
+0 @F1@ FAM
+1 HUSB @I342677484684@
+1 WIFE @I342677484676@
+1 CHIL @I342677484566@
+0 @F2@ FAM
+1 HUSB @I342678490456@
+1 WIFE @I342678490454@
+1 CHIL @I342677484718@
+0 @F3@ FAM
+1 HUSB @I342677484769@
+1 WIFE @I342677484814@
+1 CHIL @I342677484676@
+0 @F4@ FAM
+1 HUSB @I342677486356@
+1 WIFE @I342677486369@
+1 CHIL @I342677485405@
+0 @F5@ FAM
+1 HUSB @I342677491313@
+1 WIFE @I342678490451@
+1 CHIL @I342677484712@
+0 @F6@ FAM
+1 HUSB @I342677485405@
+1 WIFE @I342677485891@
+1 CHIL @I342677484684@
+0 @F7@ FAM
+1 HUSB @I342677484718@
+1 WIFE @I342677484712@
+1 CHIL @I342677484605@
+0 @F8@ FAM
+1 HUSB @I342677486382@
+1 WIFE @I342677486392@
+1 CHIL @I342677485891@
+0 @F9@ FAM
+1 HUSB @I342678490698@
+1 WIFE @I342678490712@
+1 CHIL @I342678490451@
+0 @F10@ FAM
+1 HUSB @I342677484605@
+1 WIFE @I342677484566@
+1 CHIL @I342677484484@
+0 @F11@ FAM
+1 HUSB @I342678490503@
+1 WIFE @I342678490506@
+1 CHIL @I342678490454@
+0 @F12@ FAM
+1 HUSB @I342678490657@
+1 WIFE @I342678490539@
+1 CHIL @I342678490456@
+0 @F13@ FAM
+1 WIFE @I342677486392@
+1 CHIL @I342677486764@
+1 CHIL @I342677486765@
+1 CHIL @I342677486760@
+1 CHIL @I342677486761@
+1 CHIL @I342677486766@
+1 CHIL @I342677486759@
+0 @F14@ FAM
+1 WIFE @I342678491474@
+1 CHIL @I342677484769@
+0 @F15@ FAM
+1 WIFE @I342678490983@
+1 CHIL @I342677491313@
+0 @F16@ FAM
+1 HUSB @I342678490909@
+1 CHIL @I342678490698@
+0 @O1@ OBJE
+1 FILE
+2 FORM jpg
+3 TYPE image
+3 _MTYPE portrait
+3 _STYPE jpeg
+3 _SIZE 451945
+3 _WDTH 1116
+3 _HGHT 1692
+2 TITL Mahoney Family
+1 _OID b9350281-82c8-4fb8-996b-0799f29c8703
+1 _META <metadataxml><cemetery /><transcription /></metadataxml>
+1 _CREA 2025-05-31 03:55:44.132
+1 _USER /sVFjdK83SYTTf2cFnFNWEeCLCLCaSNgTw3ArBfrnT0EvfSpd6/6/2Z0Vz6f84mnxPTCDtQ4FbX6PKxZuKn0lA==
+2 _ENCR 1
+1 _CLON
+2 _TID 15818228
+2 _PID 470004897
+2 _OID 7fbf3da1-8f28-4927-9086-ad2f13c9d927
+2 _USER CVo33U5eI2foowmTCklpOdfF4wER83KLSyR02+u7AeY9PPnwa9naUHr1IKK3Go7NZYNG0IX22nhA4Hg9gDSxlg==
+3 _ENCR 1
+2 _DATE 2012-03-11 20:39:41.000
+1 _ORIG u
+1 _MSER
+2 _LKID 7fbf3da1-8f28-4927-9086-ad2f13c9d927
+1 _ATL N
+0 @S1323405674@ SOUR
+1 TITL New York, U.S., State Census, 1905
+1 AUTH Ancestry.com
+1 PUBL Ancestry.com Operations, Inc.
+2 DATE 2014
+2 PLAC Provo, UT, USA
+1 _APID 1,7364::0
+1 REPO @R1206083757@
+1 NOTE New York, State Census, 1905. Population Schedules . Various County Clerk Offices, New York.
+0 @S1323405693@ SOUR
+1 TITL Ancestry Family Trees
+1 PUBL Online publication - Provo, UT, USA: Ancestry.com.  Original data:  Family Tree files submitted by Ancestry members.
+1 _APID 1,1030::0
+1 REPO @R1206083757@
+1 NOTE <note>This information comes from 1 or more individual Ancestry Family Tree files. This source citation points you to a current version of those files.  Note:  The owners of these tree files may have removed or changed information since this sourc
+2 CONC e citation was created.</note>
+0 @S1323504351@ SOUR
+1 TITL 1910 United States Federal Census
+1 AUTH Ancestry.com
+1 PUBL Ancestry.com Operations Inc
+2 DATE 2006
+2 PLAC Lehi, UT, USA
+1 _APID 1,7884::0
+1 REPO @R1206083757@
+1 NOTE Thirteenth Census of the United States, 1910 (NARA microfilm publication T624, 1,178 rolls). Records of the Bureau of the Census, Record Group 29. National Archives, Washington, D.C. For details on the contents of the film numbers, visit the follow
+2 CONC ing NARA web page: &lt;a href="http://www.archives.gov/research/census/publications-microfilm-catalogs-census/1910/index.html" target="_blank"&gt;NARA&lt;/a&gt;.
+0 @R1206083757@ REPO
+1 NAME Ancestry.com
+0 TRLR
