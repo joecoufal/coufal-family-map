@@ -41,20 +41,103 @@
     
     
     
-    /* Mobile responsive styles for legend and family tree box */
+    
+    /* Mobile responsive styles for better positioning without scrolling */
     @media (max-width: 768px) {
+        /* Make header smaller */
+        .header {
+            height: 40px;
+            padding: 0.5rem;
+        }
+        
+        .header h1 {
+            font-size: 1.2rem;
+        }
+        
+        /* Adjust map height to account for smaller header */
+        #map {
+            height: calc(100vh - 40px);
+        }
+        
+        /* Position search bar at the top */
+        .search-container {
+            top: 45px;
+            width: 90%;
+            z-index: 101; /* Ensure it's above other elements */
+        }
+        
+        #search-input {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        
+        #search-button {
+            padding: 0 8px;
+            font-size: 12px;
+        }
+        
+        /* Position legend at bottom right */
         .legend {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            max-width: 150px;
-            padding: 8px;
-            max-height: 200px;
+            max-width: 130px;
+            padding: 5px;
+            max-height: 150px;
             overflow-y: auto;
             z-index: 100;
-            font-size: 11px;
-            opacity: 0.9;
+            font-size: 10px;
+            opacity: 0.95;
+            border: 1px solid #ddd;
         }
+        
+        .legend-section h3 {
+            margin: 0 0 3px 0;
+            font-size: 11px;
+        }
+        
+        .legend-item {
+            margin-bottom: 2px;
+        }
+        
+        .color-dot {
+            width: 8px;
+            height: 8px;
+            margin-right: 4px;
+        }
+        
+        /* Position family tree box at bottom left */
+        .family-tree-box {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            max-width: 130px;
+            padding: 5px 8px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            opacity: 0.95;
+            border: 1px solid #ddd;
+        }
+        
+        .family-tree-box h3 {
+            margin: 0;
+            font-size: 11px;
+        }
+        
+        .family-tree-box p {
+            display: none;
+        }
+        
+        .family-tree-link {
+            margin-top: 0;
+            margin-left: 5px;
+            padding: 4px 6px;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+    }
+
         
         .legend-section h3 {
             margin: 0 0 5px 0;
@@ -283,17 +366,29 @@
 
     
     
+    
     function createFamilyTreeBox() {
         const treeBoxDiv = document.createElement('div');
         treeBoxDiv.className = 'family-tree-box';
         
-        let treeBoxHTML = '<h3>Family Tree</h3>';
-        treeBoxHTML += '<p>View the interactive Coufal family tree</p>';
-        treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
+        const isMobile = window.innerWidth <= 768;
         
-        treeBoxDiv.innerHTML = treeBoxHTML;
+        if (isMobile) {
+            // More compact version for mobile
+            let treeBoxHTML = '<h3>Tree</h3>';
+            treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">View</a>';
+            treeBoxDiv.innerHTML = treeBoxHTML;
+        } else {
+            // Desktop version - unchanged
+            let treeBoxHTML = '<h3>Family Tree</h3>';
+            treeBoxHTML += '<p>View the interactive Coufal family tree</p>';
+            treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
+            treeBoxDiv.innerHTML = treeBoxHTML;
+        }
+        
         map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
     }
+
 
 
 
