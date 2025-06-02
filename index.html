@@ -44,11 +44,11 @@
             legendHTML += '</div><div class="legend-section"><h3>Historical Context</h3>';
             legendHTML += `
                 <div class="legend-item">
-                    <div class="color-dot" style="background-color: #808080"></div>
+                    <div class="color-dot" style="background-color: #A0A0A0"></div>
                     <span>Neighborhood History</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background-color: #404040"></div>
+                    <div class="color-dot" style="background-color: #303030"></div>
                     <span>Notable Figures</span>
                 </div>
             `;
@@ -427,7 +427,7 @@
                         createMarker(
                             results[0].geometry.location,
                             context.name,
-                            '#808080',
+                            '#A0A0A0',
                             content
                         );
                     } else {
@@ -448,11 +448,6 @@
                                 <h3>${figure.name}</h3>
                                 <p><strong>Period:</strong> ${figure.year}</p>
                                 <p>${figure.details}</p>
-                                ${figure.images ? 
-                                    figure.images.map(img => 
-                                        `<img src="${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
-                                    ).join('') 
-                                    : ''}
                                 ${figure.link ? 
                                     `<a href="${figure.link}" class="action-button" target="_blank">
                                         Learn More
@@ -467,7 +462,7 @@
                         createMarker(
                             results[0].geometry.location,
                             figure.name,
-                            '#404040', // Darker gray for notable figures
+                            '#303030', // Darker gray for notable figures
                             content
                         );
                     } else {
