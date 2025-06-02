@@ -198,7 +198,7 @@ const familyAddresses = [
         year: 1935,
         family: "Krotman",
         details: "Eli Krotman attended Townsend Harris High School, which was located in the 23rd Street Building of City College (now part of Baruch College). The school was known for its rigorous academics and produced many distinguished alumni.",
-        image: "townsend_harris_hs_eli_krotman.jpg",
+        images: ["townsend_harris_hs_eli_krotman.jpg", "eli krotman townsend harris.png"],
         link: "https://blogs.baruch.cuny.edu/baruchcollegearchives/?p=282"
     },
     {
