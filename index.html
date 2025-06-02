@@ -44,19 +44,112 @@
     
     
     
-    /* Mobile responsive styles - final adjustments */
+    
+    /* Mobile responsive styles - fixed version */
     @media (max-width: 768px) {
         /* Header */
         .header {
             height: 40px;
             padding: 0.5rem;
-            box-sizing: border-box;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
         }
+        
+        .header h1 {
+            font-size: 1.2rem;
+        }
+        
+        /* Map - restore original styling */
+        #map {
+            height: calc(100vh - 40px);
+        }
+        
+        /* Search bar */
+        .search-container {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            z-index: 101;
+        }
+        
+        #search-input {
+            padding: 8px 10px;
+            font-size: 14px;
+        }
+        
+        #search-button {
+            padding: 0 10px;
+            font-size: 14px;
+        }
+        
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            width: auto;
+            max-width: 120px;
+            padding: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 100;
+            font-size: 11px;
+            opacity: 0.95;
+            border: 1px solid #ddd;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .legend-section h3 {
+            margin: 0 0 3px 0;
+            font-size: 11px;
+        }
+        
+        .legend-item {
+            margin-bottom: 2px;
+        }
+        
+        .color-dot {
+            width: 8px;
+            height: 8px;
+            margin-right: 4px;
+        }
+        
+        /* Family tree box */
+        .family-tree-box {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            width: auto;
+            max-width: 120px;
+            padding: 8px;
+            z-index: 100;
+            opacity: 0.95;
+            border: 1px solid #ddd;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+        }
+        
+        .family-tree-box h3 {
+            margin: 0;
+            font-size: 11px;
+        }
+        
+        .family-tree-box p {
+            display: none;
+        }
+        
+        .family-tree-link {
+            margin-top: 0;
+            margin-left: 8px;
+            padding: 4px 8px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+    }
+
         
         .header h1 {
             font-size: 1.2rem;
@@ -582,6 +675,7 @@
     
     
     
+    
     function createFamilyTreeBox() {
         const treeBoxDiv = document.createElement('div');
         treeBoxDiv.className = 'family-tree-box';
@@ -593,20 +687,17 @@
             let treeBoxHTML = '<h3>Tree</h3>';
             treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">View</a>';
             treeBoxDiv.innerHTML = treeBoxHTML;
-            
-            // For mobile, add directly to the body instead of as a map control
-            document.body.appendChild(treeBoxDiv);
         } else {
             // Desktop version - unchanged
             let treeBoxHTML = '<h3>Family Tree</h3>';
             treeBoxHTML += '<p>View the interactive Coufal family tree</p>';
             treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
             treeBoxDiv.innerHTML = treeBoxHTML;
-            
-            // For desktop, use map controls
-            map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
         }
+        
+        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
     }
+
 
 
 
