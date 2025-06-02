@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coufal Family Historical Addresses</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1">
     <!-- Load configuration and data files first -->
     <script src="config.js"></script>
     <script src="data.js"></script>
@@ -63,6 +63,29 @@
 
             legendDiv.innerHTML = legendHTML;
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
+        }
+
+        // Create family tree box function
+        function createFamilyTreeBox() {
+            const treeBoxDiv = document.createElement('div');
+            treeBoxDiv.className = 'family-tree-box';
+            
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // More compact version for mobile
+                let treeBoxHTML = '<h3>Tree</h3>';
+                treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">View</a>';
+                treeBoxDiv.innerHTML = treeBoxHTML;
+            } else {
+                // Desktop version
+                let treeBoxHTML = '<h3>Interactive Family Tree</h3>';
+                treeBoxHTML += '<p>View and explore the Coufal family connections</p>';
+                treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
+                treeBoxDiv.innerHTML = treeBoxHTML;
+            }
+            
+            document.body.appendChild(treeBoxDiv);
         }
 
         // Create marker function
@@ -211,37 +234,6 @@
                     }
                 });
             }
-        }
-
-        // Create family tree box function
-function createFamilyTreeBox() {
-    const treeBoxDiv = document.createElement("div");
-    treeBoxDiv.className = "family-tree-box";
-    
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // More compact version for mobile
-        let treeBoxHTML = "<h3>Tree</h3>";
-        treeBoxHTML += "<a href="family-tree.html" class="family-tree-link">View</a>";
-        treeBoxDiv.innerHTML = treeBoxHTML;
-    } else {
-        // Desktop version
-        let treeBoxHTML = "<h3>Interactive Family Tree</h3>";
-        treeBoxHTML += "<p>View and explore the Coufal family connections</p>";
-        treeBoxHTML += "<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>";
-        treeBoxDiv.innerHTML = treeBoxHTML;
-    }
-    
-    document.body.appendChild(treeBoxDiv);
-}                // Desktop version
-                let treeBoxHTML = '<h3>Interactive Family Tree</h3>';
-                treeBoxHTML += '<p>View and explore the Coufal family connections</p>';
-                treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
-                treeBoxDiv.innerHTML = treeBoxHTML;
-            }
-            
-            document.body.appendChild(treeBoxDiv);
         }
 
         // Initialize map function
