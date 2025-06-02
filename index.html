@@ -5,628 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coufal Family Historical Addresses</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Load configuration and data files first -->
     <script src="config.js"></script>
     <script src="data.js"></script>
     <script src="notableFigures.js"></script>
-    <!-- Fix script for map initialization -->
-    <script src="fix-map.js"></script>
-    <title>Coufal Family Historical Addresses</title>
-    <link rel="stylesheet" href="styles.css">
-<style>
-    
-    .family-tree-box {
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        background: white;
-        padding: 10px;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        z-index: 100;
-        max-width: 200px;
-    }
-    
-    .family-tree-box h3 {
-        margin: 0 0 10px 0;
-        font-size: 14px;
-    }
-    
-    .family-tree-link {
-        display: inline-block;
-        background: #4285f4;
-        color: white;
-        text-decoration: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        margin-top: 5px;
-        font-size: 13px;
-    }
-    
-    .family-tree-link:hover {
-        background: #3367d6;
-    }
-    
-    
-    
-    
-    
-    
-    
-    /* Mobile responsive styles - fixed version */
-    @media (max-width: 768px) {
-        /* Header */
-        .header {
-            height: 40px;
-            padding: 0.5rem;
-        }
-        
-        .header h1 {
-            font-size: 1.2rem;
-        }
-        
-        /* Map - restore original styling */
-        #map {
-            height: calc(100vh - 40px);
-        }
-        
-        /* Search bar */
-        .search-container {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            z-index: 101;
-        }
-        
-        #search-input {
-            padding: 8px 10px;
-            font-size: 14px;
-        }
-        
-        #search-button {
-            padding: 0 10px;
-            font-size: 14px;
-        }
-        
-        /* Legend */
-        .legend {
-            position: absolute;
-            bottom: 20px;
-            right: 10px;
-            width: auto;
-            max-width: 120px;
-            padding: 8px;
-            max-height: 150px;
-            overflow-y: auto;
-            z-index: 100;
-            font-size: 11px;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .legend-section h3 {
-            margin: 0 0 3px 0;
-            font-size: 11px;
-        }
-        
-        .legend-item {
-            margin-bottom: 2px;
-        }
-        
-        .color-dot {
-            width: 8px;
-            height: 8px;
-            margin-right: 4px;
-        }
-        
-        /* Family tree box */
-        .family-tree-box {
-            position: absolute;
-            bottom: 20px;
-            left: 10px;
-            width: auto;
-            max-width: 120px;
-            padding: 8px;
-            z-index: 100;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-        }
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 11px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            margin-left: 8px;
-            padding: 4px 8px;
-            font-size: 11px;
-            white-space: nowrap;
-        }
-    }
-
-        
-        .header h1 {
-            font-size: 1.2rem;
-        }
-        
-        /* Map */
-        #map {
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-        
-        /* Search bar */
-        .search-container {
-            position: fixed;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            z-index: 1001;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-        
-        #search-input {
-            padding: 8px 10px;
-            font-size: 14px;
-        }
-        
-        #search-button {
-            padding: 0 10px;
-            font-size: 14px;
-        }
-        
-        /* Legend */
-        .legend {
-            position: fixed;
-            bottom: 20px;
-            right: 10px;
-            width: auto;
-            max-width: 120px;
-            padding: 8px;
-            max-height: 150px;
-            overflow-y: auto;
-            z-index: 1000;
-            font-size: 11px;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .legend-section h3 {
-            margin: 0 0 3px 0;
-            font-size: 11px;
-        }
-        
-        .legend-item {
-            margin-bottom: 2px;
-        }
-        
-        .color-dot {
-            width: 8px;
-            height: 8px;
-            margin-right: 4px;
-        }
-        
-        /* Family tree box */
-        .family-tree-box {
-            position: fixed;
-            bottom: 20px;
-            left: 10px;
-            width: auto;
-            max-width: 120px;
-            padding: 8px;
-            z-index: 1000;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-        }
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 11px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            margin-left: 8px;
-            padding: 4px 8px;
-            font-size: 11px;
-            white-space: nowrap;
-        }
-    }
-
-        
-        .header h1 {
-            font-size: 1.2rem;
-        }
-        
-        /* Adjust map to fill entire screen */
-        #map {
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-        
-        /* Position search bar at the top, but below the header */
-        .search-container {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            z-index: 1001; /* Ensure it's above other elements */
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-        
-        #search-input {
-            padding: 8px 10px;
-            font-size: 14px;
-        }
-        
-        #search-button {
-            padding: 0 10px;
-            font-size: 14px;
-        }
-        
-        /* Position legend at bottom right */
-        .legend {
-            position: fixed;
-            bottom: 20px;
-            right: 10px;
-            max-width: 120px;
-            padding: 8px;
-            max-height: 150px;
-            overflow-y: auto;
-            z-index: 1000;
-            font-size: 11px;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .legend-section h3 {
-            margin: 0 0 3px 0;
-            font-size: 11px;
-        }
-        
-        .legend-item {
-            margin-bottom: 2px;
-        }
-        
-        .color-dot {
-            width: 8px;
-            height: 8px;
-            margin-right: 4px;
-        }
-        
-        /* Position family tree box at bottom left */
-        .family-tree-box {
-            position: fixed;
-            bottom: 20px;
-            left: 10px;
-            max-width: 120px;
-            padding: 8px;
-            z-index: 1000;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-        }
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 11px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            margin-left: 8px;
-            padding: 4px 8px;
-            font-size: 11px;
-            white-space: nowrap;
-        }
-    }
-
-        
-        .header h1 {
-            font-size: 1.2rem;
-        }
-        
-        /* Adjust map height to account for smaller header */
-        #map {
-            height: calc(100vh - 40px);
-        }
-        
-        /* Position search bar at the top */
-        .search-container {
-            top: 45px;
-            width: 90%;
-            z-index: 101; /* Ensure it's above other elements */
-        }
-        
-        #search-input {
-            padding: 6px 10px;
-            font-size: 12px;
-        }
-        
-        #search-button {
-            padding: 0 8px;
-            font-size: 12px;
-        }
-        
-        /* Position legend at bottom right */
-        .legend {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            max-width: 130px;
-            padding: 5px;
-            max-height: 150px;
-            overflow-y: auto;
-            z-index: 100;
-            font-size: 10px;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-        }
-        
-        .legend-section h3 {
-            margin: 0 0 3px 0;
-            font-size: 11px;
-        }
-        
-        .legend-item {
-            margin-bottom: 2px;
-        }
-        
-        .color-dot {
-            width: 8px;
-            height: 8px;
-            margin-right: 4px;
-        }
-        
-        /* Position family tree box at bottom left */
-        .family-tree-box {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            max-width: 130px;
-            padding: 5px 8px;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-            opacity: 0.95;
-            border: 1px solid #ddd;
-        }
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 11px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            margin-left: 5px;
-            padding: 4px 6px;
-            font-size: 10px;
-            white-space: nowrap;
-        }
-    }
-
-        
-        .legend-section h3 {
-            margin: 0 0 5px 0;
-            font-size: 12px;
-        }
-        
-        .legend-item {
-            margin-bottom: 3px;
-        }
-        
-        .color-dot {
-            width: 10px;
-            height: 10px;
-            margin-right: 5px;
-        }
-        
-        .family-tree-box {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            max-width: 140px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-            opacity: 0.9;
-        }
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 12px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            margin-left: 10px;
-            padding: 5px 8px;
-            font-size: 11px;
-            white-space: nowrap;
-        }
-        
-        .search-container {
-            width: 90%;
-            top: 65px;
-        }
-        
-        #search-input {
-            padding: 8px 12px;
-            font-size: 13px;
-        }
-        
-        #search-button {
-            padding: 0 10px;
-            font-size: 13px;
-        }
-    }
-
-        
-        .legend-section h3 {
-            margin: 0 0 5px 0;
-            font-size: 12px;
-        }
-        
-        .legend-item {
-            margin-bottom: 3px;
-        }
-        
-        .color-dot {
-            width: 10px;
-            height: 10px;
-            margin-right: 5px;
-        }
-        
-        .family-tree-box {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            right: auto;
-            max-width: none;
-            width: auto;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-        }
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 13px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            margin-left: 10px;
-            padding: 6px 10px;
-            font-size: 12px;
-        }
-    }
-
-        
-        .family-tree-box h3 {
-            margin: 0;
-            font-size: 13px;
-        }
-        
-        .family-tree-box p {
-            display: none;
-        }
-        
-        .family-tree-link {
-            margin-top: 0;
-            padding: 6px 10px;
-            font-size: 12px;
-        }
-    }
-
-</style>
-    <script src="config.js">
-        // Check if there's a search term from the family tree page
-        window.addEventListener('load', function() {
-            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
-            if (familyTreeSearch) {
-                // Clear the localStorage item
-                localStorage.removeItem('familyTreeSearch');
-                
-                // Set the search input value
-                document.getElementById('search-input').value = familyTreeSearch;
-                
-                // Perform the search
-                performSearch();
-            }
-        });
-
-    </script>
-    <script src="data.js">
-        // Check if there's a search term from the family tree page
-        window.addEventListener('load', function() {
-            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
-            if (familyTreeSearch) {
-                // Clear the localStorage item
-                localStorage.removeItem('familyTreeSearch');
-                
-                // Set the search input value
-                document.getElementById('search-input').value = familyTreeSearch;
-                
-                // Perform the search
-                performSearch();
-            }
-        });
-
-    </script>
-    <script src="notableFigures.js">
-        // Check if there's a search term from the family tree page
-        window.addEventListener('load', function() {
-            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
-            if (familyTreeSearch) {
-                // Clear the localStorage item
-                localStorage.removeItem('familyTreeSearch');
-                
-                // Set the search input value
-                document.getElementById('search-input').value = familyTreeSearch;
-                
-                // Perform the search
-                performSearch();
-            }
-        });
-
+    <!-- Load Google Maps API -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_akhvNaRsOgD4P2zu3hGHWRliwhOP9JQ&callback=initMap">
     </script>
 </head>
 <body>
@@ -642,11 +27,13 @@
     </div>
 
     <script>
+        // Initialize global variables
         let map;
         let currentInfoWindow = null;
         let familyMarkers = {};
         let searchMarker = null;
 
+        // Create legend function
         function createLegend() {
             const legendDiv = document.createElement('div');
             legendDiv.className = 'legend';
@@ -678,38 +65,7 @@
             map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendDiv);
         }
 
-    
-    
-    
-    
-    
-    function createFamilyTreeBox() {
-        const treeBoxDiv = document.createElement('div');
-        treeBoxDiv.className = 'family-tree-box';
-        
-        const isMobile = window.innerWidth <= 768;
-        
-        if (isMobile) {
-            // More compact version for mobile
-            let treeBoxHTML = '<h3>Tree</h3>';
-            treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">View</a>';
-            treeBoxDiv.innerHTML = treeBoxHTML;
-        } else {
-            // Desktop version - unchanged
-            let treeBoxHTML = '<h3>Family Tree</h3>';
-            treeBoxHTML += '<p>View the interactive Coufal family tree</p>';
-            treeBoxHTML += '<a href="family-tree.html" class="family-tree-link">Open Family Tree</a>';
-            treeBoxDiv.innerHTML = treeBoxHTML;
-        }
-        
-        map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(treeBoxDiv);
-    }
-
-
-
-
-
-
+        // Create marker function
         function createMarker(position, title, color, content) {
             const marker = new google.maps.Marker({
                 map: map,
@@ -739,12 +95,14 @@
                 infoWindow.open(map, marker);
                 currentInfoWindow = infoWindow;
             });
+
+            return marker;
         }
 
+        // Search records function
         function searchRecords(query) {
             query = query.toLowerCase();
             
-            // Search family addresses
             const matchingFamilyAddresses = familyAddresses.filter(location => 
                 location.name.toLowerCase().includes(query) || 
                 location.address.toLowerCase().includes(query) || 
@@ -752,103 +110,80 @@
                 (location.details && location.details.toLowerCase().includes(query))
             );
             
-            // Search historical context
             const matchingHistoricalContext = historicalContext.filter(context => 
                 context.name.toLowerCase().includes(query) || 
                 context.address.toLowerCase().includes(query) || 
                 context.details.toLowerCase().includes(query)
             );
             
-            // Search notable figures
-            const matchingNotableFigures = notableFigures.filter(figure => 
+            const matchingNotableFigures = notableFigures ? notableFigures.filter(figure => 
                 figure.name.toLowerCase().includes(query) || 
                 figure.address.toLowerCase().includes(query) || 
                 figure.details.toLowerCase().includes(query)
-            );
+            ) : [];
             
-            // Combine results
             const allResults = [...matchingFamilyAddresses, ...matchingHistoricalContext, ...matchingNotableFigures];
             
             if (allResults.length > 0) {
-                // Create bounds to fit all matching locations
                 const bounds = new google.maps.LatLngBounds();
                 
-                // Highlight matching markers
                 allResults.forEach(result => {
                     const marker = familyMarkers[result.name];
                     if (marker) {
                         bounds.extend(marker.getPosition());
                         
-                        // Store original icon
                         const originalIcon = marker.getIcon();
-                        
-                        // Create enlarged icon (50% larger)
                         const enlargedIcon = {
                             ...originalIcon,
-                            scale: originalIcon.scale * 1.5 // Make 50% larger
+                            scale: originalIcon.scale * 1.5
                         };
                         
-                        // Apply enlarged icon
                         marker.setIcon(enlargedIcon);
-                        
-                        // Reset after 3 seconds
                         setTimeout(() => marker.setIcon(originalIcon), 3000);
                     }
                 });
                 
-                // Fit map to show all matching locations
                 map.fitBounds(bounds, { padding: 50 });
-                
                 return true;
             }
             
             return false;
         }
 
+        // Perform search function
         function performSearch() {
             const searchInput = document.getElementById('search-input');
             const query = searchInput.value.trim();
             
             if (!query) return;
             
-            // First search our own records
             const foundInRecords = searchRecords(query);
             
-            // If not found in our records, use Google Maps search
             if (!foundInRecords) {
                 const geocoder = new google.maps.Geocoder();
                 geocoder.geocode({ address: query }, (results, status) => {
                     if (status === 'OK') {
-                        // Remove previous search marker if exists
                         if (searchMarker) {
                             searchMarker.setMap(null);
                         }
                         
-                        // Create a new marker for the search result
                         searchMarker = new google.maps.Marker({
                             map: map,
                             position: results[0].geometry.location,
-                            title: `Search result for: ${query}`
+                            title: `Search result for: ${query}`,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                fillColor: '#FF4500',
+                                fillOpacity: 0.9,
+                                strokeWeight: 2,
+                                strokeColor: '#FFFFFF',
+                                scale: 15
+                            }
                         });
                         
-                        // Create enlarged icon for search marker
-                        const searchIcon = {
-                            path: google.maps.SymbolPath.CIRCLE,
-                            fillColor: '#FF4500', // Bright orange-red color
-                            fillOpacity: 0.9,
-                            strokeWeight: 2,
-                            strokeColor: '#FFFFFF',
-                            scale: 15 // Larger than regular markers
-                        };
-                        
-                        // Apply enlarged icon
-                        searchMarker.setIcon(searchIcon);
-                        
-                        // Center map on the result
                         map.setCenter(results[0].geometry.location);
                         map.setZoom(15);
                         
-                        // Create info window for the search result
                         const infoWindow = new google.maps.InfoWindow({
                             content: `
                                 <div class="popup-content">
@@ -858,14 +193,12 @@
                             `
                         });
                         
-                        // Open info window
                         if (currentInfoWindow) {
                             currentInfoWindow.close();
                         }
                         infoWindow.open(map, searchMarker);
                         currentInfoWindow = infoWindow;
                         
-                        // Add click listener to the marker
                         searchMarker.addListener('click', () => {
                             if (currentInfoWindow) {
                                 currentInfoWindow.close();
@@ -880,261 +213,148 @@
             }
         }
 
+        // Initialize map function
         function initMap() {
-            const vintageStyle = [
-                {
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#ebe3cd"}]
-                },
-                {
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#523735"}]
-                },
-                {
-                    "elementType": "labels.text.stroke",
-                    "stylers": [{"color": "#f5f1e6"}]
-                },
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#c9b2a6"}]
-                },
-                {
-                    "featureType": "administrative.land_parcel",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#dcd2be"}]
-                },
-                {
-                    "featureType": "administrative.land_parcel",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#ae9e90"}]
-                },
-                {
-                    "featureType": "landscape.natural",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "poi",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "poi",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#93817c"}]
-                },
-                {
-                    "featureType": "poi.park",
-                    "elementType": "geometry.fill",
-                    "stylers": [{"color": "#cebea8"}]
-                },
-                {
-                    "featureType": "poi.park",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#447530"}]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#f5f1e6"}]
-                },
-                {
-                    "featureType": "road.arterial",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#fdfcf8"}]
-                },
-                {
-                    "featureType": "road.highway",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#f8c967"}]
-                },
-                {
-                    "featureType": "road.highway",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#e9bc62"}]
-                },
-                {
-                    "featureType": "road.highway.controlled_access",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#e98d58"}]
-                },
-                {
-                    "featureType": "road.highway.controlled_access",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{"color": "#db8555"}]
-                },
-                {
-                    "featureType": "road.local",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#806b63"}]
-                },
-                {
-                    "featureType": "transit.line",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "transit.line",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#8f7d77"}]
-                },
-                {
-                    "featureType": "transit.line",
-                    "elementType": "labels.text.stroke",
-                    "stylers": [{"color": "#ebe3cd"}]
-                },
-                {
-                    "featureType": "transit.station",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#dfd2ae"}]
-                },
-                {
-                    "featureType": "water",
-                    "elementType": "geometry.fill",
-                    "stylers": [{"color": "#b9d3c2"}]
-                },
-                {
-                    "featureType": "water",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{"color": "#92998d"}]
-                }
-            ];
-
-            const isMobile = window.innerWidth <= 768;
-
+            // Create map instance
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 40.7128, lng: -74.0060 },
                 zoom: 11,
                 gestureHandling: 'greedy',
-                styles: vintageStyle
-            
-                gestureHandling: 'greedy',
+                styles: vintageStyle,
                 zoomControl: true,
                 zoomControlOptions: {
-                    position: isMobile ? google.maps.ControlPosition.RIGHT_TOP : google.maps.ControlPosition.RIGHT_TOP
+                    position: google.maps.ControlPosition.RIGHT_TOP
                 },
                 streetViewControl: false,
                 mapTypeControl: false,
                 fullscreenControl: false
             });
 
+            // Create legend
             createLegend();
-            createFamilyTreeBox();
 
-            familyAddresses.forEach(location => {
-                const geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
-                    if (status === 'OK') {
-                        const mapsUrl = location.address.startsWith('http') ? location.address : 
-                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
-                        
-                        const content = `
-                            <div class="popup-content">
-                                <h3>${location.name}</h3>
-                                <p><strong>Year:</strong> ${location.year}</p>
-                                <p><strong>Address:</strong> ${location.displayAddress || location.address}</p>
-                                <p>${location.details}</p>
-                                ${location.link ? 
-                                    `<p><a href="${location.link}" target="_blank">Read more about this location</a></p>`
-                                    : ''}
-                                ${location.images ? 
-                                    location.images.map(img => 
-                                        `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
-                                    ).join('') 
-                                    : location.image ? 
-                                        `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+            // Add family address markers
+            if (familyAddresses && familyAddresses.length > 0) {
+                familyAddresses.forEach(location => {
+                    const geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ address: location.displayAddress || location.address }, (results, status) => {
+                        if (status === 'OK') {
+                            const mapsUrl = location.address.startsWith('http') ? location.address : 
+                                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`;
+                            
+                            const content = `
+                                <div class="popup-content">
+                                    <h3>${location.name}</h3>
+                                    <p><strong>Year:</strong> ${location.year}</p>
+                                    <p><strong>Address:</strong> ${location.displayAddress || location.address}</p>
+                                    <p>${location.details}</p>
+                                    ${location.link ? 
+                                        `<p><a href="${location.link}" target="_blank">Read more about this location</a></p>`
                                         : ''}
-                                <a href="${mapsUrl}" class="action-button" target="_blank">
-                                    See Current Day View on Google Maps
-                                </a>
-                            </div>
-                        `;
+                                    ${location.images ? 
+                                        location.images.map(img => 
+                                            `<img src="images/${img}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                        ).join('') 
+                                        : location.image ? 
+                                            `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
+                                            : ''}
+                                    <a href="${mapsUrl}" class="action-button" target="_blank">
+                                        See Current Day View on Google Maps
+                                    </a>
+                                </div>
+                            `;
 
-                        createMarker(
-                            results[0].geometry.location,
-                            location.name,
-                            familyColors[location.family],
-                            content
-                        );
-                    } else {
-                        console.error('Geocode was not successful for familyAddress: ' + status + ' for address: ' + (location.displayAddress || location.address));
-                    }
+                            createMarker(
+                                results[0].geometry.location,
+                                location.name,
+                                familyColors[location.family],
+                                content
+                            );
+                        } else {
+                            console.error('Geocode was not successful for familyAddress: ' + status + ' for address: ' + (location.displayAddress || location.address));
+                        }
+                    });
                 });
-            });
+            }
 
-            historicalContext.forEach(context => {
-                const geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ address: context.address }, (results, status) => {
-                    if (status === 'OK') {
-                        const content = `
-                            <div class="popup-content">
-                                <h3>${context.name}</h3>
-                                <p><strong>Period:</strong> ${context.year}</p>
-                                <p>${context.details}</p>
-                                ${context.images && context.images.length > 0 ? 
-                                    `<img src="${context.images[0]}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
-                                    : context.image ? 
-                                        `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+            // Add historical context markers
+            if (historicalContext && historicalContext.length > 0) {
+                historicalContext.forEach(context => {
+                    const geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ address: context.address }, (results, status) => {
+                        if (status === 'OK') {
+                            const content = `
+                                <div class="popup-content">
+                                    <h3>${context.name}</h3>
+                                    <p><strong>Period:</strong> ${context.year}</p>
+                                    <p>${context.details}</p>
+                                    ${context.images && context.images.length > 0 ? 
+                                        `<img src="${context.images[0]}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                        : context.image ? 
+                                            `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                            : ''}
+                                    ${context.links ? 
+                                        `<div style="margin-top: 15px;">
+                                            <strong>Learn More:</strong><br>
+                                            ${context.links.map(link => 
+                                                `<a href="${link.url}" target="_blank">${link.text}</a>`
+                                            ).join('')}
+                                        </div>`
                                         : ''}
-                                ${context.links ? 
-                                    `<div style="margin-top: 15px;">
-                                        <strong>Learn More:</strong><br>
-                                        ${context.links.map(link => 
-                                            `<a href="${link.url}" target="_blank">${link.text}</a>`
-                                        ).join('')}
-                                    </div>`
-                                    : ''}
-                            </div>
-                        `;
+                                </div>
+                            `;
 
-                        createMarker(
-                            results[0].geometry.location,
-                            context.name,
-                            '#A0A0A0',
-                            content
-                        );
-                    } else {
-                        console.error('Geocode was not successful for historicalContext: ' + status + ' for address: ' + context.address);
-                    }
+                            createMarker(
+                                results[0].geometry.location,
+                                context.name,
+                                '#A0A0A0',
+                                content
+                            );
+                        } else {
+                            console.error('Geocode was not successful for historicalContext: ' + status + ' for address: ' + context.address);
+                        }
+                    });
                 });
-            });
+            }
 
-            // Add Notable Figures markers
-            notableFigures.forEach(figure => {
-                const geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ address: figure.address }, (results, status) => {
-                    if (status === 'OK') {
-                        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(figure.address)}`;
-                        
-                        const content = `
-                            <div class="popup-content">
-                                <h3>${figure.name}</h3>
-                                <p><strong>Period:</strong> ${figure.year}</p>
-                                <p>${figure.details}</p>
-                                ${figure.link ? 
-                                    `<a href="${figure.link}" class="action-button" target="_blank">
-                                        Learn More
-                                    </a>` 
-                                    : ''}
-                                <a href="${mapsUrl}" class="action-button" target="_blank">
-                                    See Current Day View on Google Maps
-                                </a>
-                            </div>
-                        `;
+            // Add notable figures markers
+            if (notableFigures && notableFigures.length > 0) {
+                notableFigures.forEach(figure => {
+                    const geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ address: figure.address }, (results, status) => {
+                        if (status === 'OK') {
+                            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(figure.address)}`;
+                            
+                            const content = `
+                                <div class="popup-content">
+                                    <h3>${figure.name}</h3>
+                                    <p><strong>Period:</strong> ${figure.year}</p>
+                                    <p>${figure.details}</p>
+                                    ${figure.link ? 
+                                        `<a href="${figure.link}" class="action-button" target="_blank">
+                                            Learn More
+                                        </a>` 
+                                        : ''}
+                                    <a href="${mapsUrl}" class="action-button" target="_blank">
+                                        See Current Day View on Google Maps
+                                    </a>
+                                </div>
+                            `;
 
-                        createMarker(
-                            results[0].geometry.location,
-                            figure.name,
-                            '#303030', // Darker gray for notable figures
-                            content
-                        );
-                    } else {
-                        console.error('Geocode was not successful for notableFigure: ' + status + ' for address: ' + figure.address);
-                    }
+                            createMarker(
+                                results[0].geometry.location,
+                                figure.name,
+                                '#303030',
+                                content
+                            );
+                        } else {
+                            console.error('Geocode was not successful for notableFigure: ' + status + ' for address: ' + figure.address);
+                        }
+                    });
                 });
-            });
+            }
 
+            // Add map click listener
             map.addListener('click', () => {
                 if (currentInfoWindow) {
                     currentInfoWindow.close();
@@ -1148,27 +368,16 @@
                     performSearch();
                 }
             });
+
+            // Log initialization success
+            console.log('Map initialized successfully');
         }
 
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap&loading=async&defer`;
-        document.head.appendChild(script);
-    
-        // Check if there's a search term from the family tree page
-        window.addEventListener('load', function() {
-            const familyTreeSearch = localStorage.getItem('familyTreeSearch');
-            if (familyTreeSearch) {
-                // Clear the localStorage item
-                localStorage.removeItem('familyTreeSearch');
-                
-                // Set the search input value
-                document.getElementById('search-input').value = familyTreeSearch;
-                
-                // Perform the search
-                performSearch();
-            }
-        });
-
+        // Add error handling for map initialization
+        window.gm_authFailure = function() {
+            console.error('Google Maps authentication failed');
+            document.getElementById('map').innerHTML = '<div style="text-align: center; padding: 20px;">Error loading Google Maps. Please try again later.</div>';
+        };
     </script>
 </body>
 </html>
