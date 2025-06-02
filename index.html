@@ -13,164 +13,11 @@
         <h1>Coufal Family Historical Addresses</h1>
     </div>
     
-    <div class="main-content">
-        <div id="map"></div>
-        <div class="family-tree-sidebar">
-            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
-            <div class="family-tree">
-                <h2>Family Tree</h2>
-                
-                <!-- Coufal Family -->
-                <div class="family-group" data-family="Coufal">
-                    <h3>Coufal Family</h3>
-                    <div class="family-members">
-                        <div class="person" onclick="highlightPerson('Sebastian & Antoinette Coufal')">
-                            <div class="person-dot" style="background-color: #e74c3c;"></div>
-                            <span>Sebastian & Antoinette Coufal (1910)</span>
-                        </div>
-                        <div class="children-group">
-                            <div class="person" onclick="highlightPerson('Frank & Anna Coufal')">
-                                <div class="person-dot" style="background-color: #e74c3c;"></div>
-                                <span>Frank & Anna Coufal (1920-1950)</span>
-                            </div>
-                            <div class="children-group">
-                                <div class="person" onclick="highlightPerson('Donald Coufal')">
-                                    <div class="person-dot" style="background-color: #e74c3c;"></div>
-                                    <span>Donald Coufal</span>
-                                </div>
-                                <div class="person" onclick="highlightPerson('Frank Jr. Coufal')">
-                                    <div class="person-dot" style="background-color: #e74c3c;"></div>
-                                    <span>Frank Jr. Coufal</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- McKee-Beasley Family -->
-                <div class="family-group" data-family="Beasley">
-                    <h3>McKee-Beasley Family</h3>
-                    <div class="family-members">
-                        <div class="person" onclick="highlightPerson('Edward & Annie McKee')">
-                            <div class="person-dot" style="background-color: #9b59b6;"></div>
-                            <span>Edward & Annie McKee (1910)</span>
-                        </div>
-                        <div class="children-group">
-                            <div class="person" onclick="highlightPerson('Emma McKee')">
-                                <div class="person-dot" style="background-color: #9b59b6;"></div>
-                                <span>Emma McKee (later Beasley)</span>
-                            </div>
-                        </div>
-                        <div class="person" onclick="highlightPerson('Robert & Elizabeth Beasley')">
-                            <div class="person-dot" style="background-color: #3498db;"></div>
-                            <span>Robert & Elizabeth Beasley (1910)</span>
-                        </div>
-                        <div class="children-group">
-                            <div class="person" onclick="highlightPerson('Walter & Emma Beasley')">
-                                <div class="person-dot" style="background-color: #3498db;"></div>
-                                <span>Walter & Emma Beasley (1930-1950)</span>
-                            </div>
-                            <div class="children-group">
-                                <div class="person" onclick="highlightPerson('Edna Beasley')">
-                                    <div class="person-dot" style="background-color: #3498db;"></div>
-                                    <span>Edna Beasley</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Krotman-Reckler Family -->
-                <div class="family-group" data-family="Krotman">
-                    <h3>Krotman-Reckler Family</h3>
-                    <div class="family-members">
-                        <!-- Reckler Branch -->
-                        <div class="person" onclick="highlightPerson('Harry Reckler')">
-                            <div class="person-dot" style="background-color: #f1c40f;"></div>
-                            <span>Harry (Hersch) Reckler (1910)</span>
-                        </div>
-                        <div class="children-group">
-                            <div class="person" onclick="highlightPerson('Harry & Anna Reckler')">
-                                <div class="person-dot" style="background-color: #f1c40f;"></div>
-                                <span>Harry & Anna Reckler (1930-1950)</span>
-                            </div>
-                            <div class="children-group">
-                                <div class="person" onclick="highlightPerson('Claire Reckler')">
-                                    <div class="person-dot" style="background-color: #f1c40f;"></div>
-                                    <span>Claire Reckler (later Krotman)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Krotman Branch -->
-                        <div class="person" onclick="highlightPerson('Joseph & Fannie Krotman')">
-                            <div class="person-dot" style="background-color: #2ecc71;"></div>
-                            <span>Joseph & Fannie Krotman (1920)</span>
-                        </div>
-                        <div class="children-group">
-                            <div class="person" onclick="highlightPerson('Joseph & Rose Krotman')">
-                                <div class="person-dot" style="background-color: #2ecc71;"></div>
-                                <span>Joseph & Rose Krotman (1930-1940)</span>
-                            </div>
-                            <div class="children-group">
-                                <div class="person" onclick="highlightPerson('Eli Krotman')">
-                                    <div class="person-dot" style="background-color: #2ecc71;"></div>
-                                    <span>Eli Krotman</span>
-                                </div>
-                                <div class="person" onclick="highlightPerson('Eli & Claire Krotman')">
-                                    <div class="person-dot" style="background-color: #2ecc71;"></div>
-                                    <span>Eli & Claire Krotman (1950)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="map"></div>
 
     <script>
         let map;
         let currentInfoWindow = null;
-        let familyMarkers = {};
-
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.family-tree-sidebar');
-            const legend = document.querySelector('.legend');
-            sidebar.classList.toggle('collapsed');
-            legend.classList.toggle('sidebar-collapsed');
-        }
-
-        function highlightPerson(name) {
-            // Remove previous highlights
-            document.querySelectorAll('.person.highlighted').forEach(el => {
-                el.classList.remove('highlighted');
-            });
-
-            // Add highlight to selected person
-            document.querySelectorAll('.person').forEach(el => {
-                if (el.textContent.includes(name)) {
-                    el.classList.add('highlighted');
-                }
-            });
-
-            // Find and focus on related markers
-            const relatedLocations = familyAddresses.filter(location => 
-                location.name.includes(name) || location.details.includes(name)
-            );
-
-            if (relatedLocations.length > 0) {
-                const bounds = new google.maps.LatLngBounds();
-                relatedLocations.forEach(location => {
-                    const marker = familyMarkers[location.name];
-                    if (marker) {
-                        bounds.extend(marker.getPosition());
-                        marker.setAnimation(google.maps.Animation.BOUNCE);
-                        setTimeout(() => marker.setAnimation(null), 2100);
-                    }
-                });
-                map.fitBounds(bounds, { padding: 50 });
-            }
-        }
 
         function createLegend() {
             const legendDiv = document.createElement('div');
@@ -214,8 +61,6 @@
                 }
             });
 
-            familyMarkers[title] = marker;
-
             const infoWindow = new google.maps.InfoWindow({
                 content: content,
                 maxWidth: 360
@@ -228,8 +73,6 @@
                 infoWindow.open(map, marker);
                 currentInfoWindow = infoWindow;
             });
-
-            return marker;
         }
 
         function initMap() {
@@ -295,7 +138,7 @@
                                 ${context.images && context.images.length > 0 ? 
                                     `<img src="${context.images[0]}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
                                     : context.image ? 
-                                        `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">`
+                                        `<img src="${context.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                         : ''}
                                 ${context.links ? 
                                     `<div style="margin-top: 15px;">
