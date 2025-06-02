@@ -1,5 +1,6 @@
+/* Ensure html does not show scrollbars unnecessarily, but allow body to scroll if needed */
 html {
-    overflow: hidden; /* Helps prevent body scrollbars when InfoWindow might be seen as modal */
+    /* overflow: hidden; /* Removed this as it's too broad */
 }
 
 * {
@@ -82,13 +83,22 @@ body {
     border: 1px solid rgba(82, 55, 53, 0.2);
 }
 
+/* Google Maps InfoWindow Content Wrapper Styling */
+.gm-style-iw-c {
+    padding: 0 !important; /* Remove default padding from InfoWindow container */
+}
+
+.gm-style-iw-d {
+    overflow: hidden !important; /* Hide the default scrollbar of the InfoWindow content div */
+}
+
 /* Info Window Styles */
 .popup-content {
     padding: 24px;
     max-width: 360px;
     background: #ffffff;
     color: #2f2f2f;
-    border-radius: 6px;
+    border-radius: 6px; /* This will be the visible border radius */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     font-family: Georgia, 'Times New Roman', serif;
     position: relative;
