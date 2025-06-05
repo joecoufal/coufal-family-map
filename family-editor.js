@@ -145,19 +145,25 @@ class FamilyRecordEditor {
     }
     
     addEditButtonsToPopups() {
-        // Override the original createMarker function to add edit buttons
-        const originalCreateMarker = window.createMarker;
-        if (originalCreateMarker) {
-            window.createMarker = (position, title, color, content) => {
-                // Add edit button to content
-                const editableContent = content.replace(
-                    '</div>',
-                    `<button class="edit-record-btn" onclick="familyEditor.editRecord('${title}')">✏️ Edit</button></div>`
-                );
-                
-                return originalCreateMarker(position, title, color, editableContent);
-            };
+        // We need to modify the existing popup content creation
+        // Let's override the createMarker function properly
+        const self = this;
+        
+        // Store the original createMarker function
+        if (typeof window.originalCreateMarker === 'undefined') {
+            window.originalCreateMarker = window.createMarker;
         }
+        
+        // Override createMarker to add edit buttons
+        window.createMarker = function(position, title, color, content) {
+            // Add edit button to the content before the closing div
+            const editableContent = content.replace(
+                /<\/div>\s*$/,
+                `<button class="edit-record-btn" onclick="familyEditor.editRecord('${title.replace(/'/g, "\\'")}')">✏️ Edit</button></div>`
+            );
+            
+            return window.originalCreateMarker(position, title, color, editableContent);
+        };
     }
     
     editRecord(locationName) {
@@ -569,18 +575,20 @@ class FamilyRecordEditor {
     }
 }
 
-// Initialize the editor when the page loads
+// Initialize the editor when data is available
 let familyEditor;
-document.addEventListener('DOMContentLoaded', () => {
-    // Wait for the family data to be loaded
-    setTimeout(() => {
-        if (typeof familyAddresses !== 'undefined') {
-            familyEditor = new FamilyRecordEditor(
-                familyAddresses, 
-                historicalContext, 
-                notableFigures || []
-            );
-            window.familyEditor = familyEditor; // Make globally accessible
-        }
-    }, 1000);
-});
+
+// Initialize immediately after the data scripts load
+setTimeout(() => {
+    if (typeof familyAddresses !== 'undefined') {
+        familyEditor = new FamilyRecordEditor(
+            familyAddresses, 
+            historicalContext, 
+            notableFigures || []
+        );
+        window.familyEditor = familyEditor; // Make globally accessible
+        console.log('Family Editor initialized');
+    } else {
+        console.log('Family data not yet available');
+    }
+}, 10);
