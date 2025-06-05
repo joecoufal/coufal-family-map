@@ -1,0 +1,581 @@
+/* Family Record Editor Styles */
+
+/* Add Record Button */
+.add-record-button {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    z-index: 12;
+}
+
+.add-record-button:hover {
+    background: #218838;
+}
+
+/* Edit Button in Popups */
+.edit-record-btn {
+    display: inline-block;
+    background: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 10px;
+    transition: background-color 0.2s;
+}
+
+.edit-record-btn:hover {
+    background: #e0a800;
+}
+
+/* Edit Modal */
+.edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.edit-modal.hidden {
+    display: none;
+}
+
+.edit-modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.edit-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.edit-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.close-modal-btn:hover {
+    background: #e9ecef;
+}
+
+.edit-modal-body {
+    padding: 20px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* Current Images Display */
+.current-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.current-image-item {
+    position: relative;
+    display: inline-block;
+}
+
+.current-image-item img {
+    border-radius: 4px;
+    border: 2px solid #e9ecef;
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-images {
+    color: #6c757d;
+    font-style: italic;
+    margin: 10px 0;
+}
+
+/* Image Preview */
+.image-preview-container {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.image-preview-container h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.preview-image-item {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.preview-image-item img {
+    border-radius: 4px;
+    border: 2px solid #28a745;
+}
+
+.image-name {
+    display: block;
+    font-size: 11px;
+    color: #6c757d;
+    margin-top: 5px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.cancel-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+    background: #5a6268;
+}
+
+.save-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+    background: #218838;
+}
+
+/* Pending Changes Indicator */
+.pending-changes {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: #ffc107;
+    color: #212529;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.pending-changes.hidden {
+    display: none;
+}
+
+.changes-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.changes-icon {
+    font-size: 16px;
+}
+
+.view-changes-btn,
+.submit-changes-btn {
+    background: #212529;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.view-changes-btn:hover,
+.submit-changes-btn:hover {
+    background: #000;
+}
+
+/* Preview Badge */
+.preview-badge {
+    background: #ff6b35;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+/* Changes Summary */
+.changes-summary {
+    max-width: 500px;
+}
+
+.changes-summary h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.change-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border-left: 4px solid #28a745;
+}
+
+.change-item strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.change-item p {
+    margin: 5px 0;
+    color: #6c757d;
+    font-size: 13px;
+}
+
+.remove-change-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.remove-change-btn:hover {
+    background: #c82333;
+}
+
+/* Submission Modal */
+.submission-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.submission-modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.submission-modal-content h2 {
+    margin: 0 0 20px 0;
+    color: #333;
+}
+
+.submission-modal-content ul {
+    text-align: left;
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.submission-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.submit-option-btn {
+    background: #4285f4;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.submit-option-btn:hover {
+    background: #3367d6;
+}
+
+.submission-actions {
+    margin-top: 20px;
+}
+
+/* Message Toast */
+.message-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2002;
+    max-width: 90%;
+    animation: slideUp 0.3s ease-out;
+}
+
+.message-success {
+    background: #28a745;
+    color: white;
+}
+
+.message-info {
+    background: #17a2b8;
+    color: white;
+}
+
+.message-warning {
+    background: #ffc107;
+    color: #212529;
+}
+
+.message-error {
+    background: #dc3545;
+    color: white;
+}
+
+.message-close-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    padding: 0;
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateX(-50%) translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .add-record-button {
+        right: 10px;
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .edit-modal {
+        padding: 10px;
+    }
+    
+    .edit-modal-content {
+        max-height: 95vh;
+    }
+    
+    .edit-modal-header,
+    .edit-modal-body {
+        padding: 15px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .pending-changes {
+        top: 50px;
+        right: 10px;
+        left: 10px;
+        transform: none;
+    }
+    
+    .changes-content {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .current-images {
+        justify-content: center;
+    }
+    
+    .submission-options {
+        gap: 15px;
+    }
+    
+    .message-toast {
+        left: 10px;
+        right: 10px;
+        transform: none;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-modal-header h2 {
+        font-size: 16px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .current-image-item img,
+    .preview-image-item img {
+        width: 80px;
+        height: 60px;
+    }
+}
