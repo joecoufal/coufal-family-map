@@ -647,13 +647,12 @@
     </script>
     
     <!-- Load our new features -->
-    <script src="story-mode.js"></script>
     <script src="advanced-search.js"></script>
     <script src="pwa-manager.js"></script>
     
     <script>
         // Initialize new features after map loads
-        let storyMode, advancedSearch;
+        let advancedSearch;
         
         // Extend the existing initMap function
         const originalInitMap = window.initMap;
@@ -661,11 +660,9 @@
             originalInitMap();
             
             // Initialize new features
-            storyMode = new StoryMode(map, familyAddresses, historicalContext);
             advancedSearch = new AdvancedSearch(map, familyAddresses, historicalContext, notableFigures);
             
             // Make them globally accessible for onclick handlers
-            window.storyMode = storyMode;
             window.advancedSearch = advancedSearch;
         };
     </script>

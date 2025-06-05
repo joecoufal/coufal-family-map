@@ -34,10 +34,14 @@ class AdvancedSearch {
                     <div class="filter-section">
                         <h4>Time Period</h4>
                         <div class="filter-group">
-                            <input type="range" id="year-range" min="1905" max="1950" value="1905,1950" class="year-slider">
+                            <div class="year-range-container">
+                                <input type="range" id="year-start" min="1905" max="1950" value="1905" class="year-slider">
+                                <input type="range" id="year-end" min="1905" max="1950" value="1950" class="year-slider">
+                            </div>
                             <div class="year-labels">
-                                <span id="year-start">1905</span>
-                                <span id="year-end">1950</span>
+                                <span id="year-start-label">1905</span>
+                                <span>to</span>
+                                <span id="year-end-label">1950</span>
                             </div>
                         </div>
                     </div>
@@ -152,14 +156,36 @@ class AdvancedSearch {
         });
         
         // Suggestions panel toggle
-        toggleSuggestionsBtn.addEventListener('click', () => {
+        toggleSuggestionsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             suggestionsPanel.classList.toggle('collapsed');
         });
         
-        // Year range slider
-        const yearSlider = document.getElementById('year-range');
-        yearSlider.addEventListener('input', (e) => {
-            this.updateYearLabels(e.target.value);
+        // Make entire header clickable
+        document.querySelector('.suggestions-header').addEventListener('click', () => {
+            suggestionsPanel.classList.toggle('collapsed');
+        });
+        
+        // Year range sliders
+        const yearStartSlider = document.getElementById('year-start');
+        const yearEndSlider = document.getElementById('year-end');
+        
+        yearStartSlider.addEventListener('input', (e) => {
+            document.getElementById('year-start-label').textContent = e.target.value;
+            // Ensure start is not greater than end
+            if (parseInt(e.target.value) > parseInt(yearEndSlider.value)) {
+                yearEndSlider.value = e.target.value;
+                document.getElementById('year-end-label').textContent = e.target.value;
+            }
+        });
+        
+        yearEndSlider.addEventListener('input', (e) => {
+            document.getElementById('year-end-label').textContent = e.target.value;
+            // Ensure end is not less than start
+            if (parseInt(e.target.value) < parseInt(yearStartSlider.value)) {
+                yearStartSlider.value = e.target.value;
+                document.getElementById('year-start-label').textContent = e.target.value;
+            }
         });
         
         // Close filters when clicking outside
@@ -304,10 +330,10 @@ class AdvancedSearch {
         });
         
         // Year range
-        const yearSlider = document.getElementById('year-range');
-        if (yearSlider) {
-            const values = yearSlider.value.split(',');
-            filters.yearRange = [parseInt(values[0]), parseInt(values[1])];
+        const yearStartSlider = document.getElementById('year-start');
+        const yearEndSlider = document.getElementById('year-end');
+        if (yearStartSlider && yearEndSlider) {
+            filters.yearRange = [parseInt(yearStartSlider.value), parseInt(yearEndSlider.value)];
         }
         
         return filters;
@@ -330,14 +356,47 @@ class AdvancedSearch {
             
             if (!matchesQuery) return false;
             
-            // Family filter
-            if (filters.families.length > 0 && location.family && 
-                !filters.families.includes(location.family)) {
-                return false;
+            // Family filter - only apply if some families are unchecked
+            if (filters.families.length > 0 && filters.families.length < 5) {
+                if (location.family && !filters.families.includes(location.family)) {
+                    return false;
+                }
+                // For historical/notable locations without family, include them if historical is checked
+                if (!location.family && location.type === 'historical' && !filters.locationTypes.includes('historical')) {
+                    return false;
+                }
             }
             
-            // Borough filter
-            if (filters.boroughs.length > 0) {
+            // Location type filter - only apply if some types are unchecked
+            if (filters.locationTypes.length > 0 && filters.locationTypes.length < 4) {
+                let matchesType = false;
+                
+                if (location.type === 'family') {
+                    // Determine if it's a home or business based on details
+                    const isHome = location.details.toLowerCase().includes('home') || 
+                                  location.details.toLowerCase().includes('lived') ||
+                                  location.details.toLowerCase().includes('residence');
+                    const isBusiness = location.details.toLowerCase().includes('bakery') || 
+                                     location.details.toLowerCase().includes('business') ||
+                                     location.details.toLowerCase().includes('dealer');
+                    const isSchool = location.details.toLowerCase().includes('school') ||
+                                   location.details.toLowerCase().includes('high school');
+                    
+                    if (isSchool && filters.locationTypes.includes('school')) matchesType = true;
+                    else if (isBusiness && filters.locationTypes.includes('business')) matchesType = true;
+                    else if (isHome && filters.locationTypes.includes('home')) matchesType = true;
+                    else if (!isSchool && !isBusiness && filters.locationTypes.includes('home')) matchesType = true; // Default to home
+                }
+                
+                if (location.type === 'historical' && filters.locationTypes.includes('historical')) {
+                    matchesType = true;
+                }
+                
+                if (!matchesType) return false;
+            }
+            
+            // Borough filter - only apply if some boroughs are unchecked
+            if (filters.boroughs.length > 0 && filters.boroughs.length < 4) {
                 const locationBorough = this.extractBorough(location.address);
                 if (locationBorough && !filters.boroughs.includes(locationBorough)) {
                     return false;
@@ -345,7 +404,7 @@ class AdvancedSearch {
             }
             
             // Year filter
-            if (location.year) {
+            if (location.year && location.year !== 'Unknown') {
                 const locationYear = parseInt(location.year.toString().split('-')[0]);
                 if (locationYear < filters.yearRange[0] || locationYear > filters.yearRange[1]) {
                     return false;
@@ -545,25 +604,25 @@ class AdvancedSearch {
                 title: "Immigration Journey (1905-1920)",
                 description: "Follow the early immigrant experience",
                 icon: "🚢",
-                action: () => this.startTour('immigration')
+                action: 'immigration'
             },
             {
                 title: "Family Business Stories",
                 description: "Explore family businesses and trades",
                 icon: "🏪",
-                action: () => this.startTour('business')
+                action: 'business'
             },
             {
                 title: "Neighborhood Evolution",
                 description: "See how neighborhoods changed over time",
                 icon: "🏘️",
-                action: () => this.startTour('neighborhoods')
+                action: 'neighborhoods'
             },
             {
                 title: "Education & Growth",
                 description: "Schools and educational milestones",
                 icon: "🎓",
-                action: () => this.startTour('education')
+                action: 'education'
             }
         ];
         
@@ -572,19 +631,19 @@ class AdvancedSearch {
                 title: "Family Intersections",
                 description: "Where family lines crossed paths",
                 icon: "🤝",
-                action: () => this.showFamilyIntersections()
+                action: 'intersections'
             },
             {
                 title: "Generational Moves",
                 description: "How each generation moved through NYC",
                 icon: "📍",
-                action: () => this.showGenerationalMoves()
+                action: 'generations'
             },
             {
                 title: "Same Address, Different Times",
                 description: "Locations used by multiple families",
                 icon: "🏠",
-                action: () => this.showSharedLocations()
+                action: 'shared'
             }
         ];
         
@@ -598,7 +657,7 @@ class AdvancedSearch {
         const container = document.querySelector(`#${containerId} .suggestion-items`);
         if (container) {
             container.innerHTML = suggestions.map(suggestion => `
-                <div class="suggestion-item" onclick="advancedSearch.executeSuggestion('${suggestion.title}')">
+                <div class="suggestion-item" onclick="advancedSearch.executeSuggestion('${suggestion.action}')">
                     <span class="suggestion-icon">${suggestion.icon}</span>
                     <div class="suggestion-content">
                         <h5>${suggestion.title}</h5>
@@ -609,10 +668,127 @@ class AdvancedSearch {
         }
     }
     
-    executeSuggestion(title) {
-        // Implementation for executing different suggestions
-        console.log('Executing suggestion:', title);
-        // This would trigger the appropriate action based on the suggestion
+    executeSuggestion(action) {
+        console.log('Executing suggestion:', action);
+        
+        switch(action) {
+            case 'immigration':
+                this.performAdvancedSearch('1905');
+                this.showToast('Showing early immigration period (1905-1920)');
+                break;
+            case 'business':
+                this.performAdvancedSearch('bakery dealer');
+                this.showToast('Showing family businesses');
+                break;
+            case 'neighborhoods':
+                this.performAdvancedSearch('Manhattan');
+                this.showToast('Exploring Manhattan neighborhoods');
+                break;
+            case 'education':
+                this.performAdvancedSearch('school');
+                this.showToast('Showing educational locations');
+                break;
+            case 'intersections':
+                this.showFamilyIntersections();
+                break;
+            case 'generations':
+                this.showGenerationalMoves();
+                break;
+            case 'shared':
+                this.showSharedLocations();
+                break;
+            default:
+                console.log('Unknown suggestion action:', action);
+        }
+    }
+    
+    showFamilyIntersections() {
+        // Find locations where different families lived in same neighborhoods
+        const neighborhoods = {};
+        this.familyAddresses.forEach(location => {
+            const borough = this.extractBorough(location.address);
+            if (borough) {
+                if (!neighborhoods[borough]) neighborhoods[borough] = new Set();
+                neighborhoods[borough].add(location.family);
+            }
+        });
+        
+        // Find boroughs with multiple families
+        const intersections = Object.entries(neighborhoods)
+            .filter(([borough, families]) => families.size > 1)
+            .map(([borough, families]) => `${borough} (${Array.from(families).join(', ')})`);
+        
+        if (intersections.length > 0) {
+            this.showToast(`Family intersections found in: ${intersections.join('; ')}`);
+            this.performAdvancedSearch(Object.keys(neighborhoods)[0]); // Show first intersection
+        } else {
+            this.showToast('No family intersections found');
+        }
+    }
+    
+    showGenerationalMoves() {
+        // Group by decades and show progression
+        const decades = {};
+        this.familyAddresses.forEach(location => {
+            if (location.year && location.year !== 'Unknown') {
+                const decade = Math.floor(parseInt(location.year.toString().split('-')[0]) / 10) * 10;
+                if (!decades[decade]) decades[decade] = [];
+                decades[decade].push(location);
+            }
+        });
+        
+        const sortedDecades = Object.keys(decades).sort();
+        if (sortedDecades.length > 0) {
+            this.showToast(`Showing generational progression: ${sortedDecades.map(d => d + 's').join(' → ')}`);
+            this.performAdvancedSearch(sortedDecades[0] + 's');
+        }
+    }
+    
+    showSharedLocations() {
+        // Find addresses or streets used by multiple families
+        const addressCounts = {};
+        this.familyAddresses.forEach(location => {
+            const street = location.address.split(',')[0]; // Get street part
+            if (!addressCounts[street]) addressCounts[street] = new Set();
+            addressCounts[street].add(location.family);
+        });
+        
+        const shared = Object.entries(addressCounts)
+            .filter(([street, families]) => families.size > 1);
+        
+        if (shared.length > 0) {
+            const sharedStreet = shared[0][0];
+            this.showToast(`Found shared locations on ${sharedStreet}`);
+            this.performAdvancedSearch(sharedStreet);
+        } else {
+            this.showToast('No shared locations found');
+        }
+    }
+    
+    showToast(message) {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            z-index: 1002;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
     }
     
     addToSearchHistory(query) {
@@ -653,12 +829,6 @@ class AdvancedSearch {
         }
     }
     
-    updateYearLabels(value) {
-        const values = value.split(',');
-        document.getElementById('year-start').textContent = values[0];
-        document.getElementById('year-end').textContent = values[1];
-    }
-    
     applyFilters() {
         const query = document.getElementById('advanced-search-input').value;
         this.performAdvancedSearch(query);
@@ -671,10 +841,15 @@ class AdvancedSearch {
             checkbox.checked = true;
         });
         
-        // Reset year slider
-        const yearSlider = document.getElementById('year-range');
-        yearSlider.value = '1905,1950';
-        this.updateYearLabels('1905,1950');
+        // Reset year sliders
+        const yearStartSlider = document.getElementById('year-start');
+        const yearEndSlider = document.getElementById('year-end');
+        if (yearStartSlider && yearEndSlider) {
+            yearStartSlider.value = '1905';
+            yearEndSlider.value = '1950';
+            document.getElementById('year-start-label').textContent = '1905';
+            document.getElementById('year-end-label').textContent = '1950';
+        }
     }
     
     updateNearbyLocations() {
