@@ -1,4 +1,4 @@
-// PWA Installation and Management
+// Simplified PWA Manager - Just handles installation and offline status
 class PWAManager {
     constructor() {
         this.deferredPrompt = null;
@@ -243,37 +243,9 @@ class PWAManager {
             successNotification.remove();
         }, 4000);
     }
-    
-    // Utility methods for offline functionality
-    async cacheUserData(key, data) {
-        if ('caches' in window) {
-            try {
-                const cache = await caches.open('user-data-cache');
-                const response = new Response(JSON.stringify(data));
-                await cache.put(key, response);
-            } catch (error) {
-                console.error('Error caching user data:', error);
-            }
-        }
-    }
-    
-    async getUserData(key) {
-        if ('caches' in window) {
-            try {
-                const cache = await caches.open('user-data-cache');
-                const response = await cache.match(key);
-                if (response) {
-                    return await response.json();
-                }
-            } catch (error) {
-                console.error('Error retrieving user data:', error);
-            }
-        }
-        return null;
-    }
 }
 
-// PWA Styles
+// Simplified PWA Styles
 const pwaStyles = `
 .pwa-install-button {
     position: absolute;

@@ -231,7 +231,6 @@
     <script src="config.js"></script>
     <script src="data.js"></script>
     <script src="notableFigures.js"></script>
-    <link rel="stylesheet" href="advanced-search.css">
 </head>
 <body>
     <div class="header">
@@ -646,25 +645,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_akhvNaRsOgD4P2zu3hGHWRliwhOP9JQ&callback=initMap">
     </script>
     
-    <!-- Load our new features -->
-    <script src="advanced-search.js"></script>
+    <!-- Load PWA features -->
     <script src="pwa-manager.js"></script>
-    
-    <script>
-        // Initialize new features after map loads
-        let advancedSearch;
-        
-        // Extend the existing initMap function
-        const originalInitMap = window.initMap;
-        window.initMap = function() {
-            originalInitMap();
-            
-            // Initialize new features
-            advancedSearch = new AdvancedSearch(map, familyAddresses, historicalContext, notableFigures);
-            
-            // Make them globally accessible for onclick handlers
-            window.advancedSearch = advancedSearch;
-        };
-    </script>
 </body>
 </html>
