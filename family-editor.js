@@ -99,26 +99,23 @@ class FamilyRecordEditor {
         addRecordBtn.className = 'add-record-button';
         addRecordBtn.innerHTML = '+ Add Location';
         addRecordBtn.onclick = () => {
-            // Initialize editor on-demand if needed
-            if (!window.familyEditor) {
-                try {
-                    if (typeof familyAddresses !== 'undefined') {
-                        window.familyEditor = new FamilyRecordEditor(
-                            familyAddresses, 
-                            historicalContext, 
-                            notableFigures || []
-                        );
-                    }
-                } catch (error) {
-                    alert('Could not initialize editor. Please refresh the page.');
-                    return;
+            // Simple direct approach
+            try {
+                if (!window.familyEditor && window.FamilyRecordEditor) {
+                    window.familyEditor = new window.FamilyRecordEditor(
+                        familyAddresses, 
+                        historicalContext, 
+                        notableFigures || []
+                    );
                 }
-            }
-            
-            if (window.familyEditor) {
-                window.familyEditor.openEditModal();
-            } else {
-                alert('Editor could not be loaded. Please refresh the page and try again.');
+                
+                if (window.familyEditor) {
+                    window.familyEditor.openEditModal();
+                } else {
+                    alert('Editor is loading. Please try again in a moment.');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message + '. Please refresh and try again.');
             }
         };
         
@@ -586,6 +583,9 @@ class FamilyRecordEditor {
         }
     }
 }
+
+// Make the class globally available
+window.FamilyRecordEditor = FamilyRecordEditor;
 
 // Simple initialization - just try once when everything loads
 let familyEditor;

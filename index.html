@@ -647,31 +647,23 @@
         
         // Global function to handle edit clicks
         function openEditFor(locationName) {
-            // Try to initialize editor on-demand if it doesn't exist
-            if (!window.familyEditor) {
-                try {
-                    if (typeof familyAddresses !== 'undefined') {
-                        // Create the editor class instance
-                        const FamilyRecordEditor = window.FamilyRecordEditor;
-                        if (FamilyRecordEditor) {
-                            window.familyEditor = new FamilyRecordEditor(
-                                familyAddresses, 
-                                historicalContext, 
-                                notableFigures || []
-                            );
-                        }
-                    }
-                } catch (error) {
-                    alert('Could not initialize editor. Please refresh the page.');
-                    return;
+            // Simple direct approach - just create the editor when needed
+            try {
+                if (!window.familyEditor && window.FamilyRecordEditor) {
+                    window.familyEditor = new window.FamilyRecordEditor(
+                        familyAddresses, 
+                        historicalContext, 
+                        notableFigures || []
+                    );
                 }
-            }
-            
-            // Now try to edit
-            if (window.familyEditor && window.familyEditor.editRecord) {
-                window.familyEditor.editRecord(locationName);
-            } else {
-                alert('Editor could not be loaded. Please refresh the page and try again.');
+                
+                if (window.familyEditor) {
+                    window.familyEditor.editRecord(locationName);
+                } else {
+                    alert('Editor is loading. Please try again in a moment.');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message + '. Please refresh and try again.');
             }
         }
     </script>
