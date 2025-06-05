@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coufal Family Historical Addresses</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div element that contains the map. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            height: 40px;
+            z-index: 2;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        #map {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .search-container {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            width: 80%;
+            max-width: 500px;
+            z-index: 5;
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        
+        #search-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        
+        #search-button {
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        .family-tree-box {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        .family-tree-link {
+            display: inline-block;
+            background: #4285F4;
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .legend, .family-tree-box {
+                padding: 5px;
+                max-width: 100px;
+                font-size: 10px;
+            }
+            
+            .family-tree-box {
+                display: flex;
+                align-items: center;
+            }
+            
+            .family-tree-box h3 {
+                margin: 0 5px 0 0;
+                font-size: 10px;
+            }
+            
+            .family-tree-link {
+                padding: 4px 6px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Coufal Family Historical Addresses</h1>
+    </div>
+    
+    <div id="map"></div>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for locations, people, or addresses...">
+        <button id="search-button">Search</button>
+    </div>
+    
+    <div class="legend" id="legend"></div>
+    <div class="family-tree-box" id="family-tree-box"></div>
+
+    <script>
+        // Family colors
+        const familyColors = {
+            'Coufal': '#e74c3c',
+            'McKee': '#9b59b6',
+            'Beasley': '#3498db',
+            'Reckler': '#f1c40f',
+            'Krotman': '#2ecc71'
+        };
+        
+        let map;
+        let markers = {};
+        let currentInfoWindow = null;
+        
+        function initMap() {
+            // Create the map with NO custom styles
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 40.7128, lng: -74.0060},
+                zoom: 11,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                streetViewControl: false,
+                mapTypeControl: false,
+                fullscreenControl: false
+            });
+            
+            // Create legend
+            createLegend();
+            
+            // Create family tree box
+            createFamilyTreeBox();
+            
+            // Add some example markers
+            addExampleMarkers();
+            
+            // Set up search
+            document.getElementById('search-button').addEventListener('click', performSearch);
+            document.getElementById('search-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+        
+        function createLegend() {
+            const legend = document.getElementById('legend');
+            let html = '<div><h3 style="margin-top:0;font-size:14px;">Family Members</h3>';
+            
+            for (const family in familyColors) {
+                html += `
+                    <div style="display:flex;align-items:center;margin-bottom:5px;">
+                        <div style="width:12px;height:12px;border-radius:50%;background-color:${familyColors[family]};margin-right:8px;"></div>
+                        <span>${family}</span>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            legend.innerHTML = html;
+        }
+        
+        function createFamilyTreeBox() {
+            const box = document.getElementById('family-tree-box');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                box.innerHTML = `
+                    <h3>Tree</h3>
+                    <a href="family-tree.html" class="family-tree-link">View</a>
+                `;
+            } else {
+                box.innerHTML = `
+                    <h3>Interactive Family Tree</h3>
+                    <p style="margin:5px 0 10px;">View and explore the Coufal family connections</p>
+                    <a href="family-tree.html" class="family-tree-link">Open Family Tree</a>
+                `;
+            }
+        }
+        
+        function addExampleMarkers() {
+            // Add a few example markers
+            addMarker({lat: 40.7128, lng: -74.0060}, 'New York City', familyColors['Coufal'], 'New York City');
+            addMarker({lat: 40.7831, lng: -73.9712}, 'Central Park', familyColors['McKee'], 'Central Park');
+            addMarker({lat: 40.6892, lng: -74.0445}, 'Statue of Liberty', familyColors['Beasley'], 'Statue of Liberty');
+        }
+        
+        function addMarker(position, title, color, content) {
+            const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: title,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: color,
+                    fillOpacity: 0.9,
+                    strokeWeight: 2,
+                    strokeColor: '#ffffff',
+                    scale: 10
+                }
+            });
+            
+            markers[title] = marker;
+            
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<div style="padding:10px;"><h3 style="margin-top:0;">${content}</h3></div>`
+            });
+            
+            marker.addListener('click', function() {
+                if (currentInfoWindow) {
+                    currentInfoWindow.close();
+                }
+                infoWindow.open(map, marker);
+                currentInfoWindow = infoWindow;
+            });
+        }
+        
+        function performSearch() {
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) return;
+            
+            // Simple search example - just center on NYC
+            map.setCenter({lat: 40.7128, lng: -74.0060});
+            map.setZoom(12);
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_akhvNaRsOgD4P2zu3hGHWRliwhOP9JQ&callback=initMap">
+    </script>
+</body>
+</html>

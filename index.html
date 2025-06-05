@@ -4,6 +4,20 @@
     <title>Coufal Family Historical Addresses</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta charset="utf-8">
+    <meta name="description" content="Interactive map showing the historical addresses and locations of the Coufal family from 1905-1950 in New York City">
+    <meta property="og:title" content="Coufal Family Historical Addresses">
+    <meta property="og:description" content="Explore the journey of the Coufal family through New York City from 1905-1950">
+    <meta property="og:type" content="website">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4285f4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Coufal Family Map">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
     <style>
         /* Reset and base styles */
         html, body {
@@ -217,6 +231,7 @@
     <script src="config.js"></script>
     <script src="data.js"></script>
     <script src="notableFigures.js"></script>
+    <link rel="stylesheet" href="advanced-search.css">
 </head>
 <body>
     <div class="header">
@@ -629,6 +644,30 @@
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_akhvNaRsOgD4P2zu3hGHWRliwhOP9JQ&callback=initMap">
+    </script>
+    
+    <!-- Load our new features -->
+    <script src="story-mode.js"></script>
+    <script src="advanced-search.js"></script>
+    <script src="pwa-manager.js"></script>
+    
+    <script>
+        // Initialize new features after map loads
+        let storyMode, advancedSearch;
+        
+        // Extend the existing initMap function
+        const originalInitMap = window.initMap;
+        window.initMap = function() {
+            originalInitMap();
+            
+            // Initialize new features
+            storyMode = new StoryMode(map, familyAddresses, historicalContext);
+            advancedSearch = new AdvancedSearch(map, familyAddresses, historicalContext, notableFigures);
+            
+            // Make them globally accessible for onclick handlers
+            window.storyMode = storyMode;
+            window.advancedSearch = advancedSearch;
+        };
     </script>
 </body>
 </html>
