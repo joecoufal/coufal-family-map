@@ -98,6 +98,8 @@ class FamilyRecordEditor {
         addRecordBtn.id = 'add-record-btn';
         addRecordBtn.className = 'add-record-button';
         addRecordBtn.innerHTML = '+ Add Location';
+        addRecordBtn.style.opacity = '0.5'; // Start dimmed until editor is ready
+        addRecordBtn.title = 'Loading editor...';
         addRecordBtn.onclick = () => this.openEditModal();
         
         // Add to header
@@ -166,11 +168,19 @@ class FamilyRecordEditor {
         
         // Create a global function to handle edit clicks
         window.openEditFor = function(locationName) {
-            if (window.familyEditor) {
-                window.familyEditor.editRecord(locationName);
-            } else {
-                alert('Editor not ready yet. Please try again in a moment.');
-            }
+            // Try multiple times to find the editor
+            let attempts = 0;
+            const tryEdit = () => {
+                if (window.familyEditor && window.familyEditor.editRecord) {
+                    window.familyEditor.editRecord(locationName);
+                } else if (attempts < 5) {
+                    attempts++;
+                    setTimeout(tryEdit, 300); // Wait a bit and try again
+                } else {
+                    alert('Editor is still loading. Please wait a moment and try again.');
+                }
+            };
+            tryEdit();
         };
     }
     
@@ -590,17 +600,49 @@ class FamilyRecordEditor {
     }
 }
 
-// Initialize the editor when data is available
+// Initialize the editor when data is available - with robust retry logic
 let familyEditor;
+let initAttempts = 0;
+const maxInitAttempts = 10;
 
-// Initialize immediately after the data scripts load
-setTimeout(() => {
-    if (typeof familyAddresses !== 'undefined') {
-        familyEditor = new FamilyRecordEditor(
-            familyAddresses, 
-            historicalContext, 
-            notableFigures || []
-        );
-        window.familyEditor = familyEditor; // Make globally accessible
+function initializeFamilyEditor() {
+    initAttempts++;
+    
+    if (typeof familyAddresses !== 'undefined' && familyAddresses.length > 0) {
+        try {
+            familyEditor = new FamilyRecordEditor(
+                familyAddresses, 
+                historicalContext, 
+                notableFigures || []
+            );
+            window.familyEditor = familyEditor; // Make globally accessible
+            
+            // Add a visual indicator that editor is ready
+            const addBtn = document.getElementById('add-record-btn');
+            if (addBtn) {
+                addBtn.style.opacity = '1';
+                addBtn.title = 'Add new family location';
+            }
+            
+            return true; // Success
+        } catch (error) {
+            console.error('Error initializing family editor:', error);
+        }
     }
-}, 10);
+    
+    // Retry if we haven't reached max attempts
+    if (initAttempts < maxInitAttempts) {
+        setTimeout(initializeFamilyEditor, 200 * initAttempts); // Increasing delay
+    }
+    
+    return false;
+}
+
+// Start initialization attempts immediately
+initializeFamilyEditor();
+
+// Also try when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeFamilyEditor);
+
+// And try when window loads
+window.addEventListener('load', initializeFamilyEditor);

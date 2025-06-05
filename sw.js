@@ -1,5 +1,5 @@
 // Service Worker for PWA functionality
-const CACHE_NAME = 'coufal-family-map-v1.0.0';
+const CACHE_NAME = 'coufal-family-map-v1.1.0'; // Updated version to force cache refresh
 const STATIC_CACHE_URLS = [
     '/coufal-family-map/index.html',
     '/coufal-family-map/data.js',
@@ -7,7 +7,7 @@ const STATIC_CACHE_URLS = [
     '/coufal-family-map/manifest.json'
 ];
 
-const DYNAMIC_CACHE_NAME = 'coufal-family-dynamic-v1.0.0';
+const DYNAMIC_CACHE_NAME = 'coufal-family-dynamic-v1.1.0'; // Updated version
 
 // Install event - cache static resources
 self.addEventListener('install', event => {
