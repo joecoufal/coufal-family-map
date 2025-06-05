@@ -13,7 +13,7 @@ class FamilyRecordEditor {
     init() {
         this.createEditingUI();
         this.addEditButtonsToPopups();
-        this.setupImageUpload();
+        // setupImageUpload is handled in createEditingUI, so we don't need a separate call
     }
     
     createEditingUI() {
