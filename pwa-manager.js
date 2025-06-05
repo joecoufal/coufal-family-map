@@ -28,7 +28,7 @@ class PWAManager {
     async registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
-                const registration = await navigator.serviceWorker.register('/sw.js');
+                const registration = await navigator.serviceWorker.register('/coufal-family-map/sw.js');
                 console.log('Service Worker registered successfully:', registration);
                 
                 // Handle service worker updates

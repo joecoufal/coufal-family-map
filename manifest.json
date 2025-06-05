@@ -2,7 +2,7 @@
   "name": "Coufal Family Historical Map",
   "short_name": "Coufal Family Map",
   "description": "Interactive map showing the historical addresses and locations of the Coufal family from 1905-1950 in New York City",
-  "start_url": "/",
+  "start_url": "/coufal-family-map/",
   "display": "standalone",
   "background_color": "#2c3e50",
   "theme_color": "#4285f4",

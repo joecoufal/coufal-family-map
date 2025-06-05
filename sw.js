@@ -1,15 +1,14 @@
 // Service Worker for PWA functionality
 const CACHE_NAME = 'coufal-family-map-v1.0.0';
 const STATIC_CACHE_URLS = [
-    '/',
-    '/index.html',
-    '/family-tree.html',
-    '/styles.css',
-    '/data.js',
-    '/notableFigures.js',
-    '/story-mode.js',
-    '/advanced-search.js',
-    '/manifest.json'
+    '/coufal-family-map/',
+    '/coufal-family-map/index.html',
+    '/coufal-family-map/family-tree.html',
+    '/coufal-family-map/styles.css',
+    '/coufal-family-map/data.js',
+    '/coufal-family-map/notableFigures.js',
+    '/coufal-family-map/pwa-manager.js',
+    '/coufal-family-map/manifest.json'
 ];
 
 const DYNAMIC_CACHE_NAME = 'coufal-family-dynamic-v1.0.0';
@@ -98,7 +97,7 @@ async function cacheFirst(request) {
         
         // Return offline fallback for navigation requests
         if (request.mode === 'navigate') {
-            return caches.match('/index.html');
+            return caches.match('/coufal-family-map/index.html');
         }
         
         throw error;
@@ -127,7 +126,7 @@ async function networkFirst(request) {
         
         // Return offline fallback for navigation requests
         if (request.mode === 'navigate') {
-            return caches.match('/index.html');
+            return caches.match('/coufal-family-map/index.html');
         }
         
         throw error;
