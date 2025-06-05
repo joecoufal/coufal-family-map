@@ -157,9 +157,10 @@ class FamilyRecordEditor {
         // Override createMarker to add edit buttons
         window.createMarker = function(position, title, color, content) {
             // Add edit button to the content before the closing div
+            // Use a simpler approach with data attributes
             const editableContent = content.replace(
                 /<\/div>\s*$/,
-                `<button class="edit-record-btn" onclick="familyEditor.editRecord('${title.replace(/'/g, "\\'")}')">✏️ Edit</button></div>`
+                `<button class="edit-record-btn" data-location-name="${title}" onclick="window.familyEditor.editRecord(this.getAttribute('data-location-name'))">✏️ Edit</button></div>`
             );
             
             return window.originalCreateMarker(position, title, color, editableContent);
@@ -167,6 +168,8 @@ class FamilyRecordEditor {
     }
     
     editRecord(locationName) {
+        console.log('Edit button clicked for:', locationName);
+        
         // Find the record to edit
         const allRecords = [
             ...this.familyAddresses.map(r => ({...r, type: 'family'})),
@@ -174,9 +177,16 @@ class FamilyRecordEditor {
             ...(this.notableFigures || []).map(r => ({...r, type: 'notable'}))
         ];
         
+        console.log('Looking for record in:', allRecords.length, 'records');
+        
         const record = allRecords.find(r => r.name === locationName);
+        console.log('Found record:', record);
+        
         if (record) {
             this.openEditModal(record);
+        } else {
+            console.error('Record not found:', locationName);
+            this.showMessage('Could not find record to edit', 'error');
         }
     }
     
@@ -588,6 +598,15 @@ setTimeout(() => {
         );
         window.familyEditor = familyEditor; // Make globally accessible
         console.log('Family Editor initialized');
+        
+        // Add a test function to window for debugging
+        window.testEdit = function() {
+            console.log('Test edit function called');
+            if (familyEditor) {
+                familyEditor.openEditModal();
+            }
+        };
+        
     } else {
         console.log('Family data not yet available');
     }
