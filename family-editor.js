@@ -167,50 +167,8 @@ class FamilyRecordEditor {
     }
     
     addEditButtonsToPopups() {
-        // Store reference to this for use in the override
-        const editor = this;
-        
-        // Store the original createMarker function if not already stored
-        if (typeof window.originalCreateMarker === 'undefined') {
-            window.originalCreateMarker = window.createMarker;
-        }
-        
-        // Override createMarker to add edit buttons
-        window.createMarker = function(position, title, color, content) {
-            // Create a simple edit button that calls the editor directly
-            const editButton = `<div style="margin-top: 10px; text-align: center;"><button class="edit-record-btn" onclick="window.openEditFor('${title.replace(/'/g, "\\'")}')">✏️ Edit This Location</button></div>`;
-            
-            // Add the edit button before the closing div
-            const editableContent = content.replace('</div>', editButton + '</div>');
-            
-            return window.originalCreateMarker(position, title, color, editableContent);
-        };
-        
-        // Create a global function to handle edit clicks - much simpler approach
-        window.openEditFor = function(locationName) {
-            // Try to initialize editor on-demand if it doesn't exist
-            if (!window.familyEditor) {
-                try {
-                    if (typeof familyAddresses !== 'undefined') {
-                        window.familyEditor = new FamilyRecordEditor(
-                            familyAddresses, 
-                            historicalContext, 
-                            notableFigures || []
-                        );
-                    }
-                } catch (error) {
-                    alert('Could not initialize editor. Please refresh the page.');
-                    return;
-                }
-            }
-            
-            // Now try to edit
-            if (window.familyEditor && window.familyEditor.editRecord) {
-                window.familyEditor.editRecord(locationName);
-            } else {
-                alert('Editor could not be loaded. Please refresh the page and try again.');
-            }
-        };
+        // Edit buttons are now added directly in the HTML popup creation
+        // This function is no longer needed but kept for compatibility
     }
     
     editRecord(locationName) {

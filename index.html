@@ -301,9 +301,12 @@
                                         : location.image ? 
                                             `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                             : ''}
-                                    <a href="${mapsUrl}" class="action-button" target="_blank">
-                                        See Current Day View on Google Maps
-                                    </a>
+                                    <div style="margin-top: 15px; text-align: center;">
+                                        <button onclick="openEditFor('${location.name.replace(/'/g, "\\'")}');" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; margin-right: 10px;">✏️ Edit</button>
+                                        <a href="${mapsUrl}" class="action-button" target="_blank">
+                                            See Current Day View on Google Maps
+                                        </a>
+                                    </div>
                                 </div>
                             `;
 
@@ -640,6 +643,36 @@
             }
             
             return false;
+        }
+        
+        // Global function to handle edit clicks
+        function openEditFor(locationName) {
+            // Try to initialize editor on-demand if it doesn't exist
+            if (!window.familyEditor) {
+                try {
+                    if (typeof familyAddresses !== 'undefined') {
+                        // Create the editor class instance
+                        const FamilyRecordEditor = window.FamilyRecordEditor;
+                        if (FamilyRecordEditor) {
+                            window.familyEditor = new FamilyRecordEditor(
+                                familyAddresses, 
+                                historicalContext, 
+                                notableFigures || []
+                            );
+                        }
+                    }
+                } catch (error) {
+                    alert('Could not initialize editor. Please refresh the page.');
+                    return;
+                }
+            }
+            
+            // Now try to edit
+            if (window.familyEditor && window.familyEditor.editRecord) {
+                window.familyEditor.editRecord(locationName);
+            } else {
+                alert('Editor could not be loaded. Please refresh the page and try again.');
+            }
         }
     </script>
     <script async defer
