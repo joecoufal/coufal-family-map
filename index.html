@@ -644,23 +644,6 @@
             return false;
         }
         
-        // Global function to handle edit clicks
-            // Simple direct approach - just create the editor when needed
-            try {
-                if (!window.familyEditor && window.FamilyRecordEditor) {
-                    window.familyEditor = new window.FamilyRecordEditor(
-                        familyAddresses, 
-                        historicalContext, 
-                        notableFigures || []
-                    );
-                }
-                
-                if (window.familyEditor) {
-                    window.familyEditor.editRecord(locationName);
-                } else {
-                    alert('Editor is loading. Please try again in a moment.');
-                }
-            } catch (error) {
                 alert('Error: ' + error.message + '. Please refresh and try again.');
             }
         }
