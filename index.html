@@ -228,10 +228,10 @@
             }
         }
     </style>
-    <script src="family-editor.js"></script>
+    
     <script src="data.js"></script>
     <script src="notableFigures.js"></script>
-    <link rel="stylesheet" href="family-editor.css">
+
 </head>
 <body>
     <div class="header">
@@ -302,7 +302,6 @@
                                             `<img src="images/${location.image}" style="width: 100%; margin: 10px 0; border-radius: 4px;">` 
                                             : ''}
                                     <div style="margin-top: 15px; text-align: center;">
-                                        <button onclick="openEditFor('${location.name.replace(/'/g, "\\'")}');" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; margin-right: 10px;">✏️ Edit</button>
                                         <a href="${mapsUrl}" class="action-button" target="_blank">
                                             See Current Day View on Google Maps
                                         </a>
@@ -646,7 +645,6 @@
         }
         
         // Global function to handle edit clicks
-        function openEditFor(locationName) {
             // Simple direct approach - just create the editor when needed
             try {
                 if (!window.familyEditor && window.FamilyRecordEditor) {
